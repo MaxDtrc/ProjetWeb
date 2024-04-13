@@ -39,7 +39,6 @@ function init(db) {
     })
 
 
-
     router.post('/login', async (req, res) => {
         await client.connect();
         const bdd = await client.db("base1").collection("users");
@@ -59,6 +58,27 @@ function init(db) {
             }else{
                 res.send(false);
             }
+        }
+    })
+
+    router.post('/signin', async (req, res) => {
+        await client.connect();
+        const bdd = await client.db("base1").collection("users");
+
+        const { login, password } = req.body;
+        console.log("login = " + login);
+
+        const c = await bdd.findOne({
+            "username": {$eq: login}
+        })
+
+        if(c){
+            console.log("existe déjà")
+            res.send(false);
+        }else{
+            console.log("création de l'utilisateur")
+            await bdd.insertOne({"username": login, "password": password})
+            res.send(true);
         }
     })
 

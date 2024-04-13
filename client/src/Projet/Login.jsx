@@ -8,8 +8,7 @@ function Login(props){
 
     function checkLogin(){
         axios.post('/api/login', {"login": login, "password": password}).then(res => {
-            //if(res.data){
-            if(true){
+            if(res.data){
                 props.login();
             }
         })
@@ -25,7 +24,6 @@ function Login(props){
                 <input id="pass" onChange={(e) => setPassword(e.target.value)}/><br/>
                 <button id="confirmLogin" onClick={() => {
                     checkLogin()
-                    //props.login()    
                 }
                 }>Se connecter</button>
                 <a id="changeFormLogin" href="" onClick={(e) => {e.preventDefault() ; props.setForm("signin")}}>Cliquez ici pour vous créer un compte</a>
