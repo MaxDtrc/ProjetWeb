@@ -1,0 +1,61 @@
+#msg {
+  background-color: pink;
+  margin-bottom: 10px;
+  border-radius: 10px;
+
+  display:grid;
+  grid-template-rows: [top] 60px [bottom];
+  grid-template-columns: [left] 70px [right] auto [end] 150px;
+}
+
+#msg_auteur {
+  padding-top: 10px;
+  color:red;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  grid-column-start: 2;
+  grid-column-end: 2;
+}
+
+#msg_contenu {
+  padding-left: 20px;
+  padding-right: 20px;
+  color: maroon;
+  text-justify: auto;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  
+}
+
+#msg_photo {
+  padding-left: 10px;
+  padding-top: 10px;
+  width: 50px;
+  height: 50px; 
+  grid-row-start: top;
+  grid-row-end: top;
+  grid-column-start: left;
+  grid-column-end: left;
+}
+
+#msg_date {
+  padding-top: 10px;
+  color:grey;
+  grid-row-start: 1;
+  grid-row-end: 1;
+  grid-column-start: 3;
+  grid-column-end: 3;
+}
+
+
+#list_msg {
+  display: flex;
+  flex-direction: column;
+}
+
+#nv_msg {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}

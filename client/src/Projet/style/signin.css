@@ -1,0 +1,116 @@
+html,body {
+    height:100vh;
+    margin:0;
+}
+
+#login_page{
+    display:flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+#signin_form {
+    margin: auto;
+    background-color: rgb(255, 194, 254);
+    width: 400px;
+    height: 260px;
+    display: grid;
+    align-items: center;
+
+    grid-template-columns: 10% 40% 40% 10%;
+    grid-template-rows: 20% 15% 15% 15% 15% 20%;
+
+    border-radius: 15px;
+    padding:10px;
+}
+
+#login_form {
+    margin: auto;
+    background-color: rgb(255, 194, 254);
+    width: 400px;
+    height: 260px;
+    display: grid;
+    align-items: center;
+
+    grid-template-columns: 10% 40% 40% 10%;
+    grid-template-rows: 20% 20% 20% 20% 20%;
+
+    border-radius: 15px;
+    padding:10px;
+}
+
+#title {
+    grid-column: 2/4;
+    grid-row-end:2;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#confirmSignin {
+    grid-column: 2/4;
+    grid-row: 5;
+}
+
+#confirmLogin {
+    grid-column: 2/4;
+    grid-row: 4;
+}
+
+#confirmSignin, #confirmLogin {
+    text-align: center;
+    border-radius: 5px;
+    border: 0px;
+    height: 30px;
+}
+
+#login {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+#loginLabel {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#pass {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+#login, #pass, #cpass {
+    border-radius: 5px;
+    border: 0px;
+    height: 25px;
+}
+
+#passLabel {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+#cpass {
+    grid-column: 3;
+    grid-row: 4;
+}
+
+#cpassLabel {
+    grid-column: 2;
+    grid-row: 4;
+}
+
+#changeFormLogin, #changeFormSignin{
+    text-align: center;
+    text-decoration: underline;
+    font-style: italic;
+    grid-column: 2/4;
+}
+
+#changeFormLogin {
+    grid-row:5;
+}
+
+#changeFormSignin {
+    grid-row:6;
+}

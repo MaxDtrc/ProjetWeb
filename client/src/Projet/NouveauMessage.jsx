@@ -1,0 +1,24 @@
+import { useState } from 'react';
+import axios from 'axios';
+axios.defaults.baseURL = 'http://localhost:4000';
+
+function NouveauMessage(props) {
+    const [newMessage, setNewMessage] = useState("") 
+
+    const buttonEvt = (e) => {
+      axios.post('/api/message/add', {"text": newMessage, "auteur": 1, "date": "2002"}).then(res => {
+        if(res.data){
+            console.log("message ajouté")
+        }
+      })
+    }
+
+    return (
+      <>
+        <input onChange={(e) => setNewMessage(e.target.value)} id="nv_msg"/>
+        <button onClick={buttonEvt}>Envoyer</button> 
+      </>
+    )
+  }
+
+export default NouveauMessage
