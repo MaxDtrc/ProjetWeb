@@ -6,7 +6,6 @@ class Users {
 
   constructor(db) {
     this.db = db
-    // suite plus tard avec la BD
   }
 
   create(login, password, lastname, firstname) {

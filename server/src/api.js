@@ -1,8 +1,7 @@
 const express = require("express");
 const Users = require("./entities/users.js");
-const {MongoClient} = require('mongodb');
-const uri = "mongodb://127.0.0.1:27017";
-const client = new MongoClient(uri);
+
+
 
 function init(db) {
     const router = express.Router();
@@ -40,13 +39,12 @@ function init(db) {
 
 
     router.post('/login', async (req, res) => {
-        await client.connect();
-        const bdd = await client.db("base1").collection("users");
+        const u = await db.collection("users");
 
         const { login, password } = req.body;
         console.log("login = " + login);
 
-        const c = await bdd.findOne({
+        const c = await u.findOne({
             "username": {$eq: login}
         })
 
@@ -62,13 +60,12 @@ function init(db) {
     })
 
     router.post('/signin', async (req, res) => {
-        await client.connect();
-        const bdd = await client.db("base1").collection("users");
+        const u = await db.collection("users");
 
         const { login, password } = req.body;
         console.log("login = " + login);
 
-        const c = await bdd.findOne({
+        const c = await u.findOne({
             "username": {$eq: login}
         })
 
@@ -77,7 +74,7 @@ function init(db) {
             res.send(false);
         }else{
             console.log("création de l'utilisateur")
-            await bdd.insertOne({"username": login, "password": password})
+            await u.insertOne({"username": login, "password": password})
             res.send(true);
         }
     })
