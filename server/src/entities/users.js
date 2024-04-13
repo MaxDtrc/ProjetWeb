@@ -26,6 +26,7 @@ class Users {
           "firstname": firstname
         })
 
+        //On récupère l'identifiant pour le renvoyer
         const user = this.db.collection.findOne({
           "username": {$eq: username}
         })
