@@ -1,0 +1,18 @@
+Collection Utilisateurs:
+- username (string)
+- password (string)
+- firstname (string)
+- lastname (string)
+- creation (date)
+- isadmin (boolean)
+- photo (moyen_de_stocker_une_image)
+
+Collection Messages:
+- id_author (int, le numero généré par MongoDB)
+- text (string)
+- date (date)
+
+Collection Channels:
+- id_author (int)
+- title (string)
+- liste_messages (liste int)
