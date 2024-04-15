@@ -1,8 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client';
-import App from './src/Projet/App'
-//import AppTD4 from './src/TD4/AppTD4'
-//import AppTD5 from './src/TD5/AppTD5'
+import App from './src/code/App'
 
 const rootNode = document.getElementById('root');
 const root = createRoot(rootNode);
