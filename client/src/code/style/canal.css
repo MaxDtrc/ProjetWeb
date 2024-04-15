@@ -1,0 +1,46 @@
+#cnl {
+  background-color: pink;
+  margin-bottom: 10px;
+  border-radius: 10px;
+
+  display:grid;
+  grid-template-columns: [left] auto [right] 150px;
+  height: 50px;
+}
+
+#cnl_info {
+  grid-column: right;
+  display: flex;
+  flex-direction: column;
+}
+
+#cnl_titre {
+  padding-left: 20px;
+  padding-right: 20px;
+  color: maroon;
+  text-justify: auto;
+  grid-column: left;
+  margin-top: 15px
+}
+
+
+#cnl_date {
+  color:grey;
+}
+
+#cnl_auteur {
+  color:red;
+  margin-bottom: -15px;
+  margin-top: 7px;
+}
+
+
+#list_cnl {
+  display: flex;
+  flex-direction: column;
+}
+
+#nv_cnl {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}

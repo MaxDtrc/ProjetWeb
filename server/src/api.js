@@ -1,5 +1,6 @@
 const express = require("express");
 const Users = require("./entities/users.js");
+const Canaux = require("./entities/canaux.js");
 
 
 
@@ -165,6 +166,32 @@ function init(db) {
                 .catch((err) => res.status(500).send(err));
         }
     });
+
+
+    const canaux = new Canaux.default(db);
+    router.put("/canal", (req, res) => {
+        const {id_auteur, titre} = req.body;
+        if (!id_auteur || !titre) {
+            res.status(400).send("Champs manquants");
+        }else{
+            canaux.create(id_auteur, titre)
+            .then(() => res.status(201).send(true))
+            .catch((err) => res.status(500).send(err));
+        }
+    })
+
+    router.get("/canal/all"), (req, res) => {
+        console.log("getall")
+        canaux.getAll()
+        .then((canaux) => res.status(201).send(canaux))
+        .catch((err) => res.status(500).send(err));
+    }
+
+    router.get("/canal/:canal_id(\\d+)", (req, res) => {
+        canaux.get(req.params.canal_id)
+        .then((canal) => res.status(201).send(canal)) //TODO changer status
+        .catch((err) => res.status(500).send(err));
+    })
 
     return router;
 }

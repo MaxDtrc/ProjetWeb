@@ -1,32 +1,32 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import PageLogin from './PageLogin'
-import PageFilDiscussion from './PageFilDiscussion'
+import PageLogin from "./PageLogin";
+import PageFilDiscussion from "./PageFilDiscussion";
+import PageCanaux from "./PageCanaux";
 
-function MainPage(props){
-    const [currentPage, setPage] = useState("fil_discussion")
+function MainPage(props) {
+  const [currentPage, setPage] = useState("page_canaux");
 
-
-    function getConnected(){
-        setPage("fil_discussion")
-        props.setConnection(true)
-    }
-
-    var page;
-    switch(currentPage){
-        case "signin_page":
-            page = <PageLogin login={getConnected}/>
-        case "fil_discussion":
-            page = <PageFilDiscussion/>
-        //Autres cas pour les futures pages
-    }
-
-    
-    return (
+  switch (currentPage) {
+    case "page_canaux":
+      return (
         <main id="main_page">
-            {page}
-        </main> 
-    )
+          <PageCanaux setPage={setPage} />
+        </main>
+      );
+    case "fil_discussion":
+      return (
+        <main id="main_page">
+          <PageFilDiscussion setPage={setPage} />
+        </main>
+      );
+    default:
+      return (
+        <main id="main_page">
+          <PageCanaux setPage={setPage} />
+        </main>
+      );
+  }
 }
 
-export default MainPage
+export default MainPage;
