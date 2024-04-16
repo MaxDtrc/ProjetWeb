@@ -8,10 +8,12 @@ axios.defaults.baseURL = "http://localhost:4000";
 function PageCanaux(props) {
   const [lstCanaux, setLstCanaux] = useState([]);
 
-  function update() {
+  async function update() {
     axios
       .get("/api/canal")
       .then((res) => {
+        //TODO Remplacement des éléments par leur nom
+
         setLstCanaux(res.data);
       })
       .catch((e) => {
