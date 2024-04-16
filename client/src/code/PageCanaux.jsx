@@ -5,55 +5,24 @@ import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:4000";
 
-/*
-
-    {
-      titre: "Salade de fruits",
-      auteur: "Laila",
-      date: "21/03/2023 15:15",
-      _id: "fgrqegqeq",
-    },
-    {
-      titre: "[Thread] Comment renvoyer les étrangers chez eux",
-      auteur: "Laurent",
-      date: "21/03/2023 15:15",
-      _id: "qehuigqqgr",
-    },
-    {
-      titre: "Zelda TOTK",
-      auteur: "Vincent",
-      date: "21/03/2023 15:15",
-      _id: "qdfgqtghzrth",
-    },
-    {
-      titre: "Recette de riz",
-      auteur: "Laura",
-      date: "21/03/2023 15:15",
-      _id: "qdfgqg",
-    },
-  ]
-   */
-
 function PageCanaux(props) {
   const [lstCanaux, setLstCanaux] = useState([]);
 
-  if (lstCanaux.length == 0) {
-    axios.get("/api/canal/all").then((res) => {
-      console.log(res);
-      setLstCanaux([
-        ...lstCanaux,
-        {
-          titre: "Recette de riz",
-          auteur: "Laura",
-          date: "21/03/2023 15:15",
-          _id: "qdfgqg",
-        },
-      ]);
-    });
+  function update() {
+    axios
+      .get("/api/canal")
+      .then((res) => {
+        setLstCanaux(res.data);
+      })
+      .catch((e) => {
+        console.log("Erreur dans l'obtention de la liste des canaux");
+      });
+
+    console.log("liste des canaux mise à jour");
   }
 
-  function addToList(canal) {
-    setLstCanaux([...lstCanaux, canal]);
+  if (lstCanaux.length == 0) {
+    update();
   }
 
   function openCanal(id) {
@@ -62,7 +31,7 @@ function PageCanaux(props) {
 
   return (
     <div id="liste_canaux">
-      <NouveauCanal />
+      <NouveauCanal update={update} />
       <ListeCanaux lstCanaux={lstCanaux} openCanal={openCanal} />
     </div>
   );

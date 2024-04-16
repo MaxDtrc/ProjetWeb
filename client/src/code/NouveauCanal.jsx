@@ -9,11 +9,12 @@ function NouveauCanal(props) {
     axios
       .put("/api/canal", {
         titre: newCanal,
-        id_auteur: "661d3953553493b62677fc6e",
+        id_auteur: "661a8778bbf66dc7abc1c3c4",
       })
       .then((res) => {
         if (res.data) {
           console.log("Canal ajouté");
+          props.update();
         }
       });
   };

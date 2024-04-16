@@ -32,7 +32,7 @@ class Canaux {
 
   get(id_canal) {
     return new Promise((resolve, reject) => {
-      canal = this.db.collection("canaux").findOne({
+      const canal = this.db.collection("canaux").findOne({
         "_id": {$eq: id_canal}
       })
 
@@ -47,14 +47,11 @@ class Canaux {
 
   getAll(){
     return new Promise((resolve, reject) => {
-      canal = this.db.collection("canaux")
-
-      if(!canal){
-        console.log("Le canal recherché n'existe pas")
-        reject();
-      }else{
-        resolve(canal)
-      }
+      const c = this.db.collection("canaux").find()
+      if(c)
+        resolve(c.toArray())
+      else
+        reject()
     });
   }
 }

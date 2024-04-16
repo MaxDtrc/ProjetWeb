@@ -7,7 +7,7 @@ function ListeCanaux(props) {
       {[...props.lstCanaux].reverse().map((cnl) => (
         <Canal
           titre={cnl.titre}
-          auteur={cnl.auteur}
+          auteur={cnl.id_auteur}
           date={cnl.date}
           id={cnl._id}
           openCanal={props.openCanal}

@@ -36,25 +36,19 @@ class Users {
     });
   }
 
-  get(userid) {
+  get(id_user) {
     return new Promise((resolve, reject) => {
-      const user = {
-         login: "pikachu",
-         password: "1234",
-         lastname: "chu",
-         firstname: "pika"
-      }; // À remplacer par une requête bd
-
-      if(false) {
-        //erreur
-        reject();
-      } else {
-        if(userid == 1) {
-          resolve(user);
-        } else {
-          resolve(null);
-        }
-      }
+      console.log("bd: recherche de " + id_user)
+      const u = this.db.collection("users").findOne({
+        "username": {$eq: "maxdtrc"}
+      })
+      .then(res => {
+        console.log('resultat obtenu ' + res)
+        if(!res)
+          reject()
+        else
+          resolve(res)
+      })
     });
   }
 
