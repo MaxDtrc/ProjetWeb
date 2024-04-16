@@ -1,14 +1,9 @@
 import { useState } from "react";
 import "./style/canal.css";
 
-import axios from "axios";
-
-axios.defaults.baseURL = "http://localhost:4000";
-
 function Canal(props) {
   function clickCanal(e) {
     e.preventDefault();
-    console.log("click sur " + props.id);
     props.openCanal(props.id);
   }
 

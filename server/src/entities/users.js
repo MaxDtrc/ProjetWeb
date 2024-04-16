@@ -1,6 +1,6 @@
 const uri = "mongodb://127.0.0.1:27017";
-
 const { text } = require('stream/consumers');
+const {BSON} = require("bson")
 
 class Users {
 
@@ -38,12 +38,11 @@ class Users {
 
   get(id_user) {
     return new Promise((resolve, reject) => {
-      console.log("bd: recherche de " + id_user)
-      const u = this.db.collection("users").findOne({
-        "username": {$eq: "maxdtrc"}
+      this.db.collection("users").findOne({
+        _id : new BSON.ObjectId(id_user)
       })
       .then(res => {
-        console.log('resultat obtenu ' + res)
+        console.log("res =" + res)
         if(!res)
           reject()
         else

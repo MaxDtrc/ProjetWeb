@@ -108,10 +108,9 @@ function init(db) {
 
     const users = new Users.default(db);
     router.get("/user/:user_id", async (req, res) => {
-        console.log("recherche de " + req.params.user_id)
-        users.get(req.params.user_id)
+        users.get(req.params.user_id) //Recherche de l'utilisateur
         .then((u) => {
-            console.log("trouvé: " + u.username)
+            console.log(u)
             res.status(201).send(u)
         })
         .catch((err) => res.status(500).send(err));
