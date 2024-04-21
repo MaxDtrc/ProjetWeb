@@ -6,11 +6,7 @@ function NouveauMessage(props) {
     const [newMessage, setNewMessage] = useState("") 
 
     const buttonEvt = (e) => {
-      axios.post('/api/message/add', {"text": newMessage, "auteur": 1, "date": "2002"}).then(res => {
-        if(res.data){
-            console.log("message ajouté")
-        }
-      })
+      props.ajouterMessage(newMessage);
     }
 
     return (

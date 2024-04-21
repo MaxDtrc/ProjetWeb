@@ -5,25 +5,20 @@ import PageFilDiscussion from "./PageFilDiscussion";
 import PageCanaux from "./PageCanaux";
 
 function MainPage(props) {
-  const [currentPage, setPage] = useState("fil_discussion");
+  const [currentPage, setPage] = useState("page_canal");
+  const [idCanal, setIdCanal] = useState(0);
 
   switch (currentPage) {
-    case "page_canaux":
-      return (
-        <main id="main_page">
-          <PageCanaux setPage={setPage} />
-        </main>
-      );
     case "fil_discussion":
       return (
         <main id="main_page">
-          <PageFilDiscussion setPage={setPage} />
+          <PageFilDiscussion setPage={setPage} idCanal={idCanal}/>
         </main>
       );
     default:
       return (
         <main id="main_page">
-          <PageCanaux setPage={setPage} />
+          <PageCanaux setPage={setPage} setIdCanal={setIdCanal}/>
         </main>
       );
   }

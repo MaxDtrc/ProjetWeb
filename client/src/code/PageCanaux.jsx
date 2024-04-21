@@ -26,6 +26,7 @@ function PageCanaux(props) {
   }
 
   function openCanal(id) {
+    props.setIdCanal(id);
     props.setPage("fil_discussion"); //Fonction de l'ouverture du canal
   }
 

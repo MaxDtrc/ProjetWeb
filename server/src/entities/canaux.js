@@ -18,7 +18,7 @@ class Canaux {
         console.log("L'utilisateur n'existe pas")
         reject();
       }else{
-        //Ajout le canal
+        //Ajoute le canal
         this.db.collection("canaux").insertOne({
           "id_auteur": id_auteur,
           "titre": titre,
@@ -54,6 +54,21 @@ class Canaux {
         reject()
     });
   }
+
+  addMessage(text, id_auteur, id_canal){
+    return new Promise((resolve, reject) => {
+      get(id_canal).then(res => {
+        res.liste_messages.add({ text: text, auteur: id_auteur, date: "21/03/2023 15:15" }) //TODO mettre la date
+        this.db.collection("canaux").updateOne({
+            "_id": {$eq: id_canal}}, {$set: res}
+        )}).then(res => {console.log("message ajouté")})
+      .catch(() => {
+        console.log("message nonajouté")
+        reject()
+      });
+    })
+  }
+
 }
 
 exports.default = Canaux;
