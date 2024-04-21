@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 200px auto 200px;
     grid-template-rows: 50px auto 50px;
+    font-family: "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
 }
 
 #header_logo {
@@ -25,7 +26,8 @@
     grid-column-end: 2;
     text-align: center;
     font-weight: bold;
-    font-size: large;
+    font-size: larger;
+    color: white;
 }
 
 #header_logout {

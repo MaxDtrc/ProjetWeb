@@ -5,7 +5,7 @@ import PageFilDiscussion from "./PageFilDiscussion";
 import PageCanaux from "./PageCanaux";
 
 function MainPage(props) {
-  const [currentPage, setPage] = useState("page_canaux");
+  const [currentPage, setPage] = useState("fil_discussion");
 
   switch (currentPage) {
     case "page_canaux":

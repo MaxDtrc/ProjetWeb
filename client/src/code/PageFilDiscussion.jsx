@@ -24,6 +24,7 @@ function PageFilDiscussion(props) {
   }
 
   return (
+    <>
     <div id="fil_discussion">
       <a
         href=""
@@ -37,7 +38,9 @@ function PageFilDiscussion(props) {
       <NouveauMessage />
       <ListeMessages lstMessages={lstMessages} />
     </div>
+    </>
   );
+  
 }
 
 export default PageFilDiscussion;

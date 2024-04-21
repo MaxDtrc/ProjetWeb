@@ -1,6 +1,8 @@
 html, body {
     margin: 0;
     padding: 0;
+    background-image: linear-gradient(#000050 5%, #00008b 75%, #7321f8);
+    background-attachment: fixed;
 }
 
 #app {
@@ -19,14 +21,41 @@ html, body {
 }
 
 #left_side {
-    background-color: aqua;
     grid-column-end: 2;
     grid-row-start: 2;
+    border-right: 1px solid white;
 }
 
 #header {
-    background-color: magenta;
     grid-column-start: 1;
     grid-row-end: 2;
     grid-column-end : 3;
+    border-bottom: 1px solid white;
 }
+
+#cabin {
+    position: fixed;
+    width: 150px;
+    height: 128px;
+    bottom: 0px;
+    z-index: 1;
+}
+
+#snow {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 22px;
+    position: fixed;
+    background-image: url("../../assets/snow.png");
+}
+
+#smoke {
+    position: fixed;
+    left: -100px;
+    bottom: -73px;
+    width: 200px;
+    height: 200px;
+    z-index: 2;
+  }
+  
