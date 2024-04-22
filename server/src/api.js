@@ -82,19 +82,8 @@ function init(db) {
     
     const canaux = new Canaux.default(db);
 
-    router.route("/canal/:canal_id").put(async (req, res) => {
-        const {text, id_auteur} = req.body;
-        if (!id_auteur || !text) {
-            res.status(400).send("Champs manquants");
-        } else {
-            console.log("api msg ajouté debuit else")
-            canaux.addMessage(text, id_auteur, req.params.canal_id)
-            .then(() => {console.log("api msg ajouté"); res.status(201).send(true)})
-            .catch((err) => {console.log("api msg nonajouté"); res.status(500).send(err)});
-            
-        }
-    })
 
+    
     router.route("/canal")
     .put((req, res) => {
         console.log("api msg ajouté put")
@@ -115,16 +104,27 @@ function init(db) {
         .catch((err) => res.status(500).send(err));
     })
 
-    router.get("/canal/:canal_id", async (req, res) => {
+    router.route("/canal/:canal_id").get(async (req, res) => {
         canaux.get(req.params.canal_id)
         .then((c) => res.status(201).send(c.toArray())) //TODO changer status
         .catch((err) => res.status(500).send(err));
+    }).put(async (req, res) => {
+        const {text, id_auteur} = req.body;
+        if (!id_auteur || !text) {
+            res.status(400).send("Champs manquants");
+        } else {
+            console.log("api: ajout du message dans " + req.params.canal_id)
+            canaux.addMessage(text, id_auteur, req.params.canal_id)
+            .then(() => {res.status(201).send(true)})
+            .catch((err) => {res.status(500).send(err)});
+            
+        }
     })
 
     
 
     const users = new Users.default(db);
-    router.get("/user/:user_id", async (req, res) => {
+    router.route("/user/:user_id").get(async (req, res) => {
         users.get(req.params.user_id) //Recherche de l'utilisateur
         .then((u) => {
             console.log(u)

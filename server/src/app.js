@@ -20,7 +20,7 @@ const app = express()
 const session = require("express-session");
 const cors = require("cors");
 const corsOptions = {
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'UPDATE'],
 };
 app.use(cors(corsOptions));
 

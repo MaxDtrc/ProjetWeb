@@ -57,15 +57,29 @@ class Canaux {
 
   addMessage(text, id_auteur, id_canal){
     return new Promise((resolve, reject) => {
-      get(id_canal).then(res => {
-        res.liste_messages.add({ text: text, auteur: id_auteur, date: "21/03/2023 15:15" }) //TODO mettre la date
-        this.db.collection("canaux").updateOne({
-            "_id": {$eq: id_canal}}, {$set: res}
-        )}).then(res => {console.log("message ajouté")})
-      .catch(() => {
-        console.log("message nonajouté")
-        reject()
-      });
+      this.get(id_canal).then((canal) => {
+        console.log("canal: " + canal)
+        resolve()
+      }).catch((err) => {
+        console.log("err")
+      })
+        /*
+      if(c){
+        console.log("canal récupéré")
+        console.log(c)
+        var lst = c.data.liste_messages
+        lst = [...lst, { text: text, auteur: id_auteur, date: "21/03/2023 15:15" }] //TODO date
+        console.log("lst modifiée")
+        console.log("lst:" + lst)
+        this.db.collection("canaux").updateOne(
+          {
+            "_id": {$eq: id_canal}
+          }, {
+            $set: res
+          }).then((res) => resolve()).catch((err) => reject)
+        }else{
+          reject()
+        }*/
     })
   }
 
