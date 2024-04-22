@@ -1,5 +1,5 @@
 const uri = "mongodb://127.0.0.1:27017";
-
+const {BSON} = require("bson")
 const { text } = require('stream/consumers');
 
 class Canaux {
@@ -32,16 +32,15 @@ class Canaux {
 
   get(id_canal) {
     return new Promise((resolve, reject) => {
-      const canal = this.db.collection("canaux").findOne({
-        "_id": {$eq: id_canal}
+      this.db.collection("canaux").findOne({
+        _id : new BSON.ObjectId(id_canal)
       })
-
-      if(!canal){
-        console.log("Le canal recherché n'existe pas")
-        reject();
-      }else{
-        resolve(canal)
-      }
+      .then(res => {
+        if(!res)
+          reject()
+        else
+          resolve(res)
+      })
     });
   }
 
@@ -57,29 +56,22 @@ class Canaux {
 
   addMessage(text, id_auteur, id_canal){
     return new Promise((resolve, reject) => {
-      this.get(id_canal).then((canal) => {
-        console.log("canal: " + canal)
-        resolve()
+      this.get(id_canal).then((c) => {
+        c.liste_messages.push({text: text, auteur: id_auteur, date: "2004"}) // Ajout du message à la liste
+        this.db.collection("canaux").updateOne({
+          _id : new BSON.ObjectId(id_canal)
+        }, {
+          $set : c //Update
+        }).then(res => {
+          resolve(true); //Tout a marché
+        }).catch(err => {
+          console.log(err);
+          reject(); //Erreur update
+        })
       }).catch((err) => {
-        console.log("err")
+        console.log(err);
+        reject(); //Erreur obtention
       })
-        /*
-      if(c){
-        console.log("canal récupéré")
-        console.log(c)
-        var lst = c.data.liste_messages
-        lst = [...lst, { text: text, auteur: id_auteur, date: "21/03/2023 15:15" }] //TODO date
-        console.log("lst modifiée")
-        console.log("lst:" + lst)
-        this.db.collection("canaux").updateOne(
-          {
-            "_id": {$eq: id_canal}
-          }, {
-            $set: res
-          }).then((res) => resolve()).catch((err) => reject)
-        }else{
-          reject()
-        }*/
     })
   }
 

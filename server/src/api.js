@@ -99,6 +99,7 @@ function init(db) {
     .get(async (req, res) => {
         canaux.getAll()
         .then((c) => {
+            console.log("c = " + c)
             res.status(201).send(c)
         })
         .catch((err) => res.status(500).send(err));
@@ -106,7 +107,7 @@ function init(db) {
 
     router.route("/canal/:canal_id").get(async (req, res) => {
         canaux.get(req.params.canal_id)
-        .then((c) => res.status(201).send(c.toArray())) //TODO changer status
+        .then((c) => res.status(201).send(c)) //TODO changer status
         .catch((err) => res.status(500).send(err));
     }).put(async (req, res) => {
         const {text, id_auteur} = req.body;

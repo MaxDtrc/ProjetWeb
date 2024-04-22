@@ -26,6 +26,8 @@ function PageFilDiscussion(props) {
     setLstMessages(lst);
   }
 
+  if (lstMessages.length == 0) update();
+
   function ajouterMessage(msg) {
     axios
       .put("/api/canal/" + props.idCanal, {
