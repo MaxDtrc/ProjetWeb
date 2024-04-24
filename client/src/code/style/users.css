@@ -1,0 +1,90 @@
+#usr_title {
+  text-align: center;
+  font-weight: bold;
+  text-decoration: underline;
+  color: white;
+  font-size: x-large;
+  font-weight: 120;
+}
+
+#usr {
+  background-color: transparent;
+
+  border: 1px solid white;
+  border-radius: 10px;
+
+  width: 65%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+
+  display:grid;
+  grid-template-columns: 100px 45px 45px auto [right] 200px;
+
+  font-family: "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+}
+
+#usr_name {
+  color: #5cb3ff ;
+  font-size: 20px;
+  align-self: center;
+  margin-left:10px;
+}
+
+#usr_date {
+  grid-column: right;
+  padding-right: 15px;
+  color: #ddddff;
+  text-align: right;
+  align-self: center;
+}
+
+#accept, #deny{
+  position: relative;
+  align-self: center;
+
+  width: 35px;
+  height: 35px;
+
+  cursor:pointer;
+  background: transparent;
+  border-radius: 5px;
+}
+
+#accept {
+  border: 1px solid #ffffff/*#00ff37*/;
+}
+
+#deny {
+  border: 1px solid #ffffff/*#ff1e1e*/;
+}
+
+#usr_repondre:hover{
+  border-color: #5cb3ff;
+}
+
+#accept_icon, #deny_icon{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 20%;
+  left: 20%;
+}
+
+#accept_icon {
+  filter: invert(100%);/*invert(71%) sepia(75%) saturate(2761%) hue-rotate(81deg) brightness(108%) contrast(117%)*/;
+}
+
+#deny_icon {
+  filter: invert(100%);/*invert(28%) sepia(55%) saturate(5771%) hue-rotate(348deg) brightness(97%) contrast(105%)*/;
+}
+
+
+#list_usr {
+  display: flex;
+  flex-direction: column;
+}
+
+#nv_usr {
+  margin-bottom: 20px;
+  margin-right: 10px;
+}

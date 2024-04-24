@@ -3,9 +3,10 @@ import { useState } from "react";
 import PageLogin from "./PageLogin";
 import PageFilDiscussion from "./PageFilDiscussion";
 import PageCanaux from "./PageCanaux";
+import PageValidation from "./PageValidation";
 
 function MainPage(props) {
-  const [currentPage, setPage] = useState("page_canal");
+  const [currentPage, setPage] = useState("page_utilisateurs");
   const [idCanal, setIdCanal] = useState(0);
 
   switch (currentPage) {
@@ -17,6 +18,12 @@ function MainPage(props) {
             setPage={setPage}
             idCanal={idCanal}
           />
+        </main>
+      );
+    case "page_utilisateurs":
+      return (
+        <main id="main_page">
+          <PageValidation />
         </main>
       );
     default:
