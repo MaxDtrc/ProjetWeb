@@ -32,7 +32,7 @@ function PageFilDiscussion(props) {
     axios
       .put("/api/canal/" + props.idCanal, {
         text: msg,
-        id_auteur: "661a8778bbf66dc7abc1c3c4", //"662404d3f52a681a818e71c2",
+        id_auteur: props.userId,
       })
       .then((res) => {
         update();

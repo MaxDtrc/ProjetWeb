@@ -9,7 +9,7 @@ function NouveauCanal(props) {
     axios
       .put("/api/canal", {
         titre: newCanal,
-        id_auteur: "661a8778bbf66dc7abc1c3c4", //"662404d3f52a681a818e71c2",
+        id_auteur: props.userId,
       })
       .then((res) => {
         if (res.data) {

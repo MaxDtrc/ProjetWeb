@@ -1,6 +1,3 @@
-const path = require('path');
-const api = require('./api.js');
-
 //BDD
 const {MongoClient} = require('mongodb');
 const uri = "mongodb://127.0.0.1:27017";
@@ -10,25 +7,26 @@ const client = new MongoClient(uri);
 client.connect();
 const db = client.db("organizasso")
 
-// Détermine le répertoire de base
-const basedir = path.normalize(path.dirname(__dirname));
-console.debug(`Base directory: ${basedir}`);
-
 //Middlewares express
 express = require('express');
 const app = express()
-const session = require("express-session");
+
+//Path - Détermine le répertoire de base
+const path = require('path');
+const basedir = path.normalize(path.dirname(__dirname));
+console.debug(`Base directory: ${basedir}`);
+
+//API
+const api = require('./api.js');
+
+//Cors
 const cors = require("cors");
 const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'UPDATE'],
 };
 app.use(cors(corsOptions));
 
-app.use(session({
-    secret: "technoweb rocks",
-    resave: true,
-    saveUninitialized: false
-}));
+
 
 //Definition de l'api
 app.use('/api', api.default(db));

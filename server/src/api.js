@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require('express-session');
 const Users = require("./entities/users.js");
 const Canaux = require("./entities/canaux.js");
 
@@ -6,11 +7,10 @@ const Canaux = require("./entities/canaux.js");
 
 function init(db) {
     const router = express.Router();
+
     // On utilise JSON
     router.use(express.json());
 
-    // simple logger for this router's requests
-    // all requests to this router will first hit this middleware
     router.use((req, res, next) => {
         console.log('API: method %s, path %s', req.method, req.path);
         console.log('Body', req.body);
@@ -53,9 +53,9 @@ function init(db) {
             res.send(false);
         }else{
             if(c.password == password){
-                res.send(true);
+                res.send(c._id.toString());
             }else{
-                res.send(false);
+                res.send(null);
             }
         }
     })
@@ -66,17 +66,18 @@ function init(db) {
         const { login, password } = req.body;
         console.log("login = " + login);
 
-        const c = await u.findOne({
+        var c = await u.findOne({
             "username": {$eq: login}
         })
 
         if(c){
-            console.log("existe déjà")
-            res.send(false);
+            res.send(null);
         }else{
-            console.log("création de l'utilisateur")
             await u.insertOne({"username": login, "password": password})
-            res.send(true);
+            c = await u.findOne({
+                "username": {$eq: login}
+            })
+            res.send(c._id.toString());
         }
     })
     
@@ -86,7 +87,6 @@ function init(db) {
     
     router.route("/canal")
     .put((req, res) => {
-        console.log("api msg ajouté put")
         const {id_auteur, titre} = req.body;
         if (!id_auteur || !titre) {
             res.status(400).send("Champs manquants");
@@ -99,7 +99,6 @@ function init(db) {
     .get(async (req, res) => {
         canaux.getAll()
         .then((c) => {
-            console.log("c = " + c)
             res.status(201).send(c)
         })
         .catch((err) => res.status(500).send(err));
@@ -114,7 +113,6 @@ function init(db) {
         if (!id_auteur || !text) {
             res.status(400).send("Champs manquants");
         } else {
-            console.log("api: ajout du message dans " + req.params.canal_id)
             canaux.addMessage(text, id_auteur, req.params.canal_id)
             .then(() => {res.status(201).send(true)})
             .catch((err) => {res.status(500).send(err)});
@@ -128,7 +126,6 @@ function init(db) {
     router.route("/user/:user_id").get(async (req, res) => {
         users.get(req.params.user_id) //Recherche de l'utilisateur
         .then((u) => {
-            console.log(u)
             res.status(201).send(u)
         })
         .catch((err) => res.status(500).send(err));

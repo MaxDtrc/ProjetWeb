@@ -12,13 +12,21 @@ function MainPage(props) {
     case "fil_discussion":
       return (
         <main id="main_page">
-          <PageFilDiscussion setPage={setPage} idCanal={idCanal}/>
+          <PageFilDiscussion
+            userId={props.userId}
+            setPage={setPage}
+            idCanal={idCanal}
+          />
         </main>
       );
     default:
       return (
         <main id="main_page">
-          <PageCanaux setPage={setPage} setIdCanal={setIdCanal}/>
+          <PageCanaux
+            userId={props.userId}
+            setPage={setPage}
+            setIdCanal={setIdCanal}
+          />
         </main>
       );
   }
