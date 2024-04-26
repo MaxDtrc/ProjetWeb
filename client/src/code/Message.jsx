@@ -8,7 +8,16 @@ function Message(props) {
     <>
       <div id="msg">
         <img id="msg_photo" src={momo} />
-        <p id="msg_auteur">{props.auteur ? props.auteur : "auteur"}</p>
+        <a
+          id="msg_auteur"
+          href=""
+          onClick={(e) => {
+            e.preventDefault();
+            props.setPage("page_profil");
+          }}
+        >
+          {props.auteur ? props.auteur : "auteur"}
+        </a>
         <p id="msg_contenu">{props.text ? props.text : "texte"}</p>
         <p id="msg_date">{props.date ? props.date : "date"}</p>
         <button

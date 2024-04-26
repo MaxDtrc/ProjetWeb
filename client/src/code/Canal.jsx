@@ -13,7 +13,17 @@ function Canal(props) {
         {props.titre ? props.titre : "titre"}
       </a>
       <div id="cnl_info">
-        <p id="cnl_auteur">{props.auteur ? props.auteur : "auteur"}</p>
+        <a
+          id="cnl_auteur"
+          href=""
+          onClick={(e) => {
+            e.preventDefault();
+            props.setIdProfil(props.id);
+            props.setPage("page_profil");
+          }}
+        >
+          {props.auteur ? props.auteur : "auteur"}
+        </a>
         <p id="cnl_date">{props.date ? props.date : "date"}</p>
       </div>
     </div>

@@ -11,6 +11,8 @@ function ListeCanaux(props) {
           date={cnl.date}
           id={cnl._id}
           openCanal={props.openCanal}
+          setPage={props.setPage}
+          setIdProfil={props.setIdProfil}
         />
       ))}
     </>

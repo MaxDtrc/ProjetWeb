@@ -37,7 +37,12 @@ function PageCanaux(props) {
   return (
     <div id="liste_canaux">
       <NouveauCanal userId={props.userId} update={update} />
-      <ListeCanaux lstCanaux={lstCanaux} openCanal={openCanal} />
+      <ListeCanaux
+        lstCanaux={lstCanaux}
+        openCanal={openCanal}
+        setPage={props.setPage}
+        setIdProfil={props.setIdProfil}
+      />
     </div>
   );
 }
