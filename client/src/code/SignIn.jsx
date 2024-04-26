@@ -17,12 +17,20 @@ function SignIn(props) {
   function Signin() {
     console.log("création du compte");
     axios
-      .post("/api/signin", { login: login, password: password })
+      .post("/api/signin", { login: login, password: password})
       .then((res) => {
+        console.log(res)
         if (res.data) {
-          props.login(res.data);
+          if(res.data.validation) //Utilisateur validé, on le connecte
+            props.login(res.data._id.toString(), res.data.admin); 
+          else{ //Utilisateur non validé, on le met sur la page d'attente
+            console.log("mise en attente")
+            props.setForm("en_attente");
+          }
         }
-      });
+      })
+      .catch((err) => console.log(err))
+      ;
   }
 
   return (
@@ -33,10 +41,10 @@ function SignIn(props) {
         <input id="login" onChange={(e) => setLogin(e.target.value)} />
         <br />
         <label id="passLabel">Mot de passe: </label>
-        <input id="pass" onChange={(e) => setPassword(e.target.value)} />
+        <input id="pass" type="password" onChange={(e) => setPassword(e.target.value)} />
         <br />
         <label id="cpassLabel">Confirmation: </label>
-        <input id="cpass" />
+        <input id="cpass" type="password"/>
         <br />
         <div hidden={true} id="mdpDif">
           Les mots de passe ne sont pas identiques

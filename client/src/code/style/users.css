@@ -51,11 +51,11 @@
 }
 
 #accept {
-  border: 1px solid #ffffff/*#00ff37*/;
+  border: 1px solid #00ff37;
 }
 
 #deny {
-  border: 1px solid #ffffff/*#ff1e1e*/;
+  border: 1px solid #ff1e1e;
 }
 
 #usr_repondre:hover{
@@ -71,11 +71,11 @@
 }
 
 #accept_icon {
-  filter: invert(100%);/*invert(71%) sepia(75%) saturate(2761%) hue-rotate(81deg) brightness(108%) contrast(117%)*/;
+  filter: invert(71%) sepia(75%) saturate(2761%) hue-rotate(81deg) brightness(108%) contrast(117%);
 }
 
 #deny_icon {
-  filter: invert(100%);/*invert(28%) sepia(55%) saturate(5771%) hue-rotate(348deg) brightness(97%) contrast(105%)*/;
+  filter: invert(28%) sepia(55%) saturate(5771%) hue-rotate(348deg) brightness(97%) contrast(105%);
 }
 
 

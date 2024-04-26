@@ -36,3 +36,9 @@
     margin-right: 10px;
     margin-left: 10px;
 }
+
+#header_validation {
+    grid-row-start: 1;
+    grid-column-start: 3;
+    margin: 10px
+}

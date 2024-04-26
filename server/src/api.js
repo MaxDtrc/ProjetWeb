@@ -18,68 +18,38 @@ function init(db) {
     });
 
 
-    router.get('/message/get', async (req, res) => {
-        await client.connect();
-        const bdd = await client.db("base1").collection("collec1");
-        const c = await bdd.findOne({
-            "auteur" : {$eq: 1704}
-        });
-
-        res.json(c);
-    })
-
-    router.post('/message/add', async (req, res) => {
-        await client.connect();
-        const bdd = await client.db("base1").collection("collec1");
-        
-        const msg = req.body;
-        await bdd.insertOne(msg);
-
-        res.send(true);
-    })
-
-
+    const users = new Users.default(db);
     router.post('/login', async (req, res) => {
-        const u = await db.collection("users");
+        const {login, password} = req.body;
 
-        const { login, password } = req.body;
-        console.log("login = " + login);
-
-        const c = await u.findOne({
-            "username": {$eq: login}
-        })
-
-        if(!c){
-            res.send(false);
-        }else{
-            if(c.password == password){
-                res.send(c._id.toString());
+        users.login(login, password).then((u => {
+            if(!u){
+                res.status(500).send("Utilisateur inexistant");
             }else{
-                res.send(null);
+                res.send(u)
             }
-        }
-    })
-
-    router.post('/signin', async (req, res) => {
-        const u = await db.collection("users");
-
-        const { login, password } = req.body;
-        console.log("login = " + login);
-
-        var c = await u.findOne({
-            "username": {$eq: login}
+        }))
+        .catch((err) => {
+            res.status(500).send("Erreur lors de la connexion")
         })
-
-        if(c){
-            res.send(null);
-        }else{
-            await u.insertOne({"username": login, "password": password})
-            c = await u.findOne({
-                "username": {$eq: login}
-            })
-            res.send(c._id.toString());
-        }
     })
+
+    router.post('/signin', (req, res) => {
+        const {login, password} = req.body;
+        console.log("api : création de l'utilisateur")
+        users.create(login, password)
+        .then((u) => {
+            if(!u){
+                res.status(500).send("Utilisateur inexistant");
+            }else{
+                res.send(u)
+            }
+        })
+        .catch((err) => {
+            res.status(500).send("Erreur lors de la connexion")
+        })
+    })
+
     
     const canaux = new Canaux.default(db);
 
@@ -120,18 +90,40 @@ function init(db) {
         }
     })
 
-    
+    router.route("/user/validation").get(async (req, res) => {
+        users.getLstEnAttente().then((lst) => {
+            res.send(lst);
+        })
+        .catch((err) => res.status(500).send(err));
+    })
+    router.route("/user/validation/:user_id").post(async (req, res) => {
+        users.accept(req.params.user_id).then((res) => {
+            res.send(true);
+        })
+        .catch(err => {
+            res.send(false);
+        })
+    })
 
-    const users = new Users.default(db);
-    router.route("/user/:user_id").get(async (req, res) => {
+    router.route("/user/:user_id")
+    .get(async (req, res) => {
         users.get(req.params.user_id) //Recherche de l'utilisateur
         .then((u) => {
             res.status(201).send(u)
         })
         .catch((err) => res.status(500).send(err));
     })
+    .delete(async (req, res) => {
+        console.log("suppression de " + req.params.user_id)
+        users.delete(req.params.user_id).then((res) => {
+            console.log("utilisateur supprimée")
+            res.send(true);
+        })
+        .catch(err => {
+            res.send(false);
+        })
+    })
 
-    
 
     return router;
 }

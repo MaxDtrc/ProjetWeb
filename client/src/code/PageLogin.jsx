@@ -13,10 +13,16 @@ function PageLogin(props){
                 <Login login={props.login} setForm={setFormulaire}/>
             </div>
         )
-    }else{
+    }else if(formulaire == "signin"){
         return (
             <div id="login_page">
                 <SignIn login={props.login} setForm={setFormulaire}/>
+            </div>
+        )
+    }else{
+        return (
+            <div id="signin_form">
+                <p>attends frérot</p>
             </div>
         )
     }

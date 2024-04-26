@@ -12,9 +12,15 @@ function PageFilDiscussion(props) {
     const canal = await axios.get("/api/canal/" + props.idCanal); // On récupère le canal
     const lst = canal.data.liste_messages; // On récupère la liste des messages du canal
     for (var i = 0; i < lst.length; i++) {
-      const auteur = await axios.get("/api/user/" + lst[i].auteur);
-      const pseudo = auteur.data.username;
-      lst[i].auteur = pseudo;
+      try {
+        const auteur = await axios.get("/api/user/" + lst[i].auteur);
+        const pseudo = auteur.data.username;
+        lst[i].auteur = pseudo;
+      }
+      catch(e){
+        lst[i].auteur = "<Deleted User>"
+      }
+      
     }
     setLstMessages(lst);
   }

@@ -10,8 +10,14 @@ function Login(props) {
     axios
       .post("/api/login", { login: login, password: password })
       .then((res) => {
+        console.log(res.data)
         if (res.data) {
-          props.login(res.data);
+          if(res.data.validation) //Utilisateur validé, on le connecte
+            props.login(res.data._id.toString(), res.data.admin); 
+          else{ //Utilisateur non validé, on le met sur la page d'attente
+            console.log("mise en attente")
+            props.setForm("en_attente");
+          }
         }
       });
   }
@@ -28,7 +34,7 @@ function Login(props) {
         <label id="passLabel" htmlFor="pass">
           Mot de passe:{" "}
         </label>
-        <input id="pass" onChange={(e) => setPassword(e.target.value)} />
+        <input id="pass" type="password" onChange={(e) => setPassword(e.target.value)} />
         <br />
         <button
           id="confirmLogin"

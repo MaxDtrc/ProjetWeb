@@ -13,6 +13,7 @@ function Header(props) {
             <p id="header_title">MomoAsso</p>
             <img id="header_logo" src={momo} />
             <input id="header_search_bar" placeholder='nv msg'/>
+            {props.isAdmin ? <button id="header_validation" onClick={(e) => {e.preventDefault(); props.setPage("page_validation")}}>Page validation</button> : null}
             <button id="header_logout" onClick={logout}>Deconnexion</button>
         </div>
     )

@@ -10,12 +10,12 @@ function Utilisateur(props) {
       <p id="usr_name">{props.username ? props.username : "nom"}</p>
       <button
         id="accept"
-        title="Répondre"
-        onClick={(e) => console.log("reply")}
+        title="Accepter"
+        onClick={(e) => {e.preventDefault(); props.accept(props.id)}}
       >
         <img id="accept_icon" src={check} />
       </button>
-      <button id="deny" title="Répondre" onClick={(e) => console.log("reply")}>
+      <button id="deny" title="Refuser" onClick={(e) => {e.preventDefault(); props.deny(props.id)}}>
         <img id="deny_icon" src={cross} />
       </button>
       <p id="usr_date">{props.date ? props.date : "date"}</p>

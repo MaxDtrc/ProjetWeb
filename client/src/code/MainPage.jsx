@@ -6,24 +6,23 @@ import PageCanaux from "./PageCanaux";
 import PageValidation from "./PageValidation";
 
 function MainPage(props) {
-  const [currentPage, setPage] = useState("page_utilisateurs");
   const [idCanal, setIdCanal] = useState(0);
 
-  switch (currentPage) {
+  switch (props.currentPage) {
     case "fil_discussion":
       return (
         <main id="main_page">
           <PageFilDiscussion
             userId={props.userId}
-            setPage={setPage}
+            setPage={props.setPage}
             idCanal={idCanal}
           />
         </main>
       );
-    case "page_utilisateurs":
+    case "page_validation":
       return (
         <main id="main_page">
-          <PageValidation />
+          <PageValidation setPage={props.setPage}/>
         </main>
       );
     default:
@@ -31,7 +30,7 @@ function MainPage(props) {
         <main id="main_page">
           <PageCanaux
             userId={props.userId}
-            setPage={setPage}
+            setPage={props.setPage}
             setIdCanal={setIdCanal}
           />
         </main>

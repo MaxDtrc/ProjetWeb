@@ -8,72 +8,119 @@ class Users {
     this.db = db
   }
 
-  create(username, password, lastname, firstname) {
+  create(username, password) {
     return new Promise((resolve, reject) => {
-      const user = this.db.collection("users").findOne({
+      this.db.collection("users").findOne({
         "username": {$eq: username}
       })
-
-      if(u) {
-        console.log("L'utilisateur existe déjà")
-        reject();
-      } else {
-        //Ajout de l'utilisateur à la DB
-        this.db.collection("users").insertOne({
-          "username": username,
-          "password": password,
-          "lastname": lastname,
-          "firstname": firstname
-        })
-
-        //On récupère l'identifiant pour le renvoyer
-        const user = this.db.collection.findOne({
-          "username": {$eq: username}
-        })
-
-        resolve(user._id);
-      }
+      .then((user) => {
+        if(user){
+          console.log("L'utilisateur existe déjà")
+          reject();
+        }else{
+          //Ajout de l'utilisateur à la DB
+          this.db.collection("users").insertOne({
+            "username": username,
+            "password": password,
+            "admin": false,
+            "validation": false,
+            "date": "2002"
+          }).then((u) => {
+            resolve(u.insertedId.toString());
+          })
+        }
+        
+      })
+      .catch((err) => {
+        console.log("erreur dans le finbd")
+        reject(err);
+      })
     });
   }
 
   get(id_user) {
     return new Promise((resolve, reject) => {
+      console.log("obtention de l'utilisateur " + id_user)
       this.db.collection("users").findOne({
         _id : new BSON.ObjectId(id_user)
       })
       .then(res => {
-        console.log("res =" + res)
+        console.log(res)
         if(!res)
           reject()
         else
           resolve(res)
       })
+      .catch(err => {
+        reject()
+      })
     });
   }
 
-  async exists(login) {
-    const c = await db.collection("collec1").findOne( login )
+
+  login(login, password) {
     return new Promise((resolve, reject) => {
-      if(c) {
-        //erreur
-        reject();
-      } else {
-        resolve(true);
-      }
+      this.db.collection("users").findOne({
+        username : login,
+        password : password
+      })
+      .then(res => {
+        if(!res)
+          reject()
+        else
+          resolve(res)
+      })
+      .catch(err => {
+        reject()
+      })
     });
   }
 
-  checkpassword(login, password) {
+  accept(id_user){
     return new Promise((resolve, reject) => {
-      let userid = 1; // À remplacer par une requête bd
-      if(false) {
-        //erreur
-        reject();
-      } else {
-        resolve(userid);
-      }
+      this.db.collection("users").updateOne({
+        _id : new BSON.ObjectId(id_user)
+      }, {
+        $set : {"validation": true} //Update
+      })
+      .then(res => {
+        resolve(true)
+      })
+      .catch(err => {
+        reject()
+      })
     });
   }
+
+  delete(id_user){
+    return new Promise((resolve, reject) => {
+      this.db.collection("users").deleteOne({
+        _id : new BSON.ObjectId(id_user)
+      })
+      .then(res => {
+        resolve(res)
+      })
+      .catch(err => {
+        reject()
+      })
+    });
+  }
+
+  getLstEnAttente(){
+    return new Promise((resolve, reject) => {
+      const u = this.db.collection("users").find({
+        validation: {$eq: false}
+      })
+      if(u)
+        resolve(u.toArray())
+      else
+        reject()
+    });
+  }
+
+  
+
+
 
 }
 

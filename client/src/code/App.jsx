@@ -11,13 +11,16 @@ import PageLogin from "./PageLogin";
 function App() {
   const [isConnected, setConnection] = useState(false);
   const [connectedUser, setConnectedUser] = useState("null");
+  const [adminStatus, setAdminStatus] = useState(false)
+  const [currentPage, setPage] = useState("page_canaux");
 
   if (!isConnected) {
     return (
       <div>
         <PageLogin
-          login={(userId) => {
+          login={(userId, isAdmin) => {
             setConnectedUser(userId);
+            setAdminStatus(isAdmin);
             setConnection(true);
           }}
         />
@@ -26,12 +29,14 @@ function App() {
   } else {
     return (
       <div id="app">
-        <Header setConnection={setConnection} />
+        <Header setConnection={setConnection} setPage={setPage} isAdmin={adminStatus} />
         <LeftSide />
         <MainPage
           userId={connectedUser}
           isConnected={isConnected}
           setConnection={setConnection}
+          setPage={setPage}
+          currentPage={currentPage}
         />
 
         {/* Footer */}
