@@ -90,6 +90,15 @@ function init(db) {
         }
     })
 
+    router.route("/user")
+    .get(async (req, res) => {
+        users.getAll()
+        .then((u) => {
+            res.status(201).send(u)
+        })
+        .catch((err) => res.status(500).send("Erreur dans l'obtention des utilisateurs"));
+    })
+
     router.route("/user/validation").get(async (req, res) => {
         users.getLstEnAttente().then((lst) => {
             res.send(lst);

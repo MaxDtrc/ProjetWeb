@@ -57,6 +57,16 @@ class Users {
     });
   }
 
+  getAll(){
+    return new Promise((resolve, reject) => {
+      const u = this.db.collection("users").find()
+      if(u)
+        resolve(u.toArray())
+      else
+        reject()
+    });
+  }
+
 
   login(login, password) {
     return new Promise((resolve, reject) => {
