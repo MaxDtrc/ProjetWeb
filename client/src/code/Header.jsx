@@ -15,11 +15,12 @@ function Header(props) {
       props.setPage("page_canaux");
     }
   }
+  /*<img id="header_logo" src={momo} />*/
 
   return (
     <div id="header">
-      <p id="header_title">MomoAsso</p>
-      <img id="header_logo" src={momo} />
+      <p id="header_title">Association de Ski franco-marocaine</p>
+
       <input
         id="header_search_bar"
         onChange={searchMessage}

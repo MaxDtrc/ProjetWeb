@@ -9,34 +9,33 @@ html,body {
     height: 100vh;
 }
 
-#signin_form {
+#signin_form, #login_form {
     margin: auto;
-    background-color: rgb(255, 194, 254);
     width: 400px;
     height: 260px;
     display: grid;
     align-items: center;
 
-    grid-template-columns: 10% 40% 40% 10%;
-    grid-template-rows: 20% 15% 15% 15% 15% 20%;
+    background-color: transparent;
+  
+    border: 1px solid white;
+    border-radius: 10px;
 
-    border-radius: 15px;
     padding:10px;
 }
 
-#login_form {
-    margin: auto;
-    background-color: rgb(255, 194, 254);
-    width: 400px;
-    height: 260px;
-    display: grid;
-    align-items: center;
+#passLabel, #cpassLabel, #loginLabel, #title, #changeFormSignin, #changeFormLogin {
+    color: white;
+}
 
+#signin_form {
+    grid-template-columns: 10% 40% 40% 10%;
+    grid-template-rows: 20% 15% 15% 15% 15% 20%;
+}
+
+#login_form {
     grid-template-columns: 10% 40% 40% 10%;
     grid-template-rows: 20% 20% 20% 20% 20%;
-
-    border-radius: 15px;
-    padding:10px;
 }
 
 #title {

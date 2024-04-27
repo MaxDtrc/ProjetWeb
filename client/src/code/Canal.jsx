@@ -1,10 +1,18 @@
 import { useState } from "react";
 import "./style/canal.css";
+import formaterDate from "./utils";
 
 function Canal(props) {
   function clickCanal(e) {
     e.preventDefault();
     props.openCanal(props.id);
+  }
+
+  var date = "";
+  if (props.date) {
+    date = formaterDate(props.date);
+  } else {
+    date = "date";
   }
 
   return (
@@ -24,7 +32,7 @@ function Canal(props) {
         >
           {props.auteur ? props.auteur : "auteur"}
         </a>
-        <p id="cnl_date">{props.date ? props.date : "date"}</p>
+        <p id="cnl_date">{date}</p>
       </div>
     </div>
   );

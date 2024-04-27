@@ -1,11 +1,15 @@
 #cnl {
-  background-color: pink;
+  /*background-color: pink;*/
   margin-bottom: 10px;
   border-radius: 10px;
 
   display:grid;
   grid-template-columns: [left] auto [right] 150px;
   height: 50px;
+
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 10px;
 }
 
 #cnl_info {
@@ -17,7 +21,7 @@
 #cnl_titre {
   padding-left: 20px;
   padding-right: 20px;
-  color: maroon;
+  color: white;
   text-justify: auto;
   grid-column: left;
   margin-top: 15px
@@ -29,7 +33,7 @@
 }
 
 #cnl_auteur {
-  color:red;
+  color:cyan;
   margin-bottom: -15px;
   margin-top: 7px;
 }

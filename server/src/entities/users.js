@@ -24,7 +24,7 @@ class Users {
             "password": password,
             "admin": false,
             "validation": false,
-            "date": "2002"
+            "date": new Date()
           }).then((u) => {
             resolve(u.insertedId.toString());
           })
