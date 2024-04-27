@@ -32,11 +32,13 @@ function LeftSide() {
     //Ajout des infos
     var indexUsers = 0
     var indexCanaux = 0;
-    for (var i = 0; i < 5 && (indexUsers < users.length || indexCanaux < canaux.length); i++) {
+    while(listeInfos.length<5 && (indexUsers < users.length || indexCanaux < canaux.length)) {
       if (indexCanaux >= canaux.length || users[indexUsers].date > canaux[indexCanaux].date) {
         const u = users[indexUsers];
-        listeInfos.push({text: u.username + " a rejoint l'association !", date: u.date});
-        indexUsers++;
+        if(u.validation){
+          listeInfos.push({text: u.username + " a rejoint l'association !", date: u.date});
+        }   
+        indexUsers++; 
       } else {
         const c = canaux[indexCanaux];
         var name = (await axios.get("/api/user/" + c.id_auteur.toString())).data.username;

@@ -91,7 +91,7 @@ class Users {
       this.db.collection("users").updateOne({
         _id : new BSON.ObjectId(id_user)
       }, {
-        $set : {"validation": true} //Update
+        $set : {"validation": true, "date": new Date()} //Update
       })
       .then(res => {
         resolve(true)
