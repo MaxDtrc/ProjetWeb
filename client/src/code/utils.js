@@ -1,4 +1,7 @@
-function formaterDate(date) {
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:4000";
+
+export function formaterDate(date) {
   var dateMessage = new Date(date);
   var jour = dateMessage.getDate();
   var jourFormatte = jour < 10 ? "0" + jour : jour;
@@ -22,4 +25,13 @@ function formaterDate(date) {
   return date;
 }
 
-export default formaterDate;
+export async function idToName(id){
+  try {
+    const auteur = await axios.get("/api/user/" + id);
+    const pseudo = auteur.data.username;
+    return pseudo;
+  } catch (e) {
+    return "<Deleted User>";
+  }
+}
+

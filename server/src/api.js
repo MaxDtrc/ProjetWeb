@@ -79,11 +79,13 @@ function init(db) {
         .then((c) => res.status(201).send(c)) //TODO changer status
         .catch((err) => res.status(500).send(err));
     }).put(async (req, res) => {
-        const {text, id_auteur} = req.body;
+        const {text, id_auteur, reply_auteur, reply_message} = req.body;
+        console.log(reply_auteur, reply_message)
         if (!id_auteur || !text) {
             res.status(400).send("Champs manquants");
         } else {
-            canaux.addMessage(text, id_auteur, req.params.canal_id)
+            console.log("on ajoute")
+            canaux.addMessage(text, id_auteur, reply_auteur, reply_message, req.params.canal_id)
             .then(() => {res.status(201).send(true)})
             .catch((err) => {res.status(500).send(err)});
             

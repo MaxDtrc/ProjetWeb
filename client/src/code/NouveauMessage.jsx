@@ -1,20 +1,32 @@
-import { useState } from 'react';
-import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:4000';
+import { useState } from "react";
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:4000";
 
 function NouveauMessage(props) {
-    const [newMessage, setNewMessage] = useState("") 
+  const [newMessage, setNewMessage] = useState("");
 
-    const buttonEvt = (e) => {
-      props.ajouterMessage(newMessage);
-    }
+  const buttonEvt = (e) => {
+    props.ajouterMessage(newMessage);
+  };
 
-    return (
-      <>
-        <input onChange={(e) => setNewMessage(e.target.value)} id="nv_msg"/>
-        <button onClick={buttonEvt}>Envoyer</button> 
-      </>
-    )
-  }
+  return (
+    <>
+      <input onChange={(e) => setNewMessage(e.target.value)} id="nv_msg" />
+      <button onClick={buttonEvt}>Envoyer</button>
+      {props.replyMessage.length > 0 ? (
+        <>
+          <p>En réponse à {props.replyAuteur}</p>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              props.setReplyAuteur("");
+              props.setReplyMessage("");
+            }}
+          >Annuler</button>
+        </>
+      ) : null}
+    </>
+  );
+}
 
-export default NouveauMessage
+export default NouveauMessage;

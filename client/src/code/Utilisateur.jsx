@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./style/users.css";
-import formaterDate from "./utils";
+import {formaterDate} from "./utils";
 import check from "../assets/check.png";
 import cross from "../assets/cross.png";
 

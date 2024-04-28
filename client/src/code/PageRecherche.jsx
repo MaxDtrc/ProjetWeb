@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ListeMessages from "./ListeMessages";
 import NouveauMessage from "./NouveauMessage";
+import {idToName} from "./utils.js"
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:4000";
@@ -24,13 +25,13 @@ function PageRecherche(props) {
       for (var j = 0; j < canaux[i].liste_messages.length; j++) {
         var msg = canaux[i].liste_messages[j];
         if (msg.text.includes(props.recherche)) {
-          try {
-            const auteur = await axios.get("/api/user/" + msg.auteur);
-            const pseudo =
-              auteur.data.username + " dans le canal " + canaux[i].titre;
-            msg.auteur = pseudo;
-          } catch (e) {
-            msg.auteur = "<Deleted User>";
+          msg.id_auteur = msg.auteur; //On copie l'id de l'auteur
+          msg.auteur = await idToName(msg.auteur);
+          msg.auteur = msg.auteur + " dans le canal " + canaux[i].titre;
+          if(!msg.reply_auteur || !msg.reply_message){
+            msg.reply_auteur = ""; msg.reply_message = "";
+          }else{
+            msg.reply_auteur = await idToName(msg.reply_auteur)
           }
           lst.push(msg);
         }
@@ -62,7 +63,7 @@ function PageRecherche(props) {
     <>
       <div id="fil_discussion">
         {lstMessages.length > 0 ? (
-          <ListeMessages lstMessages={lstMessages} />
+          <ListeMessages lstMessages={lstMessages} reply={false} />
         ) : (
           <p>Aucun message trouvé</p>
         )}

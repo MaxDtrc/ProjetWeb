@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./style/canal.css";
-import formaterDate from "./utils";
+import {formaterDate} from "./utils";
 
 function Canal(props) {
   function clickCanal(e) {

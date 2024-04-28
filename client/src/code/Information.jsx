@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./style/informations.css";
-import formaterDate from "./utils";
+import {formaterDate} from "./utils";
 import def from "../assets/default.png";
 import reply from "../assets/reply.png";
 
