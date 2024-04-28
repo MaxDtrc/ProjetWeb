@@ -1,0 +1,19 @@
+body {
+    color: white;
+}
+
+#profile_photo {
+    height: 100px;
+    width: 100px;
+}
+
+#profile_username {
+}
+
+#profile_note {
+    
+}
+
+#user {
+    border-bottom: 1px solid white;
+}

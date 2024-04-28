@@ -16,6 +16,7 @@ function ListeMessages(props) {
           setReplyAuteur={props.setReplyAuteur}
           setReplyMessage={props.setReplyMessage}
           reply={props.reply}
+          setIdProfil={props.setIdProfil}
         />
       ))}
     </>

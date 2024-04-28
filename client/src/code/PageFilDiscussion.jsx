@@ -76,6 +76,7 @@ function PageFilDiscussion(props) {
             lstMessages={lstMessages}
             setReplyAuteur={setReplyAuteur}
             setReplyMessage={setReplyMessage}
+            setIdProfil={props.setIdProfil}
             reply={true}
           />
         ) : (

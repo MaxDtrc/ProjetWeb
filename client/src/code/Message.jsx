@@ -21,6 +21,7 @@ function Message(props) {
           href=""
           onClick={(e) => {
             e.preventDefault();
+            props.setIdProfil(props.id_auteur)
             props.setPage("page_profil");
           }}
         >
@@ -28,7 +29,8 @@ function Message(props) {
         </a>
         { props.reply_auteur && props.reply_message.length > 0 ?
           <div id="msg_reply_box">
-            <p id="msg_reply_author">{props.reply_auteur}</p>
+            <img id="reply_icon_box" src={reply} />
+            <p id="msg_reply_author"><span id="auteur">{props.reply_auteur}</span> à écrit:</p>
             <p id="msg_reply">{props.reply_message}</p>
           </div> : null
         }

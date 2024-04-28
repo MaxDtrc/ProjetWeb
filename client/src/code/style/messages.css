@@ -48,8 +48,17 @@
   grid-template-rows: auto auto;
 }
 
-#msg_reply_author {
+#msg_reply_author #auteur {
   color: rgb(255, 52, 52);
+  margin-left: 15px;
+  margin-bottom: -5px;
+  margin-top: 5px;
+  text-justify: auto;
+  grid-row: 1;
+}
+
+#msg_reply_author {
+  color: white;
   margin-left: 8px;
   margin-bottom: -5px;
   margin-top: 5px;
@@ -64,6 +73,15 @@
   margin-left: 8px;
   text-justify: auto;
   grid-row: 2;
+}
+
+#reply_icon_box {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin-top: 7px;
+  margin-left: 5px;
+  
 }
 
 #msg_photo {

@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import PageLogin from "./PageLogin";
 import PageFilDiscussion from "./PageFilDiscussion";
 import PageCanaux from "./PageCanaux";
 import PageValidation from "./PageValidation";
@@ -47,7 +46,7 @@ function MainPage(props) {
     case "page_profil":
       return (
         <main id="main_page">
-          <PageProfil setPage={props.setPage} />
+          <PageProfil setPage={props.setPage} idProfil={props.idProfil}/>
         </main>
       );
     default:

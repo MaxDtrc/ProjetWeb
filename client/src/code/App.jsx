@@ -49,6 +49,7 @@ function App() {
           currentPage={currentPage}
           recherche={recherche}
           setIdProfil={setIdProfil}
+          idProfil={idProfil}
         />
 
         {/* Footer */}
