@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ListeMessages from "./ListeMessages";
 import NouveauMessage from "./NouveauMessage";
-import {idToName} from "./utils.js"
+import {idToName, nameToId} from "./utils.js"
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:4000";
@@ -21,10 +21,16 @@ function PageRecherche(props) {
       canaux = (await axios.get("/api/canal/")).data; // On récupère tous les canaux
     }
 
+    var idSearchedUser = ""; //Nom de l'utilisateur recherché
+    if(props.recherche[0] == "@"){
+      idSearchedUser = await nameToId(props.recherche.substring(1));
+    }
+
     for (var i = 0; i < canaux.length; i++) {
       for (var j = 0; j < canaux[i].liste_messages.length; j++) {
         var msg = canaux[i].liste_messages[j];
-        if (msg.text.includes(props.recherche)) {
+
+        if ((props.recherche[0] != "@" && msg.text.includes(props.recherche)) || (props.recherche[0] == "@" && msg.auteur == idSearchedUser)) {
           msg.id_auteur = msg.auteur; //On copie l'id de l'auteur
           msg.auteur = await idToName(msg.auteur);
           msg.auteur = msg.auteur + " dans le canal " + canaux[i].titre;

@@ -35,3 +35,16 @@ export async function idToName(id){
   }
 }
 
+export async function nameToId(name){
+  try {
+    const utilisateurs = (await axios.get("/api/user/")).data;
+    for(var i = 0; i < utilisateurs.length; i++){
+      if(utilisateurs[i].username == name){
+        return utilisateurs[i]._id.toString();
+      }
+    }
+    return ""
+  } catch (e) {
+    return "";
+  }
+}
