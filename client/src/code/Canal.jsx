@@ -8,12 +8,7 @@ function Canal(props) {
     props.openCanal(props.id);
   }
 
-  var date = "";
-  if (props.date) {
-    date = formaterDate(props.date);
-  } else {
-    date = "date";
-  }
+  var date = props.date ? formaterDate(props.date) : "datenotfound";
 
   return (
     <div id="cnl">
@@ -26,7 +21,7 @@ function Canal(props) {
           href=""
           onClick={(e) => {
             e.preventDefault();
-            props.setIdProfil(props.id);
+            props.setIdProfil(props.id_auteur);
             props.setPage("page_profil");
           }}
         >

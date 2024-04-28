@@ -4,18 +4,21 @@ import { idToName } from "./utils";
 axios.defaults.baseURL = "http://localhost:4000";
 import ListeMessages from "./ListeMessages";
 import def from "../assets/default.png";
+import { formaterDate } from "./utils";
+import modifier from "../assets/modifier.png"
 
 import "./style/profil.css"
 
 function PageProfil(props) {
 
-  const[username, setUsername] = useState("")
+  const[userData, setUserData] = useState(null)
 
   async function infoUser(){
-    setUsername(await idToName(props.idProfil))
+    const user = (await axios.get("/api/user/" + props.idProfil)).data
+    setUserData({username : user.username, date : formaterDate(user.date)})
   }
 
-  if(username.length == 0){
+  if(userData == null){
     infoUser();
   }
   return (
@@ -36,13 +39,14 @@ function PageProfil(props) {
 
       <div id="user">
       <img id="profile_photo" src={def} />
-      <p id="profile_username">{username}</p>
-      <p id="date"></p>
+      <p id="profile_username">{userData ? userData.username : "auteurnotfound"} ADMIN </p>
+      <p id="date">joined date : {userData ? userData.date : "datenotfound"}</p>
       </div>
 
 
       <p>Note de l'utilisateur</p>
       <p id="profile_note">Salam les amis</p>
+      <img id="modif_icon" src={modifier}></img>
 
 
       <p>Messages envoyés par l'utilisateur : 6</p>
