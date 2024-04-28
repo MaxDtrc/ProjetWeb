@@ -1,142 +1,183 @@
 const express = require("express");
-const session = require('express-session');
+const session = require("express-session");
 const Users = require("./entities/users.js");
 const Canaux = require("./entities/canaux.js");
 
-
-
 function init(db) {
-    const router = express.Router();
+  const router = express.Router();
 
-    // On utilise JSON
-    router.use(express.json());
+  // On utilise JSON
+  router.use(express.json());
 
-    router.use((req, res, next) => {
-        console.log('API: method %s, path %s', req.method, req.path);
-        console.log('Body', req.body);
-        next();
+  router.use((req, res, next) => {
+    console.log("API: method %s, path %s", req.method, req.path);
+    console.log("Body", req.body);
+    next();
+  });
+
+  const users = new Users.default(db);
+  router.post("/login", async (req, res) => {
+    const { login, password } = req.body;
+
+    users
+      .login(login, password)
+      .then((u) => {
+        if (!u) {
+          res.status(500).send("Utilisateur inexistant");
+        } else {
+          res.send(u);
+        }
+      })
+      .catch((err) => {
+        res.status(500).send("Erreur lors de la connexion");
+      });
+  });
+
+  router.post("/signin", (req, res) => {
+    const { login, password } = req.body;
+    console.log("api : création de l'utilisateur");
+    users
+      .create(login, password)
+      .then((u) => {
+        if (!u) {
+          res.status(500).send("Utilisateur inexistant");
+        } else {
+          res.send(u);
+        }
+      })
+      .catch((err) => {
+        res.status(500).send("Erreur lors de la connexion");
+      });
+  });
+
+  const canaux = new Canaux.default(db);
+
+  router
+    .route("/canal")
+    .put((req, res) => {
+      const { id_auteur, titre } = req.body;
+      if (!id_auteur || !titre) {
+        res.status(400).send("Champs manquants");
+      } else {
+        canaux
+          .create(id_auteur, titre)
+          .then(() => res.status(201).send(true))
+          .catch((err) => res.status(500).send(err));
+      }
+    })
+    .get(async (req, res) => {
+      canaux
+        .getAll()
+        .then((c) => {
+          res.status(201).send(c);
+        })
+        .catch((err) => res.status(500).send(err));
     });
 
-
-    const users = new Users.default(db);
-    router.post('/login', async (req, res) => {
-        const {login, password} = req.body;
-
-        users.login(login, password).then((u => {
-            if(!u){
-                res.status(500).send("Utilisateur inexistant");
-            }else{
-                res.send(u)
-            }
-        }))
-        .catch((err) => {
-            res.status(500).send("Erreur lors de la connexion")
-        })
-    })
-
-    router.post('/signin', (req, res) => {
-        const {login, password} = req.body;
-        console.log("api : création de l'utilisateur")
-        users.create(login, password)
-        .then((u) => {
-            if(!u){
-                res.status(500).send("Utilisateur inexistant");
-            }else{
-                res.send(u)
-            }
-        })
-        .catch((err) => {
-            res.status(500).send("Erreur lors de la connexion")
-        })
-    })
-
-    
-    const canaux = new Canaux.default(db);
-
-
-    
-    router.route("/canal")
-    .put((req, res) => {
-        const {id_auteur, titre} = req.body;
-        if (!id_auteur || !titre) {
-            res.status(400).send("Champs manquants");
-        }else{
-            canaux.create(id_auteur, titre)
-            .then(() => res.status(201).send(true))
-            .catch((err) => res.status(500).send(err));
-        }
-    })
+  router
+    .route("/canal/:canal_id")
     .get(async (req, res) => {
-        canaux.getAll()
-        .then((c) => {
-            res.status(201).send(c)
-        })
-        .catch((err) => res.status(500).send(err));
-    })
-
-    router.route("/canal/:canal_id").get(async (req, res) => {
-        canaux.get(req.params.canal_id)
+      canaux
+        .get(req.params.canal_id)
         .then((c) => res.status(201).send(c)) //TODO changer status
         .catch((err) => res.status(500).send(err));
-    }).put(async (req, res) => {
-        const {text, id_auteur, reply_auteur, reply_message} = req.body;
-        console.log(reply_auteur, reply_message)
-        if (!id_auteur || !text) {
-            res.status(400).send("Champs manquants");
-        } else {
-            console.log("on ajoute")
-            canaux.addMessage(text, id_auteur, reply_auteur, reply_message, req.params.canal_id)
-            .then(() => {res.status(201).send(true)})
-            .catch((err) => {res.status(500).send(err)});
-            
+    })
+    .put(async (req, res) => {
+      const { text, id_auteur, reply_auteur, reply_message } = req.body;
+      console.log(reply_auteur, reply_message);
+      if (!id_auteur || !text) {
+        res.status(400).send("Champs manquants");
+      } else {
+        canaux
+          .addMessage(
+            text,
+            id_auteur,
+            reply_auteur,
+            reply_message,
+            req.params.canal_id
+          )
+          .then(() => {
+            res.status(201).send(true);
+          })
+          .catch((err) => {
+            res.status(500).send(err);
+          });
+      }
+    });
+
+  router.route("/user").get(async (req, res) => {
+    users
+      .getAll()
+      .then((u) => {
+        res.status(201).send(u);
+      })
+      .catch((err) =>
+        res.status(500).send("Erreur dans l'obtention des utilisateurs")
+      );
+  });
+
+  router.route("/user/validation").get(async (req, res) => {
+    users
+      .getLstEnAttente()
+      .then((lst) => {
+        res.send(lst);
+      })
+      .catch((err) => res.status(500).send(err));
+  });
+  router.route("/user/validation/:user_id").post(async (req, res) => {
+    users
+      .accept(req.params.user_id)
+      .then((res) => {
+        res.send(true);
+      })
+      .catch((err) => {
+        res.send(false);
+      });
+  });
+
+  /* 
+  router.route("/user/message/:user_id").get((req, res) => {
+    canaux.getAll().then((canaux) => {
+        lst = []
+        for(var i = 0; i < canaux.length; i++){
+            const c = canaux[i];
+            for(var j = 0; j < c.liste_messages.length; c++){
+                if(c[j].auteur == req.params.user_id){
+                    lst.push(c[j]);
+                }
+            }
         }
-    })
+        res.send(lst);
+    }).catch(err => {
+        console.log(err);
+        res.status(500).send("Problème dans l'obtention des messages de l'utilisateur")
+    });
+  });
+  */
 
-    router.route("/user")
+  router
+    .route("/user/:user_id")
     .get(async (req, res) => {
-        users.getAll()
+      users
+        .get(req.params.user_id) //Recherche de l'utilisateur
         .then((u) => {
-            res.status(201).send(u)
-        })
-        .catch((err) => res.status(500).send("Erreur dans l'obtention des utilisateurs"));
-    })
-
-    router.route("/user/validation").get(async (req, res) => {
-        users.getLstEnAttente().then((lst) => {
-            res.send(lst);
-        })
-        .catch((err) => res.status(500).send(err));
-    })
-    router.route("/user/validation/:user_id").post(async (req, res) => {
-        users.accept(req.params.user_id).then((res) => {
-            res.send(true);
-        })
-        .catch(err => {
-            res.send(false);
-        })
-    })
-
-    router.route("/user/:user_id")
-    .get(async (req, res) => {
-        users.get(req.params.user_id) //Recherche de l'utilisateur
-        .then((u) => {
-            res.status(201).send(u)
+          res.status(201).send(u);
         })
         .catch((err) => res.status(500).send(err));
     })
     .delete(async (req, res) => {
-        console.log("suppression de " + req.params.user_id)
-        users.delete(req.params.user_id).then((res) => {
-            console.log("utilisateur supprimée")
-            res.send(true);
+      console.log("suppression de " + req.params.user_id);
+      users
+        .delete(req.params.user_id)
+        .then((res) => {
+          console.log("utilisateur supprimée");
+          res.send(true);
         })
-        .catch(err => {
-            res.send(false);
-        })
-    })
+        .catch((err) => {
+          res.send(false);
+        });
+    });
 
-
-    return router;
+  return router;
 }
 exports.default = init;
-
