@@ -3,6 +3,7 @@ import momo from "../assets/momo.png";
 import "./style/header.css";
 
 function Header(props) {
+
   const logout = () => {
     props.setConnection(false);
   };
@@ -26,6 +27,7 @@ function Header(props) {
         onChange={searchMessage}
         placeholder="Chercher un message ..."
       />
+
       {props.isAdmin ? (
         <button
           id="header_validation"

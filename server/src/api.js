@@ -135,6 +135,16 @@ function init(db) {
       });
   });
 
+  router.route("/user/status/:user_id").post(async (req, res)=> {
+    users.changeStatus(req.params.user_id, req.body.status)
+    .then((res) => {
+      res.send(true);
+    })
+    .catch((err)=>{
+      res.send(false);
+    });
+  });
+
   /* 
   router.route("/user/message/:user_id").get((req, res) => {
     canaux.getAll().then((canaux) => {

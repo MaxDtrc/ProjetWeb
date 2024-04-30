@@ -79,7 +79,7 @@
   position: absolute;
   width: 14px;
   height: 14px;
-  margin-top: 7px;
+  margin-top: 2px;
   margin-left: 5px;
   
 }
@@ -127,6 +127,7 @@
 
 #msg_repondre:hover {
   border-color: #5cb3ff;
+  color: #5cb3ff;
 }
 
 #reply_icon {
@@ -135,7 +136,9 @@
   height: 15px;
   top: 15%;
   left: 15%;
+  color:white;
 }
+
 
 #list_msg {
   display: flex;

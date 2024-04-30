@@ -24,7 +24,8 @@ class Users {
             "password": password,
             "admin": false,
             "validation": false,
-            "date": new Date()
+            "date": new Date(),
+            "status": ""
           }).then((u) => {
             resolve(u.insertedId.toString());
           })
@@ -102,6 +103,22 @@ class Users {
     });
   }
 
+  changeStatus(id_user, status){
+    return new Promise((resolve, reject) => {
+      this.db.collection("users").updateOne({
+        _id : new BSON.ObjectId(id_user)
+      }, {
+        $set : {"status" : status}
+      })
+      .then(res=>{
+        resolve(true)
+      })
+      .catch(err => {
+        reject()
+      })
+    });
+  }
+
   delete(id_user){
     return new Promise((resolve, reject) => {
       this.db.collection("users").deleteOne({
@@ -127,11 +144,6 @@ class Users {
         reject()
     });
   }
-
-  
-
-
-
 }
 
 exports.default = Users;
