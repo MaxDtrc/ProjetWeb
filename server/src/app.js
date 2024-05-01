@@ -11,6 +11,10 @@ const db = client.db("organizasso")
 express = require('express');
 const app = express()
 
+//Cookie Parser
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+
 //Path - Détermine le répertoire de base
 const path = require('path');
 const basedir = path.normalize(path.dirname(__dirname));
