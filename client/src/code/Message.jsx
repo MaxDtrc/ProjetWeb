@@ -28,7 +28,7 @@ function Message(props) {
         </a>
         { props.reply_auteur && props.reply_message.length > 0 ?
           <div id="msg_reply_box">
-            <i id="reply_icon_box" class="bi bi-reply"></i>
+            <i id="reply_icon_box" className="bi bi-reply"></i>
             <p id="msg_reply_author"><span id="auteur">{props.reply_auteur}</span> à écrit:</p>
             <p id="msg_reply">{props.reply_message}</p>
           </div> : null

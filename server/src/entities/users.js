@@ -119,6 +119,22 @@ class Users {
     });
   }
 
+  setAdmin(id_user, b){
+    return new Promise ((resolve, reject) => {
+      this.db.collection("users").updateOne({
+        _id : new BSON.ObjectId(id_user)
+      }, {
+        $set : {"admin" : b}
+      })
+      .then(res=>{
+        resolve(true)
+      })
+      .catch(err => {
+        reject()
+      })
+    });
+  }
+
   delete(id_user){
     return new Promise((resolve, reject) => {
       this.db.collection("users").deleteOne({

@@ -145,6 +145,14 @@ function init(db) {
     });
   });
 
+  router.route("/user/admin/:user_id").post(async(req,res)=>{
+    users.setAdmin(req.params.user_id, req.body.b)
+    .then((res2)=> {
+      res.send(true);
+    })
+    .catch((err) => res.status(500).send(err));
+  });
+
   /* 
   router.route("/user/message/:user_id").get((req, res) => {
     canaux.getAll().then((canaux) => {

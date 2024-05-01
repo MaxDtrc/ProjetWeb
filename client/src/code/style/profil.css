@@ -20,3 +20,15 @@ body {
 #user {
     border-bottom: 1px solid white;
 }
+
+#button_add_admin {
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+}
+
+#button_add_admin:hover {
+    border-color: #5cb3ff;
+    color: #5cb3ff;
+}

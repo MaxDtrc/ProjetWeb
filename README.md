@@ -10,6 +10,9 @@ Projet de Web
 
 - sessions enregistrées (cookies ou express-session)
 
+- Pouvoir mettre qlq admin si t'en ai un
+
+- GROSSES PARENTHESES( mettre des likes/réactions)
 
 AUTRE
 
