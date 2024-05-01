@@ -58,7 +58,19 @@ function PageProfil(props) {
       </div>
 
       <p>A propos de l'utilisateur</p>
-      {entrainDeModif ? <><input onChange={(e) => setStatus(e.target.value)} placeholder="Status"></input> <button title="Enregistrer" onClick={changeStatus}><i class="bi bi-floppy"></i></button> </> : <><p>{userData ? userData.status : null}</p> <button><i class="bi bi-pencil-square" title="Modifier" onClick={switchModif} ></i></button></> }
+      
+      {props.idProfil == props.userId ? 
+      (entrainDeModif ? 
+        <>
+        <input onChange={(e) => setStatus(e.target.value)} placeholder="Status"></input> 
+        <button title="Enregistrer" onClick={changeStatus}><i class="bi bi-floppy"></i></button> 
+        </> 
+        : <>
+        <p>{userData ? userData.status : null}</p>
+        <button><i class="bi bi-pencil-square" title="Modifier" onClick={switchModif} ></i></button>
+        </>): 
+      <p>{userData ? userData.status : null}</p>}
+      
       
 
       <p>Messages envoyés par l'utilisateur : 6</p>

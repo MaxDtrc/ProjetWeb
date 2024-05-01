@@ -46,7 +46,7 @@ function MainPage(props) {
     case "page_profil":
       return (
         <main id="main_page">
-          <PageProfil setPage={props.setPage} idProfil={props.idProfil}/>
+          <PageProfil setPage={props.setPage} idProfil={props.idProfil} userId={props.userId}/>
         </main>
       );
     default:
