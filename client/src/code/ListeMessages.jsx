@@ -2,10 +2,14 @@ import { useState } from "react";
 import Message from "./Message.jsx";
 
 function ListeMessages(props) {
+
+  var i = 0;
+
   return (
     <>
       {[...props.lstMessages].reverse().map((msg) => (
         <Message
+          key={i++}
           text={msg.text}
           id_auteur={msg.id_auteur}
           auteur={msg.auteur}

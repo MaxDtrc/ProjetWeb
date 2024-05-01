@@ -54,10 +54,13 @@ function LeftSide() {
     update();
   }
 
+  var i = 0;
+
   return (
     <div id="left_side">
       {infos.map((inf) => (
         <Information
+          key={i++}
           text={inf.text}
           date={inf.date}
         />
