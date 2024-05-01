@@ -2,15 +2,11 @@ import { createElement, useState } from "react";
 import Login from "./Login";
 import SignIn from "./SignIn";
 import "./style/login.css";
-import Cookies from 'js-cookie';
 import axios from "axios";
 
 function PageLogin(props) {
   const [formulaire, setFormulaire] = useState("login");
   const [statutLogin, setstatutLogin] = useState(0);
-
-  const userId = Cookies.get('userId');
-  const isAdmin = Cookies.get('isAdmin');
 
   function loadSession(){
     axios.get("/api/session").then(res => {
