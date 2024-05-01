@@ -1,7 +1,6 @@
 import { useState } from "react";
 import "./style/messages.css";
 import def from "../assets/default.png";
-import reply from "../assets/reply.png";
 import {formaterDate} from "./utils";
 
 function Message(props) {
@@ -29,7 +28,7 @@ function Message(props) {
         </a>
         { props.reply_auteur && props.reply_message.length > 0 ?
           <div id="msg_reply_box">
-            <img id="reply_icon_box" src={reply} />
+            <i id="reply_icon_box" class="bi bi-reply"></i>
             <p id="msg_reply_author"><span id="auteur">{props.reply_auteur}</span> à écrit:</p>
             <p id="msg_reply">{props.reply_message}</p>
           </div> : null
@@ -46,7 +45,8 @@ function Message(props) {
               props.setReplyMessage(props.text);
             }}
           >
-            <img id="reply_icon" src={reply} />
+            <i id="reply_icon" class="bi bi-reply"></i>
+
           </button> : null
         }
       </div>

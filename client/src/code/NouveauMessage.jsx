@@ -12,7 +12,7 @@ function NouveauMessage(props) {
   return (
     <>
       <input onChange={(e) => setNewMessage(e.target.value)} id="nv_msg" />
-      <button onClick={buttonEvt}>Envoyer</button>
+      <button onClick={buttonEvt} title="Envoyer"><i class="bi bi-send"></i></button>
       {props.replyMessage.length > 0 ? (
         <>
           <p>En réponse à {props.replyAuteur}</p>
