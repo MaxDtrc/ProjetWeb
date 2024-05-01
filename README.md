@@ -6,7 +6,7 @@ Projet de Web
 
 - Faire des channels admin
 
-- photos de profil
+- photos de profil (voir nb de messages + voir tous les messages)
 
 - sessions enregistrées (cookies ou express-session)
 
