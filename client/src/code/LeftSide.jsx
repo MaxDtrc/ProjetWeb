@@ -2,7 +2,6 @@ import { useState } from "react";
 import Information from "./Information.jsx";
 import "./style/informations.css";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:4000";
 
 function LeftSide() {
   const [infos, setInfos] = useState([]);

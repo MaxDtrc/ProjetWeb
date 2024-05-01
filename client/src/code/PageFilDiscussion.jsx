@@ -4,8 +4,6 @@ import NouveauMessage from "./NouveauMessage";
 import {idToName} from "./utils.js"
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4000";
-
 function PageFilDiscussion(props) {
   const [lstMessages, setLstMessages] = useState([]);
 

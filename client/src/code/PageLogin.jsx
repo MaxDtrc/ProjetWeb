@@ -2,9 +2,20 @@ import { createElement, useState } from "react";
 import Login from "./Login";
 import SignIn from "./SignIn";
 import "./style/login.css";
+import Cookies from 'js-cookie';
+import axios from "axios";
 
 function PageLogin(props) {
   const [formulaire, setFormulaire] = useState("login");
+
+  const userId = Cookies.get('userId');
+  const isAdmin = Cookies.get('isAdmin');
+
+  axios.get("/api/session").then(res => {
+    if(res.data.id){
+      props.login(res.data.id, res.data.isAdmin);
+    }
+  }).catch(err => {console.log(err)});
 
   if (formulaire == "login") {
     return (

@@ -8,6 +8,10 @@ import smoke from "../assets/smoke.gif";
 import "./style/app.css";
 import PageLogin from "./PageLogin";
 
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:4000";
+axios.defaults.withCredentials = true;
+
 function App() {
   //Props globales
   const [isConnected, setConnection] = useState(false);
