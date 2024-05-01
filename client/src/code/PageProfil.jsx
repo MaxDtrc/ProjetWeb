@@ -72,7 +72,7 @@ function PageProfil(props) {
 
       {/* Bouton pour rendre une personne admin */}
 
-      {userDataConnected && userDataConnected.isAdmin ?
+      {userDataConnected && userDataConnected.isAdmin && props.idProfil != props.userId?
           (userDataProfil && userDataProfil.isAdmin ?
             <button id="button_add_admin" title="Enlever le rôle d'admin" onClick={() => setAdmin(false)}><i class="bi bi-heart-fill"></i></button>
           : <button id="button_add_admin" title="Donner le rôle d'admin" onClick={() => setAdmin(true)}><i class="bi bi-heart" ></i></button>
