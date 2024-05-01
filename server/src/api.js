@@ -12,6 +12,7 @@ function init(db) {
   router.use((req, res, next) => {
     console.log("API: method %s, path %s", req.method, req.path);
     console.log("Body", req.body);
+    console.log("currentSession = " + req.session.userId)
     next();
   });
 
@@ -25,6 +26,8 @@ function init(db) {
         if (!u) {
           res.status(500).send("Utilisateur inexistant");
         } else {
+          req.session.userId = u._id.toString();
+          req.session.isAdmin = u.isAdmin;
           res.send(u);
         }
       })
@@ -42,6 +45,8 @@ function init(db) {
         if (!u) {
           res.status(500).send("Utilisateur inexistant");
         } else {
+          req.session.userId = u._id.toString();
+          req.session.isAdmin = u.isAdmin;
           res.send(u);
         }
       })
@@ -49,6 +54,16 @@ function init(db) {
         res.status(500).send("Erreur lors de la connexion");
       });
   });
+
+  router.post("/logout", (req, res) => {
+    delete req.session.userId;
+    delete req.session.isAdmin;
+    res.send(true);
+  })
+
+  router.get("/session", (req, res) => {
+    res.send({id: req.session.userId, isAdmin: req.session.isAdmin})
+  })
 
   const canaux = new Canaux.default(db);
 

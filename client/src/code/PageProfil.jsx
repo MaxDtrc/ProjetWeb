@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:4000";
 import def from "../assets/default.png";
 import { formaterDate } from "./utils";
 

@@ -3,8 +3,6 @@ import NouveauCanal from "./NouveauCanal";
 import ListeCanaux from "./ListeCanaux";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4000";
-
 function PageCanaux(props) {
   const [lstCanaux, setLstCanaux] = useState([]);
 

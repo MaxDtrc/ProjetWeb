@@ -1,11 +1,16 @@
 import { useState } from "react";
 import momo from "../assets/momo.png";
 import "./style/header.css";
+import axios from "axios";
 
 function Header(props) {
 
   const logout = () => {
-    props.setConnection(false);
+    axios.post("/api/logout").then((res) => {
+      props.setConnection(false);
+    })
+    .catch(err => {console.log(err)});
+    
   };
 
   function searchMessage(e) {

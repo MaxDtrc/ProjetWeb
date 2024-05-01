@@ -4,8 +4,6 @@ import NouveauMessage from "./NouveauMessage";
 import {idToName, nameToId} from "./utils.js"
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:4000";
-
 function PageRecherche(props) {
   const [lstMessages, setLstMessages] = useState([]);
   const [lastRecherche, setLastRecherche] = useState("");

@@ -3,8 +3,6 @@ import axios from "axios";
 import ListeUtilisateurs from "./ListeUtilisateurs.jsx";
 import "./style/users.css";
 
-axios.defaults.baseURL = "http://localhost:4000";
-
 function PageValidation(props) {
   const [lstUtilisateurs, setLstUtilisateurs] = useState([]);
 
