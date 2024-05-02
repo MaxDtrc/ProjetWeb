@@ -5,6 +5,7 @@ html, body::before {
     background-attachment: fixed;
 }
 
+/*
 body::after {
     content: "";
     position: absolute;
@@ -27,6 +28,7 @@ body::after {
         transform: translateY(100vh);
     }
 }
+*/
 
 #app {
   display: grid;
