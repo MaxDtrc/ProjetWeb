@@ -142,7 +142,7 @@ function init(db) {
   router.route("/user/validation/:user_id").post(async (req, res) => {
     users
       .accept(req.params.user_id)
-      .then((res) => {
+      .then((v) => {
         res.send(true);
       })
       .catch((err) => {
@@ -152,7 +152,7 @@ function init(db) {
 
   router.route("/user/status/:user_id").post(async (req, res)=> {
     users.changeStatus(req.params.user_id, req.body.status)
-    .then((res) => {
+    .then((u) => {
       res.send(true);
     })
     .catch((err)=>{
@@ -202,7 +202,7 @@ function init(db) {
       console.log("suppression de " + req.params.user_id);
       users
         .delete(req.params.user_id)
-        .then((res) => {
+        .then((u) => {
           console.log("utilisateur supprimée");
           res.send(true);
         })
