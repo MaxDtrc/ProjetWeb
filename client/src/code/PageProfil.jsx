@@ -95,7 +95,7 @@ function PageProfil(props) {
         </> 
         : <>
         <p>{userDataProfil ? userDataProfil.status : null}</p>
-        <button><i class="bi bi-pencil-square" title="Modifier" onClick={switchModif} ></i></button>
+        <button title="Modifier" onClick={switchModif}><i class="bi bi-pencil-square"></i></button>
         </>): 
       <p>{userDataProfil ? userDataProfil.status : null}</p>}
       
