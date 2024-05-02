@@ -6,15 +6,15 @@ import axios from "axios";
 
 function PageLogin(props) {
   const [formulaire, setFormulaire] = useState("login");
-  const [statutLogin, setstatutLogin] = useState(0);
+  const [statutLogin, setStatutLogin] = useState(0);
 
   function loadSession(){
     axios.get("/api/session").then(res => {
-      if(res.data.id){
+      if(res.data.id && res.data.validation){
         props.login(res.data.id, res.data.isAdmin);
-        setstatutLogin(0);
+        setStatutLogin(0);
       }else{
-        setstatutLogin(1);
+        setStatutLogin(1);
       }
     }).catch(err => {console.log(err)});
   }
@@ -39,7 +39,7 @@ function PageLogin(props) {
     } else {
       return (
         <div id="signin_form">
-          <p>attends frérot</p>
+          <p>En attente de validation</p>
         </div>
       );
     }

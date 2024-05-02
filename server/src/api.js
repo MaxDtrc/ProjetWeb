@@ -28,6 +28,7 @@ function init(db) {
         } else {
           req.session.userId = u._id.toString();
           req.session.isAdmin = u.isAdmin;
+          req.session.validation = u.validation;
           res.send(u);
         }
       })
@@ -45,8 +46,9 @@ function init(db) {
         if (!u) {
           res.status(500).send("Utilisateur inexistant");
         } else {
-          req.session.userId = u._id.toString();
-          req.session.isAdmin = u.isAdmin;
+          req.session.userId = u;
+          req.session.isAdmin = false;
+          req.session.validation = false;
           res.send(u);
         }
       })
@@ -58,11 +60,12 @@ function init(db) {
   router.post("/logout", (req, res) => {
     delete req.session.userId;
     delete req.session.isAdmin;
+    delete req.session.validation;
     res.send(true);
   })
 
   router.get("/session", (req, res) => {
-    res.send({id: req.session.userId, isAdmin: req.session.isAdmin})
+    res.send({id: req.session.userId, isAdmin: req.session.isAdmin, validation: req.session.validation})
   })
 
   const canaux = new Canaux.default(db);
@@ -77,7 +80,7 @@ function init(db) {
         canaux
           .create(id_auteur, titre)
           .then(() => res.status(201).send(true))
-          .catch((err) => res.status(500).send(err));
+          .catch((err) => res.status(500).send(false));
       }
     })
     .get(async (req, res) => {
@@ -86,7 +89,7 @@ function init(db) {
         .then((c) => {
           res.status(201).send(c);
         })
-        .catch((err) => res.status(500).send(err));
+        .catch((err) => res.status(500).send(false));
     });
 
   router
@@ -95,7 +98,7 @@ function init(db) {
       canaux
         .get(req.params.canal_id)
         .then((c) => res.status(201).send(c)) //TODO changer status
-        .catch((err) => res.status(500).send(err));
+        .catch((err) => res.status(500).send(false));
     })
     .put(async (req, res) => {
       const { text, id_auteur, reply_auteur, reply_message } = req.body;
@@ -115,7 +118,7 @@ function init(db) {
             res.status(201).send(true);
           })
           .catch((err) => {
-            res.status(500).send(err);
+            res.status(500).send(false);
           });
       }
     });
@@ -137,12 +140,13 @@ function init(db) {
       .then((lst) => {
         res.send(lst);
       })
-      .catch((err) => res.status(500).send(err));
+      .catch((err) => res.status(500).send(false));
   });
   router.route("/user/validation/:user_id").post(async (req, res) => {
     users
       .accept(req.params.user_id)
       .then((v) => {
+        req.session.validation = true;
         res.send(true);
       })
       .catch((err) => {
@@ -165,7 +169,7 @@ function init(db) {
     .then((res2)=> {
       res.send(true);
     })
-    .catch((err) => res.status(500).send(err));
+    .catch((err) => res.status(500).send(false));
   });
 
   /* 
@@ -196,7 +200,7 @@ function init(db) {
         .then((u) => {
           res.status(201).send(u);
         })
-        .catch((err) => res.status(500).send(err));
+        .catch((err) => res.status(500).send(false));
     })
     .delete(async (req, res) => {
       console.log("suppression de " + req.params.user_id);
