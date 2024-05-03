@@ -27,7 +27,7 @@ function init(db) {
           res.status(500).send("Utilisateur inexistant");
         } else {
           req.session.userId = u._id.toString();
-          req.session.isAdmin = u.isAdmin;
+          req.session.isAdmin = u.admin;
           req.session.validation = u.validation;
           res.send(u);
         }
