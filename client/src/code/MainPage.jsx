@@ -18,6 +18,7 @@ function MainPage(props) {
         <main id="main_page">
           <PageFilDiscussion
             userId={props.userId}
+            admin={props.admin}
             setPage={props.setPage}
             idCanal={idCanal}
             setIdCanal={setIdCanal}

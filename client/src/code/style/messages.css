@@ -10,7 +10,7 @@
 
   display: grid;
   grid-template-rows: [top] 60px auto [bottom] auto;
-  grid-template-columns: [left] 70px [right] auto [end] 200px;
+  grid-template-columns: [left] 70px [right] auto [end] 220px;
 
   font-family: "Lucida Grande", "Trebuchet MS", Verdana, Helvetica, Arial,
     sans-serif;
@@ -106,7 +106,7 @@
   align-self: center;
 }
 
-#msg_repondre {
+#msg_repondre, #msg_delete {
   position: relative;
   grid-row-start: 1;
   grid-row-end: 1;
@@ -125,12 +125,17 @@
   border-radius: 5px;
 }
 
-#msg_repondre:hover {
+#msg_delete {
+  margin-left: 30px;
+  grid-column: 3;
+}
+
+#msg_repondre:hover, #msg_delete:hover {
   border-color: #5cb3ff;
   color: #5cb3ff;
 }
 
-#reply_icon {
+#reply_icon, #delete_icon {
   position: absolute;
   width: 15px;
   height: 15px;

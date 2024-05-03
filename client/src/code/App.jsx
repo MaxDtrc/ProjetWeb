@@ -46,6 +46,7 @@ function App() {
         <LeftSide />
         <MainPage
           userId={connectedUser}
+          admin={adminStatus}
           isConnected={isConnected}
           setConnection={setConnection}
           setPage={setPage}

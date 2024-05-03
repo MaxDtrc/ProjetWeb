@@ -10,6 +10,9 @@ function ListeMessages(props) {
       {[...props.lstMessages].reverse().map((msg) => (
         <Message
           key={i++}
+          id_user={props.id_user}
+          admin={props.admin}
+          id={msg.id}
           text={msg.text}
           id_auteur={msg.id_auteur}
           auteur={msg.auteur}
@@ -19,6 +22,9 @@ function ListeMessages(props) {
           setPage={props.setPage}
           setReplyAuteur={props.setReplyAuteur}
           setReplyMessage={props.setReplyMessage}
+          setReplyId={props.setReplyId}
+          deleteMessage={props.deleteMessage}
+          deleted={msg.deleted}
           reply={props.reply}
           setIdProfil={props.setIdProfil}
         />

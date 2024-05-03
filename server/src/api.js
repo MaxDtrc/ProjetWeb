@@ -92,6 +92,13 @@ function init(db) {
         .catch((err) => res.status(500).send(false));
     });
 
+  router.route("/canal/:canal_id/messages/:message_id")
+  .delete((req, res) => {
+    canaux.deleteMessage(req.params.canal_id, req.params.message_id)
+    .then((r) => res.send(true))
+    .catch((err) => res.status(500).send(false));
+  })
+
   router
     .route("/canal/:canal_id")
     .get(async (req, res) => {
@@ -101,8 +108,8 @@ function init(db) {
         .catch((err) => res.status(500).send(false));
     })
     .put(async (req, res) => {
-      const { text, id_auteur, reply_auteur, reply_message } = req.body;
-      console.log(reply_auteur, reply_message);
+      const { text, id_auteur, reply_auteur, reply_message, reply_id } = req.body;
+      console.log(reply_auteur, reply_message, reply_id);
       if (!id_auteur || !text) {
         res.status(400).send("Champs manquants");
       } else {
@@ -112,6 +119,7 @@ function init(db) {
             id_auteur,
             reply_auteur,
             reply_message,
+            reply_id,
             req.params.canal_id
           )
           .then(() => {

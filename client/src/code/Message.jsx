@@ -36,16 +36,30 @@ function Message(props) {
         <p id="msg_contenu">{props.text ? props.text : "texte"}</p>
         <p id="msg_date">{date}</p>
         {
-          props.reply ?
+          props.reply && !props.deleted ?
           <button
             id="msg_repondre"
             title="Répondre"
             onClick={(e) => {
               props.setReplyAuteur(props.id_auteur);
               props.setReplyMessage(props.text);
+              props.setReplyId(props.id)
             }}
           >
             <i id="reply_icon" class="bi bi-reply"></i>
+
+          </button> : null
+        }
+        {
+          props.reply && !props.deleted && (props.admin || props.id_auteur == props.id_user) ?
+          <button
+            id="msg_delete"
+            title="supprimer"
+            onClick={(e) => {
+              props.deleteMessage(props.id);
+            }}
+          >
+            <i id="delete_icon" class="bi bi-trash"></i>
 
           </button> : null
         }
