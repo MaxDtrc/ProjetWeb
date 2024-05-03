@@ -6,8 +6,11 @@ Projet de Web
 
 - photos de profil (voir nb de messages + voir tous les messages)
 
+- pouvoir supprimer des canaux (restent visible que par les admins avec un petit trucs qui montre qu'il a été suppr)
+
 - GROSSES PARENTHESES( mettre des likes/réactions)
 
+- l'ordre des messages (récent haut - ancien bas    )
 AUTRE
 
 faire schéma bdd

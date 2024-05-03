@@ -28,7 +28,7 @@ function PageRecherche(props) {
       for (var j = 0; j < canaux[i].liste_messages.length; j++) {
         var msg = canaux[i].liste_messages[j];
 
-        if ((props.recherche[0] != "@" && msg.text.toLowerCase().includes(props.recherche.toLowerCase())) || (props.recherche[0] == "@" && msg.auteur == idSearchedUser)) {
+        if ((props.recherche[0] != "@" && msg.text.toLowerCase().includes(props.recherche.toLowerCase()) && !msg.deleted) || (props.recherche[0] == "@" && msg.auteur == idSearchedUser)) {
           msg.id_auteur = msg.auteur; //On copie l'id de l'auteur
           msg.auteur = await idToName(msg.auteur);
           msg.auteur = msg.auteur + " dans le canal " + canaux[i].titre;
