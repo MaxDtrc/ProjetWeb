@@ -55,6 +55,7 @@ function MainPage(props) {
         <main id="main_page">
           <PageCanaux
             userId={props.userId}
+            admin={props.admin}
             setPage={props.setPage}
             setIdCanal={setIdCanal}
             setIdProfil={props.setIdProfil}

@@ -9,6 +9,7 @@ function NouveauCanal(props) {
       .put("/api/canal", {
         titre: newCanal,
         id_auteur: props.userId,
+        isPrivate: props.isAdmin ? document.getElementById("private").checked : false
       })
       .then((res) => {
         if (res.data) {
@@ -20,8 +21,12 @@ function NouveauCanal(props) {
 
   return (
     <>
+    
       <input onChange={(e) => setNewCanal(e.target.value)} id="nv_cnl" />
       <button onClick={buttonEvt}>Créer le canal</button>
+      {props.isAdmin ? (<><label htmlFor="private"> Privé: </label>
+      <input id="private" type="checkbox"></input></>) : null}
+      
     </>
   );
 }

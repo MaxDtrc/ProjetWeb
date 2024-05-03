@@ -73,12 +73,13 @@ function init(db) {
   router
     .route("/canal")
     .put((req, res) => {
-      const { id_auteur, titre } = req.body;
+      const { id_auteur, titre, isPrivate } = req.body;
+      console.log(isPrivate)
       if (!id_auteur || !titre) {
         res.status(400).send("Champs manquants");
       } else {
         canaux
-          .create(id_auteur, titre)
+          .create(id_auteur, titre, isPrivate)
           .then(() => res.status(201).send(true))
           .catch((err) => res.status(500).send(false));
       }

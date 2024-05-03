@@ -8,7 +8,7 @@ class Canaux {
     this.db = db
   }
 
-  create(id_auteur, titre) {
+  create(id_auteur, titre, isPrivate) {
     return new Promise((resolve, reject) => {
       const u = this.db.collection("users").findOne({
         "_id": {$eq: id_auteur}
@@ -21,6 +21,7 @@ class Canaux {
         //Ajoute le canal
         this.db.collection("canaux").insertOne({
           "id_auteur": id_auteur,
+          "isPrivate": isPrivate,
           "titre": titre,
           "date": new Date(),
           "liste_messages": []

@@ -8,16 +8,21 @@ function PageCanaux(props) {
 
   async function update() {
     try {
+      var lst = []
       const res = await axios.get("/api/canal"); // On récupère la liste des canaux
       for (var i = 0; i < res.data.length; i++) {
-        try {
-          const u = await axios.get("api/user/" + res.data[i].id_auteur); //Pour chaque canal on récupère le nom de l'auteur
-          res.data[i].auteur = u.data.username; //On remplace l'id par le nom dans le resultat
-        } catch (err) {
-          res.data[i].auteur = "<Deleted User>";
+        if(!res.data[i].isPrivate || props.admin){
+          try {
+            const u = await axios.get("api/user/" + res.data[i].id_auteur); //Pour chaque canal on récupère le nom de l'auteur
+            res.data[i].auteur = u.data.username; //On remplace l'id par le nom dans le resultat
+          } catch (err) {
+            res.data[i].auteur = "<Deleted User>";
+          }
+          res.data[i].titre += (res.data[i].isPrivate) ? " (privé)" : ""
+          lst.push(res.data[i])
         }
       }
-      setLstCanaux(res.data); //Mise à jour de la liste
+      setLstCanaux(lst); //Mise à jour de la liste
     } catch (e) {
       console.log("Erreur dans l'obtention de la liste des canaux");
     }
@@ -34,7 +39,7 @@ function PageCanaux(props) {
 
   return (
     <div id="liste_canaux">
-      <NouveauCanal userId={props.userId} update={update} />
+      <NouveauCanal userId={props.userId} update={update} isAdmin = {props.admin}/>
       <ListeCanaux
         lstCanaux={lstCanaux}
         openCanal={openCanal}
