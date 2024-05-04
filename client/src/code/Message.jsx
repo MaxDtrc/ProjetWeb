@@ -45,7 +45,7 @@ function Message(props) {
               props.setReplyId(props.id)
             }}
           >
-            <i id="reply_icon" class="bi bi-reply"></i>
+            <i id="reply_icon" className="bi bi-reply"></i>
 
           </button> : null
         }
@@ -58,7 +58,7 @@ function Message(props) {
               props.deleteMessage(props.id);
             }}
           >
-            <i id="delete_icon" class="bi bi-trash"></i>
+            <i id="delete_icon" className="bi bi-trash"></i>
 
           </button> : null
         }

@@ -2,84 +2,87 @@ import { useState } from "react";
 import axios from "axios";
 import def from "../assets/default.png";
 import { formaterDate } from "./utils";
-
 import "./style/profil.css"
 
+//Composant affichant une page de profile
 function PageProfil(props) {
+  const [profileData, setProfileData] = useState(null) //Composant contenant les données du profile
+  const [modification, setModification] = useState(false) //Modification en cours du statut
 
-  const [status, setStatus] = useState('');
-  const[userDataProfil, setUserDataProfil] = useState(null)
-  const[userDataConnected, setUserDataConnected] = useState(null)
-  const [entrainDeModif, setEntrainDeModif] = useState(false)
-  const [profilePicture, setProfilePicture] = useState("")
-  const [photoLoaded, setPhotoLoaded] = useState(0);
-
-  async function infoUserProfil(){
-    const user = (await axios.get("/api/user/" + props.idProfil)).data
-    setUserDataProfil({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status});
+  //Fonction de mise à jour du profile
+  async function update(){
+    console.log("PageProfil: mise à jour du profil ...")
+    try{
+      //Obtention des données de l'utilisateur
+      const user = (await axios.get("/api/user/" + props.idProfil)).data 
+      console.log("PageProfil: mise à jour effectuée !")
+      setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: user.profile_picture});
+    }
+    catch(e){
+      //Erreur de mise à jour
+      console.log("PageProfil: erreur lors de la mise à jour du profile")
+    }
   }
 
-  async function infoUserConnected(){
-    const user = (await axios.get("/api/user/" + props.userId)).data
-    setUserDataConnected({username : user.username, date : formaterDate(user.date), isAdmin: user.admin});
-  }
-
-  function switchModif(){
-    setEntrainDeModif(!entrainDeModif);
-  }
-
-  function handleFileChange(e){
-    const file = e.target.files[0];
-    const img = URL.createObjectURL(file);
-    axios.post("/api/user/photo/" + props.idProfil, {"photo": img})
-    .then(res => {console.log("Photo uploadée")})
-    .catch(err => {console.log("erreur lors de l'upload")})
-    setProfilePicture(img)
-  }
-
-  async function loadPhoto(){
-    axios.get("/api/user/" + props.idProfil)
+  //Fonction permettant d'upload une photo de profile
+  function uploadPhoto(e){
+    console.log("PageProfil: upload de la photo ...")
+    const file = e.target.files[0]; //On récupère le fichier choisi par l'utilisateur
+    const img = URL.createObjectURL(file); //On crée un objet à partir du lien
+    axios.post("/api/user/photo/" + props.idProfil, {"photo": img}) //On envoie la photo au serveur
     .then(res => {
-      setProfilePicture(res.data.profile_picture);
+      //Réussite de l'upload
+      console.log("PageProfil: photo upload avec succès !")
+      update();
     })
     .catch(err => {
-      console.log("erreur de chargement de la photo")
+      //Erreur
+      console.log("PageProfil: erreur lors de l'upload de la photo")
     })
-    console.log("photo chargée");
-    setPhotoLoaded(1);
   }
 
-  if(!photoLoaded) loadPhoto();
-
-
-
+  //Fonction permettant de changer de statut
   function changeStatus(){
+    console.log("PageProfil: mise à jour du statut ...")
     axios
-    .post(("/api/user/status/" + props.idProfil), {status : status}).then((res) => {
-      switchModif();
-      infoUserProfil();
-      console.log(status);
+    .post(("/api/user/status/" + props.idProfil), {status : profileData.status})
+    .then((res) => {
+      //Mise a jour du statut effectuée
+      console.log("PageProfil: mise à jour du statut effectuée avec succès !")
+      setModification(false); 
+      update(); //Mise à jour
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      //Erreur lors de la mise à jour
+      console.log("PageProfil: erreur lors de la mise à jour du statut")
+    });
   }
 
+  //Fonction permettant de changer le statut d'administrateur d'un membre
   function setAdmin(b){
+    console.log("PageProfil: mise à jour du statut d'administrateur ...")
     axios
-    .post(("/api/user/admin/" + props.idProfil), {b : b}).then((res)=>{
-      infoUserProfil();
+    .post(("/api/user/admin/" + props.idProfil), {b : b})
+    .then((res)=>{
+      //Réussite
+      console.log("PageProfil: statut d'administrateur changé avec succès !")
+      update(); //Mise à jour
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      //Erreur
+      console.log("PageProfil: erreur lors du changement de statut d'administrateur")
+    });
   }
 
-  if(userDataProfil == null){
-    infoUserProfil();
+  //Si aucun profile n'est chargé, on le met à jour
+  if(profileData == null){
+    update();
+    return;
   }
-  if(userDataConnected == null){
-    infoUserConnected();
-  }
+
+  //Affichage du composant
   return (
     <>
-
       <a
         href=""
         onClick={(e) => {
@@ -91,47 +94,38 @@ function PageProfil(props) {
       </a>
 
       {/* pseudo, photo de profil, logoAdmin et date d'adhésion */}
-      
       <div id="user">
-      {profilePicture ? <img className="profile_photo" src={profilePicture} alt="Profile Picture" /> : <img className="profile_photo" src={def}/>}
-      <input type="file" onChange={handleFileChange}></input>
-      <p id="profile_username">{userDataProfil ? userDataProfil.username : "auteurnotfound"} {userDataProfil ? (userDataProfil.isAdmin ? (<i title="Administrateur" class="bi bi-check-circle"></i>) : null) : "adminnotfound:("}</p>
-      <p id="date">A rejoint le : {userDataProfil ? userDataProfil.date : "datenotfound"}</p>
+        {profileData.profile_picture ? <img className="profile_photo" src={profileData.profile_picture} alt="Profile Picture" /> : <img className="profile_photo" src={def}/>}
+        <input type="file" onChange={uploadPhoto}></input>
+        <p id="profile_username">{profileData ? profileData.username : "auteurnotfound"} {profileData ? (profileData.isAdmin ? (<i title="Administrateur" className="bi bi-check-circle"></i>) : null) : "adminnotfound:("}</p>
+        <p id="date">A rejoint le : {profileData ? profileData.date : "datenotfound"}</p>
 
-      {/* Bouton pour rendre une personne admin */}
-
-      {userDataConnected && userDataConnected.isAdmin && props.idProfil != props.userId?
-          (userDataProfil && userDataProfil.isAdmin ?
-            <button id="button_add_admin" title="Enlever le rôle d'admin" onClick={() => setAdmin(false)}><i class="bi bi-heart-fill"></i></button>
-          : <button id="button_add_admin" title="Donner le rôle d'admin" onClick={() => setAdmin(true)}><i class="bi bi-heart" ></i></button>
-          )
-      : null
-      }
-
+        {/* Bouton pour rendre une personne admin */}
+        {props.admin && props.idProfil != props.userId?
+            (profileData && profileData.isAdmin ?
+              <button id="button_add_admin" title="Enlever le rôle d'admin" onClick={() => setAdmin(false)}><i className="bi bi-heart-fill"></i></button>
+            : <button id="button_add_admin" title="Donner le rôle d'admin" onClick={() => setAdmin(true)}><i className="bi bi-heart" ></i></button>
+            )
+        : null
+        }
       </div>
-
-      
 
       {/* Status */}
       <p>A propos de l'utilisateur</p>
       
       {props.idProfil == props.userId ? 
-      (entrainDeModif ? 
+      (modification ? 
         <>
-        <input onChange={(e) => setStatus(e.target.value)} placeholder="Status"></input> 
-        <button title="Enregistrer" onClick={changeStatus}><i class="bi bi-floppy"></i></button> 
+        <input onChange={(e) => {profileData.status = e.target.value}} placeholder="Status"></input> 
+        <button title="Enregistrer" onClick={changeStatus}><i className="bi bi-floppy"></i></button> 
         </> 
         : <>
-        <p>{userDataProfil ? userDataProfil.status : null}</p>
-        <button title="Modifier" onClick={switchModif}><i class="bi bi-pencil-square"></i></button>
-        </>): 
-      <p>{userDataProfil ? userDataProfil.status : null}</p>}
-      
+        <p>{profileData ? profileData.status : null}</p>
+        <button title="Modifier" onClick={() => setModification(!modification)}><i className="bi bi-pencil-square"></i></button>
+        </>): <p>{profileData ? profileData.status : null}</p>}
       
       {/* Nb de messages envoyés et la liste */}
       <p>Messages envoyés par l'utilisateur : 6</p>
-
-
     </>
   );
 }

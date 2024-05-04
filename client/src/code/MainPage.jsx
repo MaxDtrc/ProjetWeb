@@ -53,7 +53,7 @@ function MainPage(props) {
       //Affichage de la page de profil
       return (
         <main id="main_page">
-          <PageProfil setPage={props.setPage} idProfil={props.idProfil} userId={props.userId}/>
+          <PageProfil setPage={props.setPage} idProfil={props.idProfil} userId={props.userId} admin={props.admin}/>
         </main>
       );
     default:
