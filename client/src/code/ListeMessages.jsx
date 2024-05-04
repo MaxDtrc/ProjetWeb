@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Message from "./Message.jsx";
 
+//Composant permettant d'afficher une liste de messages
 function ListeMessages(props) {
 
-  var i = 0;
+  var i = 0; //Identifiant pour les clefs des éléments de la liste
 
+  //Affichage de la liste des messages
   return (
     <>
       {[...props.lstMessages].reverse().map((msg) => (

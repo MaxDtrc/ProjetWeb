@@ -3,14 +3,13 @@ import "./style/messages.css";
 import def from "../assets/default.png";
 import {formaterDate} from "./utils";
 
+//Composant permettant d'afficher un message
 function Message(props) {
-  var date = "";
-  if (props.date) {
-    date = formaterDate(props.date);
-  } else {
-    date = "date";
-  }
+  
+  //Formatage de la date
+  var date = props.date ? formaterDate(props.date) : "datenotfound";
 
+  //Affichage du message: auteur, texte, date, réponse
   return (
     <>
       <div id="msg">

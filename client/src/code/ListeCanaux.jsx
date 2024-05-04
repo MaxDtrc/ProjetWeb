@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Canal from "./Canal.jsx";
 
+//Composant permettant d'afficher une liste de canaux
 function ListeCanaux(props) {
 
-  var i = 0;
+  var i = 0; //Identifiant pour les clefs des éléments de la liste
+
+  //Affichage de la liste des canaux
   return (
     <>
       {[...props.lstCanaux].reverse().map((cnl) => (

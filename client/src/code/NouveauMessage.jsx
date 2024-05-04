@@ -1,17 +1,21 @@
 import { useState } from "react";
 import axios from "axios";
 
+//Composant permettant d'ajouter un nouveau message
 function NouveauMessage(props) {
-  const [newMessage, setNewMessage] = useState("");
+  const [newMessage, setNewMessage] = useState(""); //Contenu du message en cours de saisie
 
-  const buttonEvt = (e) => {
+  //Fonction permettant de demander l'ajout du message
+  const addMessage = (e) => {
+    console.log("Message: Demande d'ajout du message")
     props.ajouterMessage(newMessage);
   };
 
+  //Affichage du formulaire : contenu et bouton de validation
   return (
     <>
       <input onChange={(e) => setNewMessage(e.target.value)} id="nv_msg" />
-      <button onClick={buttonEvt} title="Envoyer"><i class="bi bi-send"></i></button>
+      <button onClick={addMessage} title="Envoyer"><i class="bi bi-send"></i></button>
       {props.replyMessage.length > 0 ? (
         <>
           <p>En réponse à {props.replyAuteur}</p>
