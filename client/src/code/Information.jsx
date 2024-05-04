@@ -4,14 +4,13 @@ import {formaterDate} from "./utils";
 import def from "../assets/default.png";
 import reply from "../assets/reply.png";
 
+//Composant affichant une notification: l'arrivée d'un nouvel adhérent ou la création d'un nouveau canal
 function Information(props) {
-  var date = "";
-  if (props.date) {
-    date = formaterDate(props.date);
-  } else {
-    date = "date";
-  }
+  
+  //Formatage de la date
+  var date = props.date ? formaterDate(props.date) : "datenotfound";
 
+  //Affichage de la notification: contenu et date
   return (
     <>
       <div id="info">

@@ -2,16 +2,38 @@ import { useState } from "react";
 import Information from "./Information.jsx";
 import "./style/informations.css";
 import axios from "axios";
+import { idToName } from "./utils.js";
 
+//Composant gérant la barre de notifications à gauche de l'écran
 function LeftSide() {
-  const [infos, setInfos] = useState([]);
+  const [infos, setInfos] = useState([]); //Liste des notifications à afficher
 
+  //Fonction de mise à jour de l'affichage
   async function update() {
-    //Obtention des utilisateurs et des canaux
-    const canaux = (await axios.get("/api/canal/")).data;
-    const users = (await axios.get("api/user")).data;
+    
+    //Obtention des canaux
+    var canaux;
+    try {
+      canaux = (await axios.get("/api/canal/")).data;
+      console.log("LeftSide: Liste des canaux obtenue")
+    }
+    catch(e){
+      console.log("LeftSide: Erreur dans l'obtention de la liste des canaux")
+      return;
+    }
+    
+    //Obtention de la liste des utilisateurs
+    var users;
+    try {
+      users = (await axios.get("api/user")).data;
+    }
+    catch(e){
+      console.log("LeftSide: Erreur dans l'obtention de la liste des utilisateurs")
+      return;
+    }
+    
 
-    //Création de la liste
+    //Création de la liste des informations
     var listeInfos = [];
 
     //Tri des canaux
@@ -28,34 +50,37 @@ function LeftSide() {
       return dateB - dateA;
     });
 
-    //Ajout des infos
+    //Ajout des dernières infos (jusqu'à 5 maximum)
     var indexUsers = 0
     var indexCanaux = 0;
-    while(listeInfos.length<5 && (indexUsers < users.length || indexCanaux < canaux.length)) {
+    const nb_infos = 5;
+    while(listeInfos.length < nb_infos && (indexUsers < users.length || indexCanaux < canaux.length)) {
       if (indexCanaux >= canaux.length || users[indexUsers].date > canaux[indexCanaux].date) {
-        const u = users[indexUsers];
-        if(u.validation){
+        const u = users[indexUsers]; //Obtention de l'utilisateur
+        if(u.validation){ //L'utilisateur a bien été validé
           listeInfos.push({text: u.username + " a rejoint l'association !", date: u.date});
         }   
         indexUsers++; 
       } else {
-        const c = canaux[indexCanaux];
-        var name = (await axios.get("/api/user/" + c.id_auteur.toString())).data.username;
+        const c = canaux[indexCanaux]; //Obtention du canal
+        var name = (await idToName(c.id_auteur.toString())) //Obtention du nom de l'auteur
         listeInfos.push({text: name + " a ouvert le canal : " + c.titre, date: c.date});
         indexCanaux++;
       }
     }
 
-    //Update de la liste
+    //Mise à jour de la liste des informations (et refresh du composant)
     setInfos(listeInfos);
   }
 
+  //Si la liste est vide, on appelle la fonction d'update
   if(infos.length == 0){
     update();
   }
 
-  var i = 0;
+  var i = 0; //Identifiant pour les clefs des éléments de la liste
 
+  //Affichage du composant
   return (
     <div id="left_side">
       {infos.map((inf) => (
