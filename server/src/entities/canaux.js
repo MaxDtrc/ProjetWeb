@@ -2,6 +2,7 @@ const uri = "mongodb://127.0.0.1:27017";
 const {BSON} = require("bson")
 const { text } = require('stream/consumers');
 
+//Classe contenant tous les méthodes de modification des canaux/messages dans la BDD
 class Canaux {
 
   constructor(db) {
