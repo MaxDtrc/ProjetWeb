@@ -8,7 +8,7 @@ function Header(props) {
 
   //Fonction de déconnexion
   const logout = () => {
-    axios.post("/api/logout").then((res) => {
+    axios.post("/api/user/logout").then((res) => {
       console.log("Déconnexion réussie, retour à la page de connexion")
       props.setConnection(false);  //La déconnexion a réussi côté serveur
     })

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./style/messages.css";
 import def from "../assets/default.png";
-import {formaterDate} from "./utils";
+import {formaterDate, idToName} from "./utils";
 
 //Composant permettant d'afficher un message
 function Message(props) {

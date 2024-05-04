@@ -9,7 +9,7 @@ function Login(props) {
   //Fonction de connexion
   function checkLogin() {
     axios
-      .post("/api/login", { login: login, password: password }) //Requête de connexion
+      .post("/api/user/login", { login: login, password: password }) //Requête de connexion
       .then((res) => {
         if (res.data) {
           //Utilisateur correspondant trouvé

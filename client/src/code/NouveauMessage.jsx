@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 
 //Composant permettant d'ajouter un nouveau message
 function NouveauMessage(props) {
