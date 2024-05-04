@@ -2,6 +2,7 @@ import { useState } from "react";
 import NouveauCanal from "./NouveauCanal";
 import ListeCanaux from "./ListeCanaux";
 import axios from "axios";
+import {idToName} from "./utils.js"
 
 //Composant gérant l'affichage de la page de sélection des canaux
 function PageCanaux(props) {
@@ -15,11 +16,7 @@ function PageCanaux(props) {
       const res = await axios.get("/api/canal"); // On récupère la liste des canaux
       for (var i = 0; i < res.data.length; i++) {
         if(!res.data[i].isPrivate || props.admin){ //Si le canal est publique ou qu'on est admin, on l'affiche
-          try {
-            res.data[i].auteur = (await idToName(res.data[i].id_auteur)); //On remplace l'id par le nom dans le resultat
-          } catch (err) {
-            res.data[i].auteur = "<Deleted User>"; //L'utilisateur n'existe plus
-          }
+          res.data[i].auteur = (await idToName(res.data[i].id_auteur)); //On remplace l'id par le nom dans le resultat
           res.data[i].titre += (res.data[i].isPrivate) ? " (privé)" : "" //On indique si le canal est privé
           lst.push(res.data[i]) //Ajout du canal à la liste à afficher
         }

@@ -102,47 +102,6 @@ function init(db) {
 
 
 
-    //Route concernant un utilisateur particulier
-    router
-    .route("/:user_id")
-    .get(async (req, res) => {
-      //Obtention d'un utilisateur
-      console.log("API: obtention de l'utilisateur " + req.params.user_id)
-
-      users
-        .get(req.params.user_id) //Recherche de l'utilisateur
-        .then((u) => {
-          //Succès
-          console.log("API: utilisateur obtenu avec succès")
-          res.status(200).send(u);
-        })
-        .catch((err) => {
-          //Erreur
-          console.log("API: erreur dans l'obtention de l'utilisateur")
-          res.status(500).send(null)
-        });
-    })
-    .delete(async (req, res) => {
-      //Suppression de l'utilisateur
-      console.log("API: suppression de l'utilisateur " + req.params.user_id);
-
-      //Suppression
-      users
-        .delete(req.params.user_id)
-        .then((u) => {
-          //Succès
-          console.log("API: utilisateur supprimé avec succès !");
-          res.status(200).send(true);
-        })
-        .catch((err) => {
-          //Erreur
-          console.log("API: Erreur lors de la suppression de l'utilisateur")
-          res.status(500).send(false);
-        });
-    });
-
-
-
   //Route concernant tous les utilisateurs à valider
   router
     .route("/validation")
@@ -267,6 +226,47 @@ function init(db) {
         console.log("API: erreur lors de la mise à jour du statut d'admin")
         res.status(500).send(false)
       });
+    });
+
+
+
+    //Route concernant un utilisateur particulier
+  router
+    .route("/:user_id")
+    .get(async (req, res) => {
+      //Obtention d'un utilisateur
+      console.log("API: obtention de l'utilisateur " + req.params.user_id)
+
+      users
+        .get(req.params.user_id) //Recherche de l'utilisateur
+        .then((u) => {
+          //Succès
+          console.log("API: utilisateur obtenu avec succès")
+          res.status(200).send(u);
+        })
+        .catch((err) => {
+          //Erreur
+          console.log("API: erreur dans l'obtention de l'utilisateur")
+          res.status(500).send(null)
+        });
+    })
+    .delete(async (req, res) => {
+      //Suppression de l'utilisateur
+      console.log("API: suppression de l'utilisateur " + req.params.user_id);
+
+      //Suppression
+      users
+        .delete(req.params.user_id)
+        .then((u) => {
+          //Succès
+          console.log("API: utilisateur supprimé avec succès !");
+          res.status(200).send(true);
+        })
+        .catch((err) => {
+          //Erreur
+          console.log("API: Erreur lors de la suppression de l'utilisateur")
+          res.status(500).send(false);
+        });
     });
 
 
