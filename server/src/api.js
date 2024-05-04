@@ -163,6 +163,20 @@ function init(db) {
       });
   });
 
+  router.route("/user/photo/:user_id").post(async (req, res) => {
+    const {photo} = req.body;
+    users
+      .changeProfilePicture(req.params.user_id, req.body.photo)
+      .then((v) => {
+        res.send(true);
+      })
+      .catch((err) => {
+        res.send(false);
+      });
+  });
+
+
+
   router.route("/user/status/:user_id").post(async (req, res)=> {
     users.changeStatus(req.params.user_id, req.body.status)
     .then((u) => {

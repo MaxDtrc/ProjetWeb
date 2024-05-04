@@ -24,6 +24,7 @@ class Users {
             "password": password,
             "admin": false,
             "validation": false,
+            "profile_picture": null,
             "date": new Date(),
             "status": ""
           }).then((u) => {
@@ -109,6 +110,22 @@ class Users {
         _id : new BSON.ObjectId(id_user)
       }, {
         $set : {"status" : status}
+      })
+      .then(res=>{
+        resolve(true)
+      })
+      .catch(err => {
+        reject()
+      })
+    });
+  }
+
+  changeProfilePicture(id_user, photo){
+    return new Promise((resolve, reject) => {
+      this.db.collection("users").updateOne({
+        _id : new BSON.ObjectId(id_user)
+      }, {
+        $set : {"profile_picture" : photo}
       })
       .then(res=>{
         resolve(true)

@@ -11,6 +11,8 @@ function PageProfil(props) {
   const[userDataProfil, setUserDataProfil] = useState(null)
   const[userDataConnected, setUserDataConnected] = useState(null)
   const [entrainDeModif, setEntrainDeModif] = useState(false)
+  const [profilePicture, setProfilePicture] = useState("")
+  const [photoLoaded, setPhotoLoaded] = useState(0);
 
   async function infoUserProfil(){
     const user = (await axios.get("/api/user/" + props.idProfil)).data
@@ -25,6 +27,31 @@ function PageProfil(props) {
   function switchModif(){
     setEntrainDeModif(!entrainDeModif);
   }
+
+  function handleFileChange(e){
+    const file = e.target.files[0];
+    const img = URL.createObjectURL(file);
+    axios.post("/api/user/photo/" + props.idProfil, {"photo": img})
+    .then(res => {console.log("Photo uploadée")})
+    .catch(err => {console.log("erreur lors de l'upload")})
+    setProfilePicture(img)
+  }
+
+  async function loadPhoto(){
+    axios.get("/api/user/" + props.idProfil)
+    .then(res => {
+      setProfilePicture(res.data.profile_picture);
+    })
+    .catch(err => {
+      console.log("erreur de chargement de la photo")
+    })
+    console.log("photo chargée");
+    setPhotoLoaded(1);
+  }
+
+  if(!photoLoaded) loadPhoto();
+
+
 
   function changeStatus(){
     axios
@@ -66,7 +93,8 @@ function PageProfil(props) {
       {/* pseudo, photo de profil, logoAdmin et date d'adhésion */}
       
       <div id="user">
-      <img id="profile_photo" src={def} />
+      {profilePicture ? <img className="profile_photo" src={profilePicture} alt="Profile Picture" /> : <img className="profile_photo" src={def}/>}
+      <input type="file" onChange={handleFileChange}></input>
       <p id="profile_username">{userDataProfil ? userDataProfil.username : "auteurnotfound"} {userDataProfil ? (userDataProfil.isAdmin ? (<i title="Administrateur" class="bi bi-check-circle"></i>) : null) : "adminnotfound:("}</p>
       <p id="date">A rejoint le : {userDataProfil ? userDataProfil.date : "datenotfound"}</p>
 

@@ -2,7 +2,7 @@ body {
     color: white;
 }
 
-#profile_photo {
+.profile_photo {
     height: 100px;
     width: 100px;
 }
