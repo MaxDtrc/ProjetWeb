@@ -3,145 +3,272 @@ const Users = require("./entities/users.js");
 
 function init(db) {
   const router = express.Router();
+  router.use(express.json());
 
   //Fonctions des utilisateurs
   const users = new Users.default(db);
 
-  router.use(express.json());
-  
-  router.post("/login", async (req, res) => {
-    const { login, password } = req.body;
+  //Route concernant tous les utilisateurs
+  router
+    .route("/")
+    .get(async (req, res) => {
+      //Obtention de tous les utilisateurs
+      console.log("API: obtention des utilisateurs")
 
-    users
-      .login(login, password)
-      .then((u) => {
-        if (!u) {
-          res.status(500).send("Utilisateur inexistant");
-        } else {
-          req.session.userId = u._id.toString();
-          req.session.isAdmin = u.admin;
-          req.session.validation = u.validation;
-          res.send(u);
-        }
-      })
-      .catch((err) => {
-        res.status(500).send("Erreur lors de la connexion");
-      });
-  });
-
-  router.post("/signin", (req, res) => {
-    const { login, password } = req.body;
-    console.log("api : création de l'utilisateur");
-    users
-      .create(login, password)
-      .then((u) => {
-        if (!u) {
-          res.status(500).send("Utilisateur inexistant");
-        } else {
-          req.session.userId = u;
-          req.session.isAdmin = false;
-          req.session.validation = false;
-          res.send(u);
-        }
-      })
-      .catch((err) => {
-        res.status(500).send("Erreur lors de la connexion");
-      });
-  });
-
-  router.post("/logout", (req, res) => {
-    delete req.session.userId;
-    delete req.session.isAdmin;
-    delete req.session.validation;
-    res.send(true);
-  })
-
-  router.route("/").get(async (req, res) => {
-    users
-      .getAll()
-      .then((u) => {
-        res.status(201).send(u);
-      })
-      .catch((err) =>
-        res.status(500).send("Erreur dans l'obtention des utilisateurs")
-      );
-  });
-
-  router.route("/validation").get(async (req, res) => {
-    users
-      .getLstEnAttente()
-      .then((lst) => {
-        res.send(lst);
-      })
-      .catch((err) => res.status(500).send(false));
-  });
-  router.route("/validation/:user_id").post(async (req, res) => {
-    users
-      .accept(req.params.user_id)
-      .then((v) => {
-        req.session.validation = true;
-        res.send(true);
-      })
-      .catch((err) => {
-        res.send(false);
-      });
-  });
-
-  router.route("/photo/:user_id").post(async (req, res) => {
-    const {photo} = req.body;
-    users
-      .changeProfilePicture(req.params.user_id, req.body.photo)
-      .then((v) => {
-        res.send(true);
-      })
-      .catch((err) => {
-        res.send(false);
-      });
-  });
-
-
-
-  router.route("/status/:user_id").post(async (req, res)=> {
-    users.changeStatus(req.params.user_id, req.body.status)
-    .then((u) => {
-      res.send(true);
-    })
-    .catch((err)=>{
-      res.send(false);
+      users
+        .getAll()
+        .then((u) => {
+          console.log("API: obtention des utilisateurs effectuée avec succès !")
+          res.status(200).send(u);
+        })
+        .catch((err) => {
+          //Erreur
+          console.log("Erreur dans l'obtention des utilisateurs")
+          res.status(500).send(false);
+        })
     });
-  });
 
-  router.route("/admin/:user_id").post(async(req,res)=>{
-    users.setAdmin(req.params.user_id, req.body.b)
-    .then((res2)=> {
-      res.send(true);
-    })
-    .catch((err) => res.status(500).send(false));
-  });
 
+
+  //Route de connexion
+  router
+    .post("/login", async (req, res) => {
+      const { login, password } = req.body;
+
+      users
+        .login(login, password)
+        .then((u) => {
+          if (!u) {
+            res.status(500).send("Utilisateur inexistant");
+          } else {
+            req.session.userId = u._id.toString();
+            req.session.isAdmin = u.admin;
+            req.session.validation = u.validation;
+            res.send(u);
+          }
+        })
+        .catch((err) => {
+          res.status(500).send("Erreur lors de la connexion");
+        });
+    });
+
+  
 
   router
+    .route("/signin")
+    .post((req, res) => {
+      //Création d'un nouvel utilisateur
+      console.log("API: Création de l'utilisateur ...");
+
+      //Récupération du corps de la requête
+      const { login, password } = req.body;
+      
+      users
+        .create(login, password)
+        .then((u) => {
+          if (!u) {
+            //Utilisateur non renvoyé
+            console.log("API: Erreur lors de la création de l'utilisateur")
+            res.status(500).send(null);
+          } else {
+            //Paramétrage de la session
+            req.session.userId = u;
+            req.session.isAdmin = false;
+            req.session.validation = false;
+            
+            console.log("API: création de l'utilisateur effectuée avec succès !")
+            res.status(200).send(u);
+          }
+        })
+        .catch((err) => {
+          console.log("API: erreur lors de l'inscription de l'utilisateur")
+          res.status(500).send(null);
+      });
+    });
+
+
+
+  //Route de déconnexion: supprime les valeurs de la session
+  router
+    .route("/logout")
+    .post((req, res) => {
+      delete req.session.userId;
+      delete req.session.isAdmin;
+      delete req.session.validation;
+
+      //On renvoie true pour acquitter la demande
+      res.status(200).send(true);
+    })
+
+
+
+    //Route concernant un utilisateur particulier
+    router
     .route("/:user_id")
     .get(async (req, res) => {
+      //Obtention d'un utilisateur
+      console.log("API: obtention de l'utilisateur " + req.params.user_id)
+
       users
         .get(req.params.user_id) //Recherche de l'utilisateur
         .then((u) => {
-          res.status(201).send(u);
+          //Succès
+          console.log("API: utilisateur obtenu avec succès")
+          res.status(200).send(u);
         })
-        .catch((err) => res.status(500).send(false));
+        .catch((err) => {
+          //Erreur
+          console.log("API: erreur dans l'obtention de l'utilisateur")
+          res.status(500).send(null)
+        });
     })
     .delete(async (req, res) => {
-      console.log("suppression de " + req.params.user_id);
+      //Suppression de l'utilisateur
+      console.log("API: suppression de l'utilisateur " + req.params.user_id);
+
+      //Suppression
       users
         .delete(req.params.user_id)
         .then((u) => {
-          console.log("utilisateur supprimée");
-          res.send(true);
+          //Succès
+          console.log("API: utilisateur supprimé avec succès !");
+          res.status(200).send(true);
         })
         .catch((err) => {
-          res.send(false);
+          //Erreur
+          console.log("API: Erreur lors de la suppression de l'utilisateur")
+          res.status(500).send(false);
         });
     });
+
+
+
+  //Route concernant tous les utilisateurs à valider
+  router
+    .route("/validation")
+    .get(async (req, res) => {
+      //Obtention de tous les utilisateurs à valider
+      console.log("API: obtention des utilisateurs à valider")
+
+      //Obtention de la liste
+      users
+        .getLstEnAttente()
+        .then((lst) => {
+          //Succès
+          console.log("API: utilisateurs à valider obtenus avec succès !")
+          res.status(200).send(lst);
+        })
+        .catch((err) => {
+          //Erreur
+          console.log("API: erreur lors de l'obtention des utilisateurs à valider")
+          res.status(500).send(null)
+        });
+  });
+
+
+
+  //Route concernant le statut de validation d'un utilisateur
+  router
+    .route("/validation/:user_id")
+    .post(async (req, res) => {
+      //Acceptation d'un utilisateur
+      console.log("API: acceptation de l'utilisateur " + req.params.user_id)
+
+      //Mise à jour
+      users
+        .accept(req.params.user_id)
+        .then((v) => {
+          //Succès
+          console.log("API: utilisateur validé avec succès !")
+          req.session.validation = true;
+          res.statut(200).send(true);
+        })
+        .catch((err) => {
+          //Erreur
+          console.log("API: erreur lors de la validation de l'utilisateur")
+          res.statut(500).send(false);
+        });
+    });
+
+
+
+  //Route concernant la photo de profil des utilisateurs
+  router
+    .route("/photo/:user_id")
+    .post(async (req, res) => {
+      //Modification de la photo de profil
+      console.log("API: modification de la photo de profil ...")
+
+      //Obtention du corps de la requête
+      const {photo} = req.body;
+
+      //Mise à jour
+      users
+        .changeProfilePicture(req.params.user_id, req.body.photo)
+        .then((v) => {
+          //Succès
+          console.log("API: photo mise à jour avec succès !")
+          res.status(200).send(true);
+        })
+        .catch((err) => {
+          //Erreur
+          console.log("API: erreur lors de la mise à jour de la photo")
+          res.status(500).send(false);
+        });
+    });
+
+
+
+  //Route concernant la phrase de statut des utilisateurs
+  router
+    .route("/status/:user_id")
+    .post(async (req, res)=> {
+      //Modification du statut
+      console.log("API: modification de la phrase de statut ...")
+
+      //Obtention du corps de la requête
+      const {s} = req.body;
+
+      //Mise à jour
+      users.changeStatus(req.params.user_id, s)
+      .then((u) => {
+        //Succès
+        console.log("API: statut mis à jour avec succès !")
+        res.status(200).send(true);
+      })
+      .catch((err)=>{
+        //Erreur
+        console.log("API: erreur lors de la mise à jour du statut")
+        res.status(500).send(false);
+      });
+    });
+
+
+
+  //Route concernant le statut d'administrateur des utilisateurs
+  router
+    .route("/admin/:user_id")
+    .post(async(req, res)=>{
+      //Mise à jour du statut d'administrateur
+      console.log("API: mise à jour du statut d'admin de l'utilisateur")
+
+      //Obtention du corps de la requête
+      const {b} = req.body;
+
+      //Mise à jour
+      users.setAdmin(req.params.user_id, b)
+      .then(()=> {
+        //Succès
+        console.log("API: mise à jour du statut d'admin avec succès !")
+        res.status(200).send(true);
+      })
+      .catch((err) => {
+        //Erreur
+        console.log("API: erreur lors de la mise à jour du statut d'admin")
+        res.status(500).send(false)
+      });
+    });
+
 
   return router;
 }

@@ -52,6 +52,7 @@ function init(db) {
     })
     
 
+
   //Route concernant un canal particulier
   router
     .route("/:canal_id")
@@ -102,6 +103,8 @@ function init(db) {
       }
     });
 
+
+
   //Route concernant un message particulier
   router
     .route("/:canal_id/messages/:message_id")
@@ -120,6 +123,8 @@ function init(db) {
       });
     })
 
+
+    
   return router;
 }
 exports.default = init;
