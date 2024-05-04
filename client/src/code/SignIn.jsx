@@ -2,38 +2,38 @@ import { useState } from "react";
 import "./style/login.css";
 import axios from "axios";
 
+//Composant affichant le formulaire d'inscription
 function SignIn(props) {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  const [login, setLogin] = useState(""); //Nom d'utilisateur en cours de saisie
+  const [password, setPassword] = useState(""); //Mot de passe en cours de saisie
 
+  //Renvoie true si les mots de passe entrés sont différents, false sinon.
   function mdpDifferent() {
     var p = document.getElementById("pass").value;
     var cp = document.getElementById("cpass").value;
-    if (p != cp) document.getElementById("mdpDif").hidden = false;
-    else document.getElementById("mdpDif").hidden = true;
+    document.getElementById("mdpDif").hidden = (p == cp);
     return p != cp;
   }
 
+  //Fonction de création du compte
   function Signin() {
-    console.log("création du compte");
+    console.log("SignIn: demande de création du compte ...");
     axios
-      .post("/api/signin", { login: login, password: password })
-      .then((res) => {
-        console.log(res);
-        if (res.data) {
-          if (res.data.validation)
-            //Utilisateur validé, on le connecte
-            props.login(res.data._id.toString(), res.data.admin);
-          else {
-            //Utilisateur non validé, on le met sur la page d'attente
-            console.log("mise en attente");
-            props.setForm("en_attente");
-          }
-        }
-      })
-      .catch((err) => console.log(err));
+    .post("/api/signin", { login: login, password: password })
+    .then((res) => {
+      if (res.data) {
+        //Création du compte effectuée, on passe à la page d'attente
+        console.log("SignIn: création du compte effectuée, mise en attente ...");
+        props.setForm("en_attente");
+      }
+    })
+    .catch((err) => {
+      //Erreur
+      console.log("SignIn: erreur lors de la création du compte")
+    });
   }
 
+  //Affichage du formulaire
   return (
     <>
       <div id="signin_form">
@@ -52,7 +52,7 @@ function SignIn(props) {
         <input id="cpass" type="password" />
         <br />
         <div hidden={true} id="mdpDif">
-          Les mots de passe ne sont pas identiques
+          Les mots de passe sont différents
         </div>
         <button
           id="confirmSignin"

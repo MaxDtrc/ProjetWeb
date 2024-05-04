@@ -30,12 +30,12 @@ html,body {
 
 #signin_form {
     grid-template-columns: 10% 40% 40% 10%;
-    grid-template-rows: 20% 15% 15% 15% 15% 20%;
+    grid-template-rows: 20% 15% 15% 15% 15% 7% 13%;
 }
 
 #login_form {
     grid-template-columns: 10% 40% 40% 10%;
-    grid-template-rows: 20% 20% 20% 20% 20%;
+    grid-template-rows: 20% 20% 20% 20% 7% 13%;
 }
 
 #title {
@@ -99,6 +99,14 @@ html,body {
     grid-row: 4;
 }
 
+#mdpDif {
+    grid-row: 6;
+    grid-column: 1/6;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(255, 65, 65);
+}
+
 #changeFormLogin, #changeFormSignin{
     text-align: center;
     text-decoration: underline;
@@ -107,9 +115,9 @@ html,body {
 }
 
 #changeFormLogin {
-    grid-row:5;
+    grid-row:6;
 }
 
 #changeFormSignin {
-    grid-row:6;
+    grid-row:7;
 }

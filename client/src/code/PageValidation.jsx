@@ -3,35 +3,55 @@ import axios from "axios";
 import ListeUtilisateurs from "./ListeUtilisateurs.jsx";
 import "./style/users.css";
 
+//Composant affichant la liste des utilisateurs à valider pour les administrateurs
 function PageValidation(props) {
-  const [lstUtilisateurs, setLstUtilisateurs] = useState([]);
+  const [lstUtilisateurs, setLstUtilisateurs] = useState([]); //Liste des utilisateurs à valider
 
+  //Fonction de mise à jour du composant
   async function update() {
-    console.log("màj")
+    console.log("PageValidation: mise à jour de la liste des utilisateurs")
     try {
       const res = await axios.get("/api/user/validation"); // On récupère la liste des Utilisateurs
+
+      console.log("PageValidation: mise à jour de la liste des utilisateurs effectuée avec succès !")
       setLstUtilisateurs(res.data); //Mise à jour de la liste
     } catch (e) {
-      console.log("Erreur dans l'obtention de la liste des utilisateurs");
+      //Erreur
+      console.log("PageValidation: erreur dans l'obtention de la liste des utilisateurs");
     }
   }
 
+  //Fonction d'acceptation d'un utilisateur
   function accept(id){
-    axios.post("/api/user/validation/" + id).then(res => {
-      update();
+    console.log("PageValidation: demande d'acceptation d'un utilisateur ...")
+    axios.post("/api/user/validation/" + id)
+    .then(res => {
+      //Validation effectuée
+      console.log("PageValidation: validation effectuée !")
+      update(); //Mise à jour
+    })
+    .catch(err => {
+      console.log("PageValidation: erreur lors de la validation de l'utilisateur")
     });
   }
 
   function deny(id){
-    axios.delete("/api/user/" + id).then(res => {
-      update();
+    console.log("PageValidation: demande de rejection d'un utilisateur ...")
+    axios.delete("/api/user/" + id)
+    .then(res => {
+      //Rejection effectuée
+      console.log("PageValidation: rejection effectuée !")
+      update();//Mise à jour
     })
+    .catch(err => {
+      console.log("PageValidation: erreur lors de la rejection de l'utilisateur")
+    });
   }
 
-  if (lstUtilisateurs.length == 0) {
-    update(); //On met à jour la liste si elle est vide (à l'ouverture de la page)
-  }
+  //On met à jour la liste si elle est vide
+  if (lstUtilisateurs.length == 0) update();
 
+  //Affichage du composant
   return (
     <div id="liste_utilisateurs">
       <a

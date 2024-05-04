@@ -1,17 +1,15 @@
-import { useState } from "react";
 import "./style/users.css";
 import {formaterDate} from "./utils";
 import check from "../assets/check.png";
 import cross from "../assets/cross.png";
 
+//Composant permettant d'afficher un utilisateur à valider
 function Utilisateur(props) {
-  var date = "";
-  if (props.date) {
-    date = formaterDate(props.date);
-  } else {
-    date = "date";
-  }
+  
+  //Formatage de la date
+  var date = props.date ? formaterDate(props.date) : "datenotfound";
 
+  //Affichage du composant: nom, date, boutons de validation
   return (
     <div id="usr">
       <p id="usr_name">{props.username ? props.username : "nom"}</p>
@@ -20,7 +18,7 @@ function Utilisateur(props) {
         title="Accepter"
         onClick={(e) => {
           e.preventDefault();
-          props.accept(props.id);
+          props.accept(props.id); //On accepte l'utilisateur
         }}
       >
         <img id="accept_icon" src={check} />
@@ -30,7 +28,7 @@ function Utilisateur(props) {
         title="Refuser"
         onClick={(e) => {
           e.preventDefault();
-          props.deny(props.id);
+          props.deny(props.id); //On rejette l'utilisateur
         }}
       >
         <img id="deny_icon" src={cross} />
