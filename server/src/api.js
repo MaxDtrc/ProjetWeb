@@ -12,7 +12,6 @@ function init(db) {
   router.use((req, res, next) => {
     console.log("API: method %s, path %s", req.method, req.path);
     console.log("Body", req.body);
-    console.log("currentSession = " + req.session.userId)
     next();
   });
 
