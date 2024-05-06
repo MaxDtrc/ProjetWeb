@@ -16,7 +16,27 @@ function PageProfil(props) {
       //Obtention des données de l'utilisateur
       const user = (await axios.get("/api/user/" + props.idProfil)).data 
       console.log("PageProfil: mise à jour effectuée !")
-      setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: user.profile_picture});
+
+      //Obtention de la photo
+      try { 
+        console.log("PageProfil: Obtention de la photo")
+
+        //Requête d'obtention de la photo
+        const res = await axios.get("/api/user/photo/" + props.idProfil, { responseType: 'arraybuffer' })
+
+        //Conversion de l'image
+        const blob = new Blob([res.data], { type: 'image/png' });
+        const imageUrl = URL.createObjectURL(blob);
+
+        //Mise à jour du profil
+        setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: imageUrl});
+      }
+      catch(err){
+        console.log("PageProfil: erreur de chargement de la photo");
+        
+        //Mise à jour du profil (sans photo)
+        setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: null});
+      }
     }
     catch(e){
       //Erreur de mise à jour
@@ -27,9 +47,17 @@ function PageProfil(props) {
   //Fonction permettant d'upload une photo de profile
   function uploadPhoto(e){
     console.log("PageProfil: upload de la photo ...")
+
     const file = e.target.files[0]; //On récupère le fichier choisi par l'utilisateur
-    const img = URL.createObjectURL(file); //On crée un objet à partir du lien
-    axios.post("/api/user/photo/" + props.idProfil, {"photo": img}) //On envoie la photo au serveur
+    const formData = new FormData();
+    formData.append('image', file);
+
+    //On envoie la photo au serveur
+    axios.post("/api/user/photo/" + props.idProfil, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }) 
     .then(res => {
       //Réussite de l'upload
       console.log("PageProfil: photo upload avec succès !")
