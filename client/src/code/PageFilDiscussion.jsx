@@ -123,6 +123,7 @@ function PageFilDiscussion(props) {
     <>
       <div id="fil_discussion">
         <a
+          id="retour"
           href=""
           onClick={(e) => {
             props.setIdCanal(0);
