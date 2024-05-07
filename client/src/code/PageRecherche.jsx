@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ListeMessages from "./ListeMessages";
-import {idToName, nameToId} from "./utils.js"
+import {idToName, nameToId, idToPhoto} from "./utils.js"
 import axios from "axios";
 
 //Composant permettant d'afficher la page de recherche
@@ -37,6 +37,9 @@ function PageRecherche(props) {
       idSearchedUser = await nameToId(props.recherche.substring(1)); //Récupération de l'id à partir du nom
     }
 
+    //Dictionnaire d'optimisation
+    var donneesChargees = {}
+
     //Construction de la liste
     for (var i = 0; i < canaux.length; i++) {
       for (var j = 0; j < canaux[i].liste_messages.length; j++) {
@@ -46,15 +49,45 @@ function PageRecherche(props) {
         if ((props.recherche[0] != "@" && msg.text.toLowerCase().includes(props.recherche.toLowerCase()) && !msg.deleted) || (props.recherche[0] == "@" && msg.auteur == idSearchedUser)) {
           //Le message correspond aux critères de recherche
           msg.id_auteur = msg.auteur; //On copie l'id de l'auteur
-          msg.auteur = await idToName(msg.auteur); //On remplace l'id de l'auteur par son nom
+          
+          //On remplace l'id de l'auteur par son nom
+          if(donneesChargees[msg.auteur]){
+            //Déjà chargé précedemment, on récupère directement la valeur
+            msg.auteur = donneesChargees[msg.auteur].nom;
+          }else{
+            //Requête à la bdd pour l'obtenir
+            const nom = await idToName(msg.auteur);
+            donneesChargees[msg.auteur] = {'nom': nom};
+            msg.auteur = nom;
+          }
+
           msg.auteur = msg.auteur + " dans le canal " + canaux[i].titre; //Ajout de l'information du canal au nom de l'auteur
           
           //Informations s'il s'agit d'une réponse
           if(!msg.reply_auteur || !msg.reply_message){
             msg.reply_auteur = ""; msg.reply_message = "";
           }else{
-            msg.reply_auteur = await idToName(msg.reply_auteur)
+            //On remplace le nom dans le message d'origine auquel on a répondu
+            if(donneesChargees[msg.reply_auteur]){
+              //Déjà chargé précedemment, on récupère directement la valeur
+              msg.reply_auteur = donneesChargees[msg.reply_auteur].nom;
+            }else{
+              //Requête à la bdd pour l'obtenir
+              const nom = await idToName(msg.reply_auteur);
+              donneesChargees[msg.reply_auteur] = {'nom': nom};
+              msg.reply_auteur = nom;
+            }
           }
+
+          //Chargement de la photo
+          var photo;
+          if(donneesChargees[msg.id_auteur].photo)
+            photo = donneesChargees[msg.id_auteur].photo
+          else{
+            donneesChargees[msg.id_auteur].photo = await idToPhoto(msg.id_auteur)
+            photo = donneesChargees[msg.id_auteur].photo;
+          }
+          msg.photo = photo
 
           //On ajoute le message à la liste
           lst.push(msg);
