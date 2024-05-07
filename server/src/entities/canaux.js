@@ -61,6 +61,35 @@ class Canaux {
     });
   }
 
+  //Fonction de suppression d'un canal
+  delete(id_canal){
+    return new Promise((resolve, reject) => {
+      console.log("Canaux: suppression du canal ...")
+
+      this.db.collection("canaux").updateOne({
+        _id : new BSON.ObjectId(id_canal)
+      }, {
+        $set: {"deleted": true}
+      })
+      .then(res => {
+        if(res){
+          //Canal supprimé
+          console.log("Canaux: canal supprimé")
+          resolve(true);
+        }
+        else{
+          //Canal pas trouvé
+          console.log("Canaux: rien n'a été mis à jour")
+          reject();
+        }
+      })
+      .catch(err => {
+        console.log("Canaux: erreur lors de la suppression du canal")
+        reject();
+      })
+    });
+  }
+
   //Fonction permettant de renvoyer tous les canaux
   getAll(){
     return new Promise((resolve, reject) => {

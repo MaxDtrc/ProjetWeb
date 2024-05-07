@@ -140,12 +140,12 @@ function init(db) {
           //Succès
           console.log("API: utilisateur validé avec succès !")
           req.session.validation = true;
-          res.statut(200).send(true);
+          res.status(200).send(true);
         })
         .catch((err) => {
           //Erreur
           console.log("API: erreur lors de la validation de l'utilisateur")
-          res.statut(500).send(false);
+          res.status(500).send(false);
         });
     });
 

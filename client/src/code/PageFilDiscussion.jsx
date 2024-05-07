@@ -133,13 +133,16 @@ function PageFilDiscussion(props) {
         >
           Retour
         </a>
-        <NouveauMessage
-          ajouterMessage={ajouterMessage}
-          replyAuteur={replyAuteur}
-          replyMessage={replyMessage}
-          setReplyAuteur={setReplyAuteur}
-          setReplyMessage={setReplyMessage}
-        />
+        {
+          !props.canalDeleted ?
+          <NouveauMessage
+            ajouterMessage={ajouterMessage}
+            replyAuteur={replyAuteur}
+            replyMessage={replyMessage}
+            setReplyAuteur={setReplyAuteur}
+            setReplyMessage={setReplyMessage}
+          /> : null
+        }
         {lstMessages.length > 0 ? (
           <ListeMessages
             id_user={props.userId}

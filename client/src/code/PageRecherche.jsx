@@ -42,6 +42,9 @@ function PageRecherche(props) {
 
     //Construction de la liste
     for (var i = 0; i < canaux.length; i++) {
+      if(canaux[i].deleted && props.idCanal == 0)
+        continue;
+
       for (var j = 0; j < canaux[i].liste_messages.length; j++) {
 
         var msg = canaux[i].liste_messages[j]; //Récupération du message

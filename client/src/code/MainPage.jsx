@@ -9,6 +9,7 @@ import PageProfil from "./PageProfil";
 //Composant gérant la partie principale de la page du site
 function MainPage(props) {
   const [idCanal, setIdCanal] = useState(0); //Identifiant du canal ouvert
+  const [canalDeleted, setCanalDeleted] = useState(false); //Indique si le canal a été supprimé
 
   //Si un canal est déjà ouvert alors que l'on se trouve sur la page des canaux, on ouvre la conversation correspondante
   if (idCanal != 0 && props.currentPage == "page_canaux") props.setPage("fil_discussion");
@@ -26,6 +27,7 @@ function MainPage(props) {
             idCanal={idCanal}
             setIdCanal={setIdCanal}
             setIdProfil={props.setIdProfil}
+            canalDeleted={canalDeleted}
           />
         </main>
       );
@@ -66,6 +68,7 @@ function MainPage(props) {
             setPage={props.setPage}
             setIdCanal={setIdCanal}
             setIdProfil={props.setIdProfil}
+            setCanalDeleted={setCanalDeleted}
           />
         </main>
       );

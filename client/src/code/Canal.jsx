@@ -9,7 +9,7 @@ function Canal(props) {
   function clickCanal(e) {
     e.preventDefault();
     console.log("Canal: Ouverture du canal d'id " + props.id)
-    props.openCanal(props.id);
+    props.openCanal(props.id, props.deleted);
   }
 
   //Formatage de la date
@@ -21,6 +21,19 @@ function Canal(props) {
       <a href="" id="cnl_titre" onClick={clickCanal}>
         {props.titre ? props.titre : "titre"}
       </a>
+      {
+        !props.deleted && (props.admin || props.id_auteur == props.userId) ?
+        <button
+          id="cnl_delete"
+          title="supprimer"
+          onClick={(e) => {
+            props.deleteCanal(props.id);
+          }}
+        >
+          <i id="delete_icon" className="bi bi-trash"></i>
+
+        </button> : null
+      }
       <div id="cnl_info">
         <a
           id="cnl_auteur"

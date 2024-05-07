@@ -101,7 +101,23 @@ function init(db) {
             res.status(500).send(false);
           });
       }
-    });
+    })
+    .delete((req, res) => {
+      //Suppression d'un canal
+      console.log("API: suppression du canal ...")
+
+      canaux.delete(req.params.canal_id)
+      .then((r) => {
+        //Succès
+        console.log("API: canal supprimé avec succès !")
+        res.status(200).send(true)
+      })
+      .catch((err) => {
+        //Erreur
+        console.log("API: Erreur lors de la suppression du canal !")
+        res.status(500).send(false)
+      });
+    })
 
 
 
@@ -114,17 +130,17 @@ function init(db) {
 
       canaux.deleteMessage(req.params.canal_id, req.params.message_id)
       .then((r) => {
+        //Succès
         console.log("API: message supprimé avec succès !")
         res.status(200).send(true)
       })
       .catch((err) => {
+        //Erreur
         console.log("API: Erreur lors de la suppression du message !")
         res.status(500).send(false)
       });
     })
 
-
-    
   return router;
 }
 exports.default = init;

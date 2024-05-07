@@ -14,12 +14,16 @@ function ListeCanaux(props) {
           key={i++}
           titre={cnl.titre}
           auteur={cnl.auteur}
+          userId={props.userId}
+          admin={props.admin}
           id_auteur={cnl.id_auteur}
           date={cnl.date}
           id={cnl._id}
           openCanal={props.openCanal}
           setPage={props.setPage}
           setIdProfil={props.setIdProfil}
+          deleteCanal={props.deleteCanal}
+          deleted={cnl.deleted}
         />
       ))}
     </>

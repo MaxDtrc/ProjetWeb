@@ -4,7 +4,7 @@
   border-radius: 10px;
 
   display:grid;
-  grid-template-columns: [left] auto [right] 150px;
+  grid-template-columns: auto 60px 150px;
   height: 50px;
 
   background-color: transparent;
@@ -13,7 +13,7 @@
 }
 
 #cnl_info {
-  grid-column: right;
+  grid-column: 3;
   display: flex;
   flex-direction: column;
 }
@@ -23,7 +23,7 @@
   padding-right: 20px;
   color: white;
   text-justify: auto;
-  grid-column: left;
+  grid-column: 1;
   margin-top: 15px
 }
 
@@ -38,6 +38,37 @@
   margin-top: 7px;
 }
 
+#cnl_delete {
+  position: relative;
+  grid-column: 2;
+  margin-left: 10px;
+  margin-top: -10px;
+
+  align-self: center;
+
+  width: 25px;
+  height: 25px;
+
+  cursor: pointer;
+  background: transparent;
+
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+#cnl_delete:hover {
+  border-color: #5cb3ff;
+  color: #5cb3ff;
+}
+
+#delete_icon {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: 15%;
+  left: 18%;
+  color:white;
+}
 
 #list_cnl {
   display: flex;
