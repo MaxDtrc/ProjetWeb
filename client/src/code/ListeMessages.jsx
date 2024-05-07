@@ -9,7 +9,7 @@ function ListeMessages(props) {
   //Affichage de la liste des messages
   return (
     <>
-      {[...props.lstMessages].reverse().map((msg) => (
+      {[...props.lstMessages].map((msg) => (
         <Message
           key={i++}
           id_user={props.id_user}
