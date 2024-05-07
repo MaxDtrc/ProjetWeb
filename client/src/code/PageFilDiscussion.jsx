@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ListeMessages from "./ListeMessages";
 import NouveauMessage from "./NouveauMessage";
-import {idToName} from "./utils.js"
+import {idToName, idToPhoto} from "./utils.js"
 import axios from "axios";
 
 //Composant permettant d'afficher un fil de discussion
@@ -34,6 +34,9 @@ function PageFilDiscussion(props) {
       }else{
         lst[i].reply_auteur = await idToName(lst[i].reply_auteur); //On remplace l'id de l'auteur du message d'origine par son nom
       }
+      const photo = await idToPhoto(lst[i].id_auteur)
+      console.log("photo = " + photo)
+      lst[i].photo = photo;
     }
 
     //Mise à jour de la liste

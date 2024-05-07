@@ -1,4 +1,6 @@
 import axios from "axios";
+import def from "../assets/default.png";
+
 axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
@@ -51,4 +53,29 @@ export async function nameToId(name){
   } catch (e) {
     return "";
   }
+}
+
+export async function idToPhoto(id){
+  try{
+    //Requête d'obtention de la photo
+    const res = await axios.get("/api/user/photo/" + id, { responseType: 'arraybuffer' })
+    
+    if(res.data){
+      //Conversion de la photo
+      const blob = new Blob([res.data], { type: 'image/png' });
+      const imageUrl = URL.createObjectURL(blob);
+
+      //Return
+      console.log("Utils: photo obtenue avec succès !")
+      return imageUrl;
+    }
+    console.log("Utils: l'utilisateur n'a pas de photo")
+    return def;
+  }
+  catch(err){
+    //Erreur
+    console.log("Utils: erreur lors de l'obtention de la photo")
+    return def;
+  }
+  
 }

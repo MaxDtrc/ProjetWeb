@@ -187,7 +187,7 @@ function init(db) {
         }
 
         //On insère l'image dans la base de données
-        const i = await db.collection('images').insertOne({
+        await db.collection('images').insertOne({
           image: data,
           user_id: req.params.user_id
         })
@@ -205,7 +205,6 @@ function init(db) {
 
         //On renvoie un ok
         res.status(200).send(true);
-
       })
     }
     catch(err){

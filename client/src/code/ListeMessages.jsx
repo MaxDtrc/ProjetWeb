@@ -29,6 +29,7 @@ function ListeMessages(props) {
           deleted={msg.deleted}
           reply={props.reply}
           setIdProfil={props.setIdProfil}
+          photo={msg.photo}
         />
       ))}
     </>

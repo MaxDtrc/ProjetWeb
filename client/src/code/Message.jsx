@@ -13,7 +13,7 @@ function Message(props) {
   return (
     <>
       <div id="msg">
-        <img id="msg_photo" src={def} />
+        <img id="msg_photo" src={props.photo} />
         <a
           id="msg_auteur"
           href=""

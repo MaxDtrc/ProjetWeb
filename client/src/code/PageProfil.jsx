@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import def from "../assets/default.png";
-import { formaterDate } from "./utils";
+import { formaterDate, idToPhoto } from "./utils";
 import "./style/profil.css"
 
 //Composant affichant une page de profile
@@ -18,25 +17,13 @@ function PageProfil(props) {
       console.log("PageProfil: mise à jour effectuée !")
 
       //Obtention de la photo
-      try { 
-        console.log("PageProfil: Obtention de la photo")
+      console.log("PageProfil: Obtention de la photo")
 
-        //Requête d'obtention de la photo
-        const res = await axios.get("/api/user/photo/" + props.idProfil, { responseType: 'arraybuffer' })
+      //Requête d'obtention de la photo
+      const photo = await idToPhoto(props.idProfil);
 
-        //Conversion de l'image
-        const blob = new Blob([res.data], { type: 'image/png' });
-        const imageUrl = URL.createObjectURL(blob);
-
-        //Mise à jour du profil
-        setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: imageUrl});
-      }
-      catch(err){
-        console.log("PageProfil: erreur de chargement de la photo");
-        
-        //Mise à jour du profil (sans photo)
-        setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: null});
-      }
+      //Mise à jour du profil
+      setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: photo});
     }
     catch(e){
       //Erreur de mise à jour
