@@ -6,8 +6,6 @@ Projet de Web
 
 - pouvoir acceder au profil des gens (hors msgs)
 
-- pouvoir cliquer sur le titre du msg dans la recherche pour acceder au thread
-
 
 AUTRE
 faire schéma bdd
