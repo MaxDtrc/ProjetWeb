@@ -2,8 +2,6 @@ Projet de Web
 
 - Profil : voir les messages + nb
 
-- Meilleur message en cas d'erreur de connexion
- 
 AUTRE
 faire schéma bdd
 faire dossier écrit
