@@ -5,19 +5,22 @@ import PageCanaux from "./PageCanaux";
 import PageAdherents from "./PageAdherents";
 import PageRecherche from "./PageRecherche";
 import PageProfil from "./PageProfil";
+import axios from "axios";
 
 //Composant gérant la partie principale de la page du site
 function MainPage(props) {
   const [idCanal, setIdCanal] = useState(0); //Identifiant du canal ouvert
   const [canalDeleted, setCanalDeleted] = useState(false); //Indique si le canal a été supprimé
+  const [nomCanal, setNomCanal] = useState(""); //Nom du canal ouvert
 
   //Si un canal est déjà ouvert alors que l'on se trouve sur la page des canaux, on ouvre la conversation correspondante
   if (idCanal != 0 && props.currentPage == "page_canaux") props.setPage("fil_discussion");
 
   //Fonction d'ouverture d'un canal
-  function openCanal(id, deleted) {
+  async function openCanal(id, deleted) {
     setIdCanal(id); //On change l'id du canal ouvert
     setCanalDeleted(deleted); //On indique si le canal est supprimé ou non
+    setNomCanal((await axios.get("api/canal/" + id)).data.titre);
     document.getElementById("header_search_bar").value = ""
     props.setRecherche("")
     props.setPage("fil_discussion"); //On change la page sur laquelle on est
@@ -35,6 +38,7 @@ function MainPage(props) {
             setPage={props.setPage}
             idCanal={idCanal}
             setIdCanal={setIdCanal}
+            nomCanal={nomCanal}
             setIdProfil={props.setIdProfil}
             canalDeleted={canalDeleted}
           />

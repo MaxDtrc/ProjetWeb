@@ -12,8 +12,8 @@ function NouveauMessage(props) {
 
   //Affichage du formulaire : contenu et bouton de validation
   return (
-    <>
-      <input onChange={(e) => setNewMessage(e.target.value)} id="nv_msg" />
+    <div id="zone_nv_msg">
+      <input placeholder="Nouveau message ..." onChange={(e) => setNewMessage(e.target.value)} id="nv_msg" />
       <button onClick={addMessage} title="Envoyer"><i className="bi bi-send"></i></button>
       {props.replyMessage.length > 0 ? (
         <>
@@ -27,7 +27,7 @@ function NouveauMessage(props) {
           >Annuler</button>
         </>
       ) : null}
-    </>
+    </div>
   );
 }
 

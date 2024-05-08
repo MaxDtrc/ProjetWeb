@@ -69,28 +69,19 @@ function PageFilDiscussion(props) {
   //Affichage du composant: formulaire de nouveau message + liste des messages
   return (
     <>
+      <a
+        id="retour"
+        href=""
+        onClick={(e) => {
+          props.setIdCanal(0);
+          e.preventDefault();
+          props.setPage("page_canaux");
+        }}
+      >
+        Retour
+      </a>
       <div id="fil_discussion">
-        <a
-          id="retour"
-          href=""
-          onClick={(e) => {
-            props.setIdCanal(0);
-            e.preventDefault();
-            props.setPage("page_canaux");
-          }}
-        >
-          Retour
-        </a>
-        {
-          !props.canalDeleted ?
-          <NouveauMessage
-            ajouterMessage={ajouterMessage}
-            replyAuteur={replyAuteur}
-            replyMessage={replyMessage}
-            setReplyAuteur={setReplyAuteur}
-            setReplyMessage={setReplyMessage}
-          /> : null
-        }
+        <p id="msg_title">{props.nomCanal}</p>
         {lstMessages.length > 0 ? (
           <ListeMessages
             id_user={props.userId}
@@ -107,6 +98,16 @@ function PageFilDiscussion(props) {
         ) : (
           <p>Aucun message trouvé</p>
         )}
+        {
+          !props.canalDeleted ?
+          <NouveauMessage
+            ajouterMessage={ajouterMessage}
+            replyAuteur={replyAuteur}
+            replyMessage={replyMessage}
+            setReplyAuteur={setReplyAuteur}
+            setReplyMessage={setReplyMessage}
+          /> : null
+        }
       </div>
     </>
   );
