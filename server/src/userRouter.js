@@ -271,10 +271,9 @@ function init(db) {
       console.log("API: mise à jour du statut d'admin de l'utilisateur")
 
       //Obtention du corps de la requête
-      const {b} = req.body;
 
       //Mise à jour
-      users.setAdmin(req.params.user_id, b)
+      users.setAdmin(req.params.user_id, req.body.b)
       .then(()=> {
         //Succès
         console.log("API: mise à jour du statut d'admin avec succès !")
