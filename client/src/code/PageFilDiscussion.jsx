@@ -9,6 +9,7 @@ function PageFilDiscussion(props) {
   const [lstMessages, setLstMessages] = useState([]); //Liste des messages affichés
   const [replyId, setReplyId] = useState(""); //Id local du message auquel on répond
   const [replyAuteur, setReplyAuteur] = useState(""); //Id de l'auteur auquel on répond
+  const [replyNomAuteur, setReplyNomAuteur] = useState(""); //Nom de l'auteur auquel on répond
   const [replyMessage, setReplyMessage] = useState(""); //Texte du message auquel on répond
 
   //Fonction de mise à jour de la liste des messages
@@ -90,6 +91,7 @@ function PageFilDiscussion(props) {
             lstMessages={lstMessages}
             setReplyAuteur={setReplyAuteur}
             setReplyMessage={setReplyMessage}
+            setReplyNomAuteur={setReplyNomAuteur}
             setReplyId={setReplyId}
             deleteMessage={deleteMessage}
             setIdProfil={props.setIdProfil}
@@ -104,6 +106,7 @@ function PageFilDiscussion(props) {
             ajouterMessage={ajouterMessage}
             replyAuteur={replyAuteur}
             replyMessage={replyMessage}
+            replyNomAuteur={replyNomAuteur}
             setReplyAuteur={setReplyAuteur}
             setReplyMessage={setReplyMessage}
           /> : null

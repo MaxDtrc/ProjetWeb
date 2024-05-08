@@ -165,12 +165,6 @@
   flex-direction: column;
 }
 
-#nv_msg {
-  margin-bottom: 20px;
-  margin-right: 10px;
-  width:300px; /*TODO changer valeur absolue*/
-}
-
 #retour {
   color: white;
   margin-right: 10px;
@@ -181,4 +175,26 @@
   flex-direction: column;
   margin-bottom: 50px;
   align-items: center;
+}
+
+#zone_nv_msg {
+  margin-top: 10px;
+  width: 40%;
+  display: grid;
+  grid-template-columns: 85% 15%;
+  grid-template-rows: 50% 50%;
+  row-gap: 8px;
+  column-gap: 5px;
+  align-items: center;
+}
+
+#reply_nv_msg {
+  justify-content: center;
+  display:flex;
+  flex-direction: horizontal;
+  gap: 10px;
+  align-self:flex-end;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row: 2;
 }

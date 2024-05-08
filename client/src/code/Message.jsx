@@ -55,6 +55,7 @@ function Message(props) {
             id="msg_repondre"
             title="Répondre"
             onClick={(e) => {
+              props.setReplyNomAuteur(props.auteur)
               props.setReplyAuteur(props.id_auteur);
               props.setReplyMessage(props.text);
               props.setReplyId(props.id)

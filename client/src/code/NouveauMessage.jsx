@@ -16,16 +16,16 @@ function NouveauMessage(props) {
       <input placeholder="Nouveau message ..." onChange={(e) => setNewMessage(e.target.value)} id="nv_msg" />
       <button onClick={addMessage} title="Envoyer"><i className="bi bi-send"></i></button>
       {props.replyMessage.length > 0 ? (
-        <>
-          <p>En réponse à {props.replyAuteur}</p>
+        <div id="reply_nv_msg">
+          En réponse à {props.replyNomAuteur}
           <button
             onClick={(e) => {
               e.preventDefault();
               props.setReplyAuteur("");
               props.setReplyMessage("");
             }}
-          >Annuler</button>
-        </>
+          > Annuler</button>
+        </div>
       ) : null}
     </div>
   );

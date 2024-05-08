@@ -24,13 +24,13 @@ function ListeMessages(props) {
           setPage={props.setPage}
           setReplyAuteur={props.setReplyAuteur}
           setReplyMessage={props.setReplyMessage}
+          setReplyNomAuteur={props.setReplyNomAuteur}
           setReplyId={props.setReplyId}
           deleteMessage={props.deleteMessage}
           deleted={msg.deleted}
           reply={props.reply}
           setIdProfil={props.setIdProfil}
           photo={msg.photo}
-
           idCanal={msg.idCanal}
           openCanal={props.openCanal}
           canal={msg.canal}
