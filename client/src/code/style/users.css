@@ -78,6 +78,14 @@
   filter: invert(28%) sepia(55%) saturate(5771%) hue-rotate(348deg) brightness(97%) contrast(105%);
 }
 
+#liste_en_attente {
+  padding-bottom: 20px;
+  border-bottom: 1px solid white;
+}
+
+#liste_adherents {
+  margin-bottom: 50px
+}
 
 #list_usr {
   display: flex;

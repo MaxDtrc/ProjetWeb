@@ -48,7 +48,7 @@ function Header(props) {
             props.setPage("page_validation");
           }}
         >
-          Page validation
+          Liste Adhérents
         </button>
       ) : null}
       <button id="header_logout" onClick={logout}>

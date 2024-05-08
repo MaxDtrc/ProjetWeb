@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import PageFilDiscussion from "./PageFilDiscussion";
 import PageCanaux from "./PageCanaux";
-import PageValidation from "./PageValidation";
+import PageAdherents from "./PageAdherents";
 import PageRecherche from "./PageRecherche";
 import PageProfil from "./PageProfil";
 
@@ -35,7 +35,7 @@ function MainPage(props) {
       //Affichage de la page de validation des utilisateurs
       return (
         <main id="main_page">
-          <PageValidation setPage={props.setPage} />
+          <PageAdherents setPage={props.setPage} />
         </main>
       );
     case "page_recherche":

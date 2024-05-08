@@ -13,26 +13,29 @@ function Utilisateur(props) {
   return (
     <div id="usr">
       <p id="usr_name">{props.username ? props.username : "nom"}</p>
-      <button
-        id="accept"
-        title="Accepter"
-        onClick={(e) => {
-          e.preventDefault();
-          props.accept(props.id); //On accepte l'utilisateur
-        }}
-      >
-        <img id="accept_icon" src={check} />
-      </button>
-      <button
-        id="deny"
-        title="Refuser"
-        onClick={(e) => {
-          e.preventDefault();
-          props.deny(props.id); //On rejette l'utilisateur
-        }}
-      >
-        <img id="deny_icon" src={cross} />
-      </button>
+      {!props.valide ?
+      <>
+        <button
+          id="accept"
+          title="Accepter"
+          onClick={(e) => {
+            e.preventDefault();
+            props.accept(props.id); //On accepte l'utilisateur
+          }}
+        >
+          <img id="accept_icon" src={check} />
+        </button>
+        <button
+          id="deny"
+          title="Refuser"
+          onClick={(e) => {
+            e.preventDefault();
+            props.deny(props.id); //On rejette l'utilisateur
+          }}
+        >
+          <img id="deny_icon" src={cross} />
+        </button>
+      </> : null}
       <p id="usr_date">{date}</p>
     </div>
   );

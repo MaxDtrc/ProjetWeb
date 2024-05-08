@@ -10,7 +10,7 @@ function ListeUtilisateurs(props) {
   return (
     <>
       {[...props.lstUtilisateurs].reverse().map((usr) => (
-        <Utilisateur key={i++} id={usr._id.toString()} username={usr.username} date={usr.date} accept={props.accept} deny={props.deny}/>
+        <Utilisateur key={i++} id={usr._id.toString()} username={usr.username} date={usr.date} valide={props.valide} accept={!props.valide ? props.accept : null} deny={!props.valide ? props.deny : null}/>
       ))}
     </>
   );
