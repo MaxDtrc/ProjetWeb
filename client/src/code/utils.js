@@ -90,7 +90,7 @@ export async function getListeMessages(idCanal, condition, afficherCanal) {
 
   var lst = []; //Création de la liste des messages
   var canaux = []; //Création de la liste des canaux
-  console.log("recherche dans " + idCanal)
+
   try{
     if (idCanal) {
       canaux = [(await axios.get("/api/canal/" + idCanal)).data]; //On cherche dans un canal particulier

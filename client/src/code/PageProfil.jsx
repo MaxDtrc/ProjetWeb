@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { formaterDate, idToPhoto, idToName } from "./utils";
+import { formaterDate, idToPhoto, idToName, getListeMessages } from "./utils";
 import "./style/profil.css"
 import ListeMessages from "./ListeMessages";
 
@@ -22,42 +22,8 @@ function PageProfil(props) {
       console.log("PageProfil: Obtention de la photo")
       const photo = await idToPhoto(props.idProfil);
 
-      //Liste des messages
-      var lst = [];
-
-      //Dictionnaire d'optimisation
-      var donneesChargees = {}
-
-      var canaux = (await axios.get("/api/canal/")).data; //On récupère tous les canaux
-
-      for (var i = 0; i < canaux.length; i++) {
-        if(canaux[i].deleted) 
-          continue
-        for (var j = 0; j < canaux[i].liste_messages.length; j++) {
-          var msg = canaux[i].liste_messages[j]; //Récupération du message
-          if(msg.auteur == props.idProfil){
-            msg.id_auteur = msg.auteur; //On copie l'id de l'auteur
-            msg.auteur = user.username; //Ajout du nom
-            msg.idCanal = canaux[i]._id.toString(); //Ajout de l'id du canal
-            msg.canal = canaux[i].titre; //Ajout du titre du canal
-    
-            if(!msg.reply_auteur || !msg.reply_message){
-              msg.reply_auteur = ""; msg.reply_message = ""; //Informations s'il s'agit d'une réponse
-            }else{
-              if(donneesChargees[msg.reply_auteur]){ //On remplace le nom dans le message d'origine auquel on a répondu
-                msg.reply_auteur = donneesChargees[msg.reply_auteur].nom; //Déjà chargé précedemment, on récupère directement la valeur
-              }else{
-                const nom = await idToName(msg.reply_auteur); //Requête à la bdd pour l'obtenir
-                donneesChargees[msg.reply_auteur] = {'nom': nom};
-                msg.reply_auteur = nom;
-              }
-            }
-            msg.photo = photo
-            //On ajoute le message à la liste
-            lst.push(msg);
-          }
-        }
-      }
+      //Obtention de la liste des messages
+      const lst = await getListeMessages(null, ((msg) => msg.auteur == props.idProfil), true);
 
       //Mise à jour du profil
       setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: photo, liste_messages: lst});
