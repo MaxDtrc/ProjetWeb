@@ -13,6 +13,15 @@ function MainPage(props) {
 
   //Si un canal est déjà ouvert alors que l'on se trouve sur la page des canaux, on ouvre la conversation correspondante
   if (idCanal != 0 && props.currentPage == "page_canaux") props.setPage("fil_discussion");
+
+  //Fonction d'ouverture d'un canal
+  function openCanal(id, deleted) {
+    setIdCanal(id); //On change l'id du canal ouvert
+    setCanalDeleted(deleted); //On indique si le canal est supprimé ou non
+    document.getElementById("header_search_bar").value = ""
+    props.setRecherche("")
+    props.setPage("fil_discussion"); //On change la page sur laquelle on est
+  }
     
   //Affichage de la page courante
   switch (props.currentPage) {
@@ -35,7 +44,12 @@ function MainPage(props) {
       //Affichage de la page de validation des utilisateurs
       return (
         <main id="main_page">
-          <PageAdherents setPage={props.setPage} setIdProfil={props.setIdProfil} quit={props.quit}/>
+          <PageAdherents
+            admin={props.admin}
+            setPage={props.setPage}
+            setIdProfil={props.setIdProfil}
+            quit={props.quit}
+          />
         </main>
       );
     case "page_recherche":
@@ -48,6 +62,9 @@ function MainPage(props) {
             setPage={props.setPage}
             recherche={props.recherche}
             idCanal={idCanal}
+            setIdCanal={props.setIdCanal}
+            openCanal={openCanal}
+            setIdProfil={props.setIdProfil}
           />
         </main>
       );
@@ -75,6 +92,7 @@ function MainPage(props) {
             setIdCanal={setIdCanal}
             setIdProfil={props.setIdProfil}
             setCanalDeleted={setCanalDeleted}
+            openCanal={openCanal}
           />
         </main>
       );

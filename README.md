@@ -4,7 +4,7 @@ Projet de Web
 
 - Profil : voir les messages + nb
 
-- pouvoir acceder au profil des gens (hors msgs)
+- CSS en attente
 
 
 AUTRE

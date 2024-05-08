@@ -40,17 +40,17 @@ function Header(props) {
         placeholder="Chercher un message ..."
       />
 
-      {props.isAdmin ? (
-        <button
-          id="header_validation"
-          onClick={(e) => {
-            e.preventDefault();
-            props.setPage("page_validation");
-          }}
-        >
-          Liste Adhérents
-        </button>
-      ) : null}
+      
+      <button
+        id="header_validation"
+        onClick={(e) => {
+          e.preventDefault();
+          props.setPage("page_validation");
+        }}
+      >
+        Liste Adhérents
+      </button>
+      
       <button id="header_logout" onClick={logout}>
         Deconnexion
       </button>

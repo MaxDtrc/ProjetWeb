@@ -64,7 +64,10 @@ function PageRecherche(props) {
             msg.auteur = nom;
           }
 
-          msg.auteur = msg.auteur + " dans le canal " + canaux[i].titre; //Ajout de l'information du canal au nom de l'auteur
+          //Informations sur le canal
+          msg.idCanal = canaux[i]._id.toString(); //Ajout de l'id du canal
+          msg.canal = canaux[i].titre; //Ajout du titre du canal
+          msg.canalDeleted = canaux[i].deleted //Indique si le canal est supprimé (pour le changement de page)
           
           //Informations s'il s'agit d'une réponse
           if(!msg.reply_auteur || !msg.reply_message){
@@ -115,7 +118,13 @@ function PageRecherche(props) {
     <>
       <div id="fil_discussion">
         {lstMessages.length > 0 ? (
-          <ListeMessages lstMessages={lstMessages} reply={false} />
+          <ListeMessages
+            openCanal={props.openCanal}
+            setPage={props.setPage}
+            lstMessages={[...lstMessages].reverse()}
+            reply={false}
+            setIdProfil={props.setIdProfil}
+          />
         ) : (
           <p>Aucun message trouvé</p>
         )}

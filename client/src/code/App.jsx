@@ -28,6 +28,7 @@ function App() {
   //Fonction de changement de page
   function changePage(p){
     if(p != currentPage){
+      setRecherche("")
       setPreviousPage(currentPage);
       setPage(p)
     }
@@ -75,6 +76,7 @@ function App() {
           page={currentPage}
           currentPage={currentPage}
           recherche={recherche}
+          setRecherche={setRecherche}
           setIdProfil={setIdProfil}
           idProfil={idProfil}
           quit={quitPage}

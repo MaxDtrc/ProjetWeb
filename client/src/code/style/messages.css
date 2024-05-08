@@ -16,13 +16,24 @@
     sans-serif;
 }
 
-#msg_auteur {
-  color: #5cb3ff;
+#msg_info {
   grid-row: 1;
   grid-column-start: 2;
   grid-column-end: 2;
-  font-size: 20px;
   align-self: center;
+  padding-top: 7px;
+}
+
+#msg_auteur, #msg_canal {
+  color: #5cb3ff;
+  font-size: 20px;
+}
+
+#msg_canal {
+  font-style: italic;
+  font-size: 16px;
+  color: #d8c37d;
+  text-decoration: none;
 }
 
 #msg_contenu {

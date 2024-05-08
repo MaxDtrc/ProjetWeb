@@ -9,7 +9,7 @@ function ListeMessages(props) {
   //Affichage de la liste des messages
   return (
     <>
-      {[...props.lstMessages].map((msg) => (
+      {props.lstMessages.map((msg) => (
         <Message
           key={i++}
           id_user={props.id_user}
@@ -30,6 +30,11 @@ function ListeMessages(props) {
           reply={props.reply}
           setIdProfil={props.setIdProfil}
           photo={msg.photo}
+
+          idCanal={msg.idCanal}
+          openCanal={props.openCanal}
+          canal={msg.canal}
+          canalDeleted={msg.canalDeleted}
         />
       ))}
     </>

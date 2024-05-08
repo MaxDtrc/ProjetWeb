@@ -14,17 +14,32 @@ function Message(props) {
     <>
       <div id="msg">
         <img id="msg_photo" src={props.photo} />
-        <a
-          id="msg_auteur"
-          href=""
-          onClick={(e) => {
-            e.preventDefault();
-            props.setIdProfil(props.id_auteur)
-            props.setPage("page_profil");
-          }}
-        >
-          {props.auteur ? props.auteur : "auteur"}
-        </a>
+
+        <div id="msg_info">
+          <a
+            id="msg_auteur"
+            href=""
+            onClick={(e) => {
+              e.preventDefault();
+              props.setIdProfil(props.id_auteur)
+              props.setPage("page_profil");
+            }}
+          >
+            {props.auteur ? props.auteur : "auteur"}
+          </a>
+          { props.idCanal && props.canal ?
+            <a
+              id="msg_canal"
+              href=""
+              onClick={(e) => {
+                e.preventDefault();
+                props.openCanal(props.idCanal, props.canalDeleted)
+              }}
+            >
+              {" (" + props.canal + ")"}
+            </a> : null
+          }
+        </div>
         { props.reply_auteur && props.reply_message.length > 0 ?
           <div id="msg_reply_box">
             <i id="reply_icon_box" className="bi bi-reply"></i>

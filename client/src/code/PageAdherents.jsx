@@ -76,7 +76,7 @@ function PageAdherents(props) {
       >
         Retour
       </a>
-      {lstAValider.length != 0 ? (
+      {props.admin && lstAValider.length != 0 ? (
         <div id="liste_en_attente">
           <p id="usr_title">Adhérents en attente de validation</p>
           <ListeUtilisateurs

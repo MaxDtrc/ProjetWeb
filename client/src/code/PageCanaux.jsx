@@ -34,13 +34,6 @@ function PageCanaux(props) {
 
   //On met à jour la liste si elle est vide
   if (lstCanaux.length == 0) update(); 
-    
-  //Fonction d'ouverture d'un canal
-  function openCanal(id, deleted) {
-    props.setIdCanal(id); //On change l'id du canal ouvert
-    props.setCanalDeleted(deleted); //On indique si le canal est supprimé ou non
-    props.setPage("fil_discussion"); //On change la page sur laquelle on est
-  }
 
   function deleteCanal(id){
     axios.delete("/api/canal/" + id)
@@ -62,7 +55,7 @@ function PageCanaux(props) {
         lstCanaux={lstCanaux}
         userId={props.userId}
         admin={props.admin}
-        openCanal={openCanal}
+        openCanal={props.openCanal}
         setPage={props.setPage}
         setIdProfil={props.setIdProfil}
         deleteCanal={deleteCanal}
