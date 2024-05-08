@@ -14,7 +14,7 @@ function NouveauMessage(props) {
   return (
     <div id="zone_nv_msg">
       <input placeholder="Nouveau message ..." onChange={(e) => setNewMessage(e.target.value)} id="nv_msg" />
-      <button onClick={addMessage} title="Envoyer"><i className="bi bi-send"></i></button>
+      <button onClick={e => {addMessage(); document.getElementById("nv_msg").value = ""}} title="Envoyer"><i className="bi bi-send"></i></button>
       {props.replyMessage.length > 0 ? (
         <div id="reply_nv_msg">
           En réponse à {props.replyNomAuteur}
