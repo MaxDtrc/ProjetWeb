@@ -71,21 +71,32 @@ function PageAdherents(props) {
         href=""
         onClick={(e) => {
           e.preventDefault();
-          props.setPage("page_canaux");
+          props.quit();
         }}
       >
         Retour
       </a>
-      {
-        lstAValider.length != 0 ?
+      {lstAValider.length != 0 ? (
         <div id="liste_en_attente">
           <p id="usr_title">Adhérents en attente de validation</p>
-          <ListeUtilisateurs lstUtilisateurs={lstAValider} accept={accept} deny={deny} valide={false}/>
-        </div> : null
-      }
+          <ListeUtilisateurs
+            lstUtilisateurs={lstAValider}
+            accept={accept}
+            deny={deny}
+            valide={false}
+            setPage={props.setPage}
+            setIdProfil={props.setIdProfil}
+          />
+        </div>
+      ) : null}
       <div id="liste_adherents">
-      <p id="usr_title">Liste des adhérents</p>
-      <ListeUtilisateurs valide={true} lstUtilisateurs={lstAdherents} />
+        <p id="usr_title">Liste des adhérents</p>
+        <ListeUtilisateurs
+          valide={true}
+          lstUtilisateurs={lstAdherents}
+          setPage={props.setPage}
+          setIdProfil={props.setIdProfil}
+        />
       </div>
     </>
   );

@@ -20,9 +20,24 @@ function App() {
   const [isConnected, setConnection] = useState(false); //Statut de connexion de l'utilisateur
   const [connectedUser, setConnectedUser] = useState("null"); //Identifiant de l'utilisateur connecté
   const [adminStatus, setAdminStatus] = useState(false); //Stocke si l'utilisateur connecté est administrateur ou non
+  const [previousPage, setPreviousPage] = useState("page_canaux"); //Page précédente
   const [currentPage, setPage] = useState("page_canaux"); //Page affichée par le composant MainPage
   const [recherche, setRecherche] = useState(""); //Texte contenu dans la barre de recherche du header
   const [idProfil, setIdProfil] = useState("null"); //Identifiant du profil affiché par le composant PageProfil
+
+  //Fonction de changement de page
+  function changePage(p){
+    if(p != currentPage){
+      setPreviousPage(currentPage);
+      setPage(p)
+    }
+  }
+
+  //Fonction de retour de page
+  function quitPage(){
+    setPage(previousPage)
+    setPreviousPage("page_canaux")
+  }
 
   if (!isConnected) {
     //L'utilisateur n'est pas connecté, on affiche la page de connexion
@@ -33,6 +48,7 @@ function App() {
             setConnectedUser(userId);
             setAdminStatus(isAdmin);
             setPage("page_canaux");
+            setPreviousPage("page_canaux")
             setConnection(true);
           }}
         />
@@ -44,9 +60,10 @@ function App() {
       <div id="app">
         <Header
           setConnection={setConnection}
-          setPage={setPage}
+          setPage={changePage}
           setRecherche={setRecherche}
           isAdmin={adminStatus}
+          quit={quitPage}
         />
         <LeftSide />
         <MainPage
@@ -54,12 +71,13 @@ function App() {
           admin={adminStatus}
           isConnected={isConnected}
           setConnection={setConnection}
-          setPage={setPage}
+          setPage={changePage}
           page={currentPage}
           currentPage={currentPage}
           recherche={recherche}
           setIdProfil={setIdProfil}
           idProfil={idProfil}
+          quit={quitPage}
         />
 
         {/* Footer */}

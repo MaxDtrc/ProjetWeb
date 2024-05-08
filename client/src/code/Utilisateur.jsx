@@ -12,7 +12,19 @@ function Utilisateur(props) {
   //Affichage du composant: nom, date, boutons de validation
   return (
     <div id="usr">
-      <p id="usr_name">{props.username ? props.username : "nom"}</p>
+      { props.valide ?
+        <a
+          id="usr_name"
+          href=""
+          onClick={(e) => {
+            e.preventDefault();
+            props.setIdProfil(props.id)
+            props.setPage("page_profil");
+          }}
+        >
+          {props.username ? props.username : "nom"}
+        </a> : <p id="usr_name">{props.username ? props.username : "nom"}</p>
+      }
       {!props.valide ?
       <>
         <button

@@ -35,7 +35,7 @@ function MainPage(props) {
       //Affichage de la page de validation des utilisateurs
       return (
         <main id="main_page">
-          <PageAdherents setPage={props.setPage} />
+          <PageAdherents setPage={props.setPage} setIdProfil={props.setIdProfil} quit={props.quit}/>
         </main>
       );
     case "page_recherche":
@@ -55,7 +55,13 @@ function MainPage(props) {
       //Affichage de la page de profil
       return (
         <main id="main_page">
-          <PageProfil setPage={props.setPage} idProfil={props.idProfil} userId={props.userId} admin={props.admin}/>
+          <PageProfil
+            setPage={props.setPage}
+            idProfil={props.idProfil}
+            userId={props.userId}
+            admin={props.admin}
+            quit={props.quit}
+          />
         </main>
       );
     default:

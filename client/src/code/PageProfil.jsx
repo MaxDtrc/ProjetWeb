@@ -103,7 +103,7 @@ function PageProfil(props) {
         href=""
         onClick={(e) => {
           e.preventDefault();
-          props.setPage("page_canaux");
+          props.quit();
         }}
       >
         Retour
