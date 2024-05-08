@@ -36,7 +36,7 @@ export async function idToName(id){
     const pseudo = auteur.data.username;
     return pseudo;
   } catch (e) {
-    return "<Deleted User>";
+    return "[Deleted User]";
   }
 }
 

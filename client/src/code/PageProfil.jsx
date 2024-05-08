@@ -112,7 +112,7 @@ function PageProfil(props) {
       {/* pseudo, photo de profil, logoAdmin et date d'adhésion */}
       <div id="user">
         {profileData.profile_picture ? <img className="profile_photo" src={profileData.profile_picture} alt="Profile Picture" /> : <img className="profile_photo" src={def}/>}
-        <input type="file" onChange={uploadPhoto}></input>
+        {props.idProfil == props.userId ? <input type="file" onChange={uploadPhoto}></input> : null}
         <p id="profile_username">{profileData ? profileData.username : "auteurnotfound"} {profileData ? (profileData.isAdmin ? (<i title="Administrateur" className="bi bi-check-circle"></i>) : null) : "adminnotfound:("}</p>
         <p id="date">A rejoint le : {profileData ? profileData.date : "datenotfound"}</p>
 
