@@ -1,7 +1,5 @@
 Projet de Web
 
-- Profil : voir les messages + nb
-
 - Pouvoir bannir les utilisateurs
 
 AUTRE
