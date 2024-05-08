@@ -13,10 +13,7 @@ function PageRecherche(props) {
     console.log("PageRecherche: mise à jour de la liste des messages ...")
 
     //Nom de l'utilisateur recherché
-    var idSearchedUser = ""; 
-    if(props.recherche[0] == "@"){
-      idSearchedUser = await nameToId(props.recherche.substring(1)); //Récupération de l'id à partir du nom
-    }
+    var idSearchedUser = props.recherche[0] == "@" ? await nameToId(props.recherche.substring(1)) : ""; 
 
     //Condition de filtrage des messages
     const cond = (msg => {

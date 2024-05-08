@@ -157,6 +157,7 @@ class Users {
       console.log("Users: mise à jour du statut de l'utilisateur ...")
 
       //Mise à jour
+      console.log("status = " + status)
       this.db.collection("users").updateOne({
         _id : new BSON.ObjectId(id_user)
       }, {

@@ -63,8 +63,11 @@ function PageProfil(props) {
   //Fonction permettant de changer de statut
   function changeStatus(){
     console.log("PageProfil: mise à jour du statut ...")
+    console.log("status = " + profileData.status)
+    const s = profileData.status;
+    
     axios
-    .post(("/api/user/status/" + props.idProfil), {status : profileData.status})
+    .post(("/api/user/status/" + props.idProfil), {status : s})
     .then((res) => {
       //Mise a jour du statut effectuée
       console.log("PageProfil: mise à jour du statut effectuée avec succès !")

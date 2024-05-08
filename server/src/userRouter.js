@@ -247,11 +247,8 @@ function init(db) {
       //Modification du statut
       console.log("API: modification de la phrase de statut ...")
 
-      //Obtention du corps de la requête
-      const {s} = req.body;
-
       //Mise à jour
-      users.changeStatus(req.params.user_id, s)
+      users.changeStatus(req.params.user_id, req.body.status)
       .then((u) => {
         //Succès
         console.log("API: statut mis à jour avec succès !")
