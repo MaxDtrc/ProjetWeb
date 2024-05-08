@@ -168,5 +168,6 @@ export async function getListeMessages(idCanal, condition, afficherCanal) {
   }
 
   //On retourne la liste
+  console.log("Utils: liste des messages obtenue avec succès !")
   return lst;
 }

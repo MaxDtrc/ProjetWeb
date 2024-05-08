@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ListeMessages from "./ListeMessages";
 import NouveauMessage from "./NouveauMessage";
-import {idToName, idToPhoto} from "./utils.js"
+import {getListeMessages, idToName, idToPhoto} from "./utils.js"
 import axios from "axios";
 
 //Composant permettant d'afficher un fil de discussion
@@ -14,63 +14,11 @@ function PageFilDiscussion(props) {
   //Fonction de mise à jour de la liste des messages
   async function update() {
     console.log("PageFilDiscussion: mise à jour de la liste des messages ...")
-    var canal;
-    try {
-      canal = await axios.get("/api/canal/" + props.idCanal); // On récupère le canal
-    }
-    catch(e){
-      //Erreur pendant la requête d'obtention au serveur
-      console.log("PageFilDiscussion: erreur lors de l'obtention du canal")
-      return;
-    }
 
-    //Dictionnaire d'optimisation
-    var donneesChargees = {}
-    
-    const lst = canal.data.liste_messages; // On récupère la liste des messages du canal
-    for (var i = 0; i < lst.length; i++) {
-      lst[i].id = i; //On ajoute l'id local du message (correspondant à son placement dans la liste)
-      lst[i].id_auteur = lst[i].auteur; //On copie l'id de l'auteur
+    //Obtention de la liste des messages
+    const lst = await getListeMessages(props.idCanal, (msg) => {return true}, false);
 
-      //On remplace l'id de l'auteur par son nom
-      if(donneesChargees[lst[i].auteur]){
-        //Déjà chargé précedemment, on récupère directement la valeur
-        lst[i].auteur = donneesChargees[lst[i].auteur].nom;
-      }else{
-        //Requête à la bdd pour l'obtenir
-        const nom = await idToName(lst[i].auteur);
-        donneesChargees[lst[i].auteur] = {'nom': nom};
-        lst[i].auteur = nom;
-      }
-
-      if(!lst[i].reply_auteur || !lst[i].reply_message){ 
-        lst[i].reply_auteur = ""; lst[i].reply_message = ""; //Si le message n'est en réponse à aucun, on rempli des champs vides
-      }else{
-        //On remplace le nom dans le message d'origine auquel on a répondu
-        if(donneesChargees[lst[i].reply_auteur]){
-          //Déjà chargé précedemment, on récupère directement la valeur
-          lst[i].reply_auteur = donneesChargees[lst[i].reply_auteur].nom;
-        }else{
-          //Requête à la bdd pour l'obtenir
-          const nom = await idToName(lst[i].reply_auteur);
-          donneesChargees[lst[i].reply_auteur] = {'nom': nom};
-          lst[i].reply_auteur = nom;
-        }
-      }
-
-      //Chargement de la photo
-      var photo;
-      if(donneesChargees[lst[i].id_auteur].photo)
-        photo = donneesChargees[lst[i].id_auteur].photo
-      else{
-        donneesChargees[lst[i].id_auteur].photo = await idToPhoto(lst[i].id_auteur)
-        photo = donneesChargees[lst[i].id_auteur].photo;
-      }
-        
-      lst[i].photo = photo;
-    }
-
-    //Mise à jour de la liste
+    //Mise à jour
     console.log("PageFilDiscussion: mise à jour effectuée !")
     setLstMessages(lst);
   }
