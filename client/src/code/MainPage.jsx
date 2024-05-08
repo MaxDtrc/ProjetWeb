@@ -75,6 +75,8 @@ function MainPage(props) {
           <PageProfil
             setPage={props.setPage}
             idProfil={props.idProfil}
+            openCanal={openCanal}
+            setIdProfil={props.setIdProfil}
             userId={props.userId}
             admin={props.admin}
             quit={props.quit}

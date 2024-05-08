@@ -19,6 +19,7 @@ body {
 }
 
 #user {
+    padding-bottom: 10px;
     border-bottom: 1px solid white;
 }
 
@@ -27,6 +28,13 @@ body {
     border: 1px solid white;
     border-radius: 5px;
     color: white;
+}
+
+#nb_messages {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 #button_add_admin:hover {
