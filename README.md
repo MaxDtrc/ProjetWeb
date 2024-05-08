@@ -2,10 +2,8 @@ Projet de Web
 
 - Profil : voir les messages + nb
 
-- CSS en attente
-
 - Meilleur message en cas d'erreur de connexion
-
+ 
 AUTRE
 faire schéma bdd
 faire dossier écrit

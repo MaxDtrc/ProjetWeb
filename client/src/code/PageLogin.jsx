@@ -8,6 +8,7 @@ import axios from "axios";
 function PageLogin(props) {
   const [formulaire, setFormulaire] = useState("login"); //Formulaire en cours d'affichage
   const [statutLogin, setStatutLogin] = useState(0); //Contient 1 si on a déjà essayé de charger une session
+  const [messageErreur, setMessageErreur] = useState(""); //Message d'erreur de connexion/inscription
 
   //Fonction permettant de charger un session en cours
   function loadSession(){
@@ -38,14 +39,24 @@ function PageLogin(props) {
       //On affiche le formulaire de connexion
       return (
         <div id="login_page">
-          <Login login={props.login} setForm={setFormulaire} />
+          <Login
+            messageErreur={messageErreur}
+            setMessageErreur={setMessageErreur}
+            login={props.login}
+            setForm={setFormulaire}
+          />
         </div>
       );
     } else if (formulaire == "signin") {
       //On affiche le formulaire d'inscription
       return (
         <div id="login_page">
-          <SignIn login={props.login} setForm={setFormulaire} />
+          <SignIn
+            messageErreur={messageErreur}
+            setMessageErreur={setMessageErreur}
+            login={props.login}
+            setForm={setFormulaire}
+          />
         </div>
       );
     } else {

@@ -27,6 +27,7 @@ function Login(props) {
       .catch(err => {
         //Erreur lors de la connexion
         console.log("Login: Erreur lors de la connexion")
+        props.setMessageErreur("Identifiant ou mot de passe incorrect.")
       })
   }
 
@@ -53,11 +54,15 @@ function Login(props) {
         >
           Se connecter
         </button>
+        <div id="messageErreurLogin">
+          {props.messageErreur}
+        </div>
         <a
           id="changeFormLogin"
           href=""
           onClick={(e) => {
             e.preventDefault();
+            props.setMessageErreur("")
             props.setForm("signin");
           }}
         >

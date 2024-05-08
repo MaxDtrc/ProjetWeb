@@ -11,7 +11,9 @@ function SignIn(props) {
   function mdpDifferent() {
     var p = document.getElementById("pass").value;
     var cp = document.getElementById("cpass").value;
-    document.getElementById("mdpDif").hidden = (p == cp);
+    if(p != cp){
+      props.setMessageErreur("Les mots de passe sont différents.")
+    }
     return p != cp;
   }
 
@@ -30,6 +32,7 @@ function SignIn(props) {
     .catch((err) => {
       //Erreur
       console.log("SignIn: erreur lors de la création du compte")
+      props.setMessageErreur("L'identifiant est déjà utilisé.")
     });
   }
 
@@ -51,8 +54,8 @@ function SignIn(props) {
         <label id="cpassLabel">Confirmation: </label>
         <input id="cpass" type="password" />
         <br />
-        <div hidden={true} id="mdpDif">
-          Les mots de passe sont différents
+        <div id="messageErreurSignin">
+          {props.messageErreur}
         </div>
         <button
           id="confirmSignin"
@@ -68,6 +71,7 @@ function SignIn(props) {
           href=""
           onClick={(e) => {
             e.preventDefault();
+            props.setMessageErreur("")
             props.setForm("login");
           }}
         >
