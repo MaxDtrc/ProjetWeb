@@ -46,3 +46,10 @@ body {
     color:white;
     margin-right: 10px;
 }
+
+#changer_statut {
+    display:flex;
+    flex-direction: vertical;
+    gap: 10px;
+    margin-bottom: 10px;
+}

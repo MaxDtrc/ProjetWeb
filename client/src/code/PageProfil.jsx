@@ -138,14 +138,14 @@ function PageProfil(props) {
       
       {props.idProfil == props.userId ? 
       (modification ? 
-        <>
-        <input onChange={(e) => {profileData.status = e.target.value}} placeholder="Status"></input> 
+        <div id="changer_statut">
+        <input defaultValue={profileData.status} id="status_input" onChange={(e) => {profileData.status = e.target.value}} placeholder="Status"></input> 
         <button title="Enregistrer" onClick={changeStatus}><i className="bi bi-floppy"></i></button> 
-        </> 
-        : <>
-        <p>{profileData ? profileData.status : null}</p>
+        </div> 
+        : <div id="changer_statut">
+        {profileData ? profileData.status : null}
         <button title="Modifier" onClick={() => setModification(!modification)}><i className="bi bi-pencil-square"></i></button>
-        </>): <p>{profileData ? profileData.status : null}</p>}
+        </div>): <p>{profileData ? profileData.status : null}</p>}
       
       {/* Nb de messages envoyés et la liste */}
       <div id="nb_messages">
