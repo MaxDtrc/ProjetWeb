@@ -77,5 +77,96 @@ export async function idToPhoto(id){
     console.log("Utils: erreur lors de l'obtention de la photo")
     return def;
   }
-  
+}
+
+
+/*Fonction d'obtention d'une liste de message
+idCanal = identifiant du canal dans lequel on recherche le message
+condition = fonction de filtre des messages
+afficherCanal = booleen pour afficher ou non le canal dans le titre du message
+*/
+export async function getListeMessages(idCanal, condition, afficherCanal) {
+  console.log("Utils: obtention de la liste des messages ...")
+
+  var lst = []; //Création de la liste des messages
+  var canaux = []; //Création de la liste des canaux
+  console.log("recherche dans " + idCanal)
+  try{
+    if (idCanal) {
+      canaux = [(await axios.get("/api/canal/" + idCanal)).data]; //On cherche dans un canal particulier
+    } else {
+      canaux = (await axios.get("/api/canal/")).data; //On recherche les messages de tous les canaux
+    }
+  }
+  catch(e){
+    //Erreur
+    console.log("Utils: Erreur lors de l'obtention des canaux")
+    return;
+  }
+
+  //Dictionnaire d'optimisation
+  var donneesChargees = {}
+
+  //Construction de la liste
+  for (var i = 0; i < canaux.length; i++) {
+    if(canaux[i].deleted && !idCanal)
+      continue;
+
+    for (var j = 0; j < canaux[i].liste_messages.length; j++) {
+      var msg = canaux[i].liste_messages[j]; //Récupération du message
+
+      if (condition(msg)) {
+        //Le message correspond aux critères de recherche
+        msg.id_auteur = msg.auteur; //On copie l'id de l'auteur
+        
+        //On remplace l'id de l'auteur par son nom
+        if(donneesChargees[msg.auteur]){
+          msg.auteur = donneesChargees[msg.auteur].nom; //Déjà chargé précedemment, on récupère directement la valeur
+        }else{
+          const nom = await idToName(msg.auteur); //Requête à la bdd pour l'obtenir
+          donneesChargees[msg.auteur] = {'nom': nom};
+          msg.auteur = nom;
+        }
+
+        //Informations sur le canal
+        if(afficherCanal){
+          msg.idCanal = canaux[i]._id.toString(); //Ajout de l'id du canal
+          msg.canal = canaux[i].titre; //Ajout du titre du canal
+          msg.canalDeleted = canaux[i].deleted //Indique si le canal est supprimé (pour le changement de page)
+        }
+        
+        //Informations s'il s'agit d'une réponse
+        if(!msg.reply_auteur || !msg.reply_message){
+          msg.reply_auteur = ""; msg.reply_message = "";
+        }else{
+          //On remplace le nom dans le message d'origine auquel on a répondu
+          if(donneesChargees[msg.reply_auteur]){
+            msg.reply_auteur = donneesChargees[msg.reply_auteur].nom; //Déjà chargé précedemment, on récupère directement la valeur
+          }else{
+            const nom = await idToName(msg.reply_auteur); //Requête à la bdd pour l'obtenir
+            donneesChargees[msg.reply_auteur] = {'nom': nom};
+            msg.reply_auteur = nom;
+          }
+        }
+
+        //Chargement de la photo
+        var photo;
+        if(donneesChargees[msg.id_auteur].photo)
+          photo = donneesChargees[msg.id_auteur].photo
+        else{
+          donneesChargees[msg.id_auteur].photo = await idToPhoto(msg.id_auteur)
+          photo = donneesChargees[msg.id_auteur].photo;
+        }
+        msg.photo = photo
+
+        //On ajoute le message à la liste
+        lst.push(msg);
+      }
+    }
+
+    
+  }
+
+  //On retourne la liste
+  return lst;
 }

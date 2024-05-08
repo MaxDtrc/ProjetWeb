@@ -28,7 +28,7 @@ function App() {
   //Fonction de changement de page
   function changePage(p){
     if(p != currentPage){
-      setRecherche("")
+      //setRecherche("")
       setPreviousPage(currentPage);
       setPage(p)
     }
