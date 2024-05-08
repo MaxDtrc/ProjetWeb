@@ -51,8 +51,10 @@ function PageLogin(props) {
     } else {
       //L'utilisateur est en attente de validation
       return (
-        <div id="signin_form">
-          <p>En attente de validation</p>
+        <div id="login_page">
+          <div id="en_attente">
+            <p id="text_en_attente">En attente de validation ...</p>
+          </div>
         </div>
       );
     }

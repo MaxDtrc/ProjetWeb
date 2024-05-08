@@ -9,7 +9,7 @@ html,body {
     height: 100vh;
 }
 
-#signin_form, #login_form {
+#signin_form, #login_form, #en_attente {
     margin: auto;
     width: 400px;
     height: 260px;
@@ -22,6 +22,16 @@ html,body {
     border-radius: 10px;
 
     padding:10px;
+}
+
+#en_attente {
+    width: 200px;
+    height: 70px;
+}
+
+#text_en_attente {
+    font-weight: 500;
+    text-align: center;
 }
 
 #passLabel, #cpassLabel, #loginLabel, #title, #changeFormSignin, #changeFormLogin {
