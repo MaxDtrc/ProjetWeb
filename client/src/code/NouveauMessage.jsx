@@ -13,8 +13,22 @@ function NouveauMessage(props) {
   //Affichage du formulaire : contenu et bouton de validation
   return (
     <form id="zone_nv_msg">
-      <input placeholder="Nouveau message ..." onChange={(e) => setNewMessage(e.target.value)} id="nv_msg" />
-      <button type="submit" onClick={e => {e.preventDefault(); addMessage(); document.getElementById("nv_msg").value = ""}} title="Envoyer"><i className="bi bi-send"></i></button>
+      <input
+        placeholder="Nouveau message ..."
+        onChange={(e) => setNewMessage(e.target.value)}
+        id="nv_msg"
+      />
+      <button
+        type="submit"
+        onClick={(e) => {
+          e.preventDefault();
+          addMessage();
+          document.getElementById("nv_msg").value = "";
+        }}
+        title="Envoyer"
+      >
+        <i className="bi bi-send"></i>
+      </button>
       {props.replyMessage.length > 0 ? (
         <div id="reply_nv_msg">
           En réponse à {props.replyNomAuteur}
@@ -24,7 +38,10 @@ function NouveauMessage(props) {
               props.setReplyAuteur("");
               props.setReplyMessage("");
             }}
-          > Annuler</button>
+          >
+            {" "}
+            Annuler
+          </button>
         </div>
       ) : null}
     </form>
