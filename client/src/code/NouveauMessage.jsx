@@ -39,7 +39,6 @@ function NouveauMessage(props) {
               props.setReplyMessage("");
             }}
           >
-            {" "}
             Annuler
           </button>
         </div>
