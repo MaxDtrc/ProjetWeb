@@ -157,15 +157,17 @@ function PageProfil(props) {
         }  
       </div>
       
-      { afficherMessages ?
-      <ListeMessages 
-        lstMessages={[...profileData.liste_messages].reverse()} 
-        openCanal={props.openCanal}
-        setPage={props.setPage}
-        reply={false}
-        setIdProfil={props.setIdProfil}
-      /> : null
-      }
+      <div id="profil_msg">
+        { afficherMessages ?
+        <ListeMessages 
+          lstMessages={[...profileData.liste_messages].reverse()} 
+          openCanal={props.openCanal}
+          setPage={props.setPage}
+          reply={false}
+          setIdProfil={props.setIdProfil}
+        /> : null
+        }
+      </div>
     </>
   );
 }

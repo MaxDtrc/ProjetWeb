@@ -6,12 +6,12 @@ body {
     height: 100px;
     width: 100px;
     border-radius: 50%;
+    margin-top: 10px;
 }
 
 #modif_icon {
     height: 50px;
     width: 50px;
-    
 }
 
 #date {
@@ -52,4 +52,8 @@ body {
     flex-direction: vertical;
     gap: 10px;
     margin-bottom: 10px;
+}
+
+#profil_msg {
+    margin-bottom: 30px;
 }
