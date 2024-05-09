@@ -34,7 +34,7 @@ function Login(props) {
   //Affichage du formulaire de connexion
   return (
     <>
-      <div id="login_form">
+      <form id="login_form">
         <p id="title">Connexion</p>
         <label id="loginLabel" htmlFor="login">
           Identifiant:{" "}
@@ -48,7 +48,9 @@ function Login(props) {
         <br />
         <button
           id="confirmLogin"
-          onClick={() => {
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
             checkLogin();
           }}
         >
@@ -68,7 +70,7 @@ function Login(props) {
         >
           Cliquez ici pour vous créer un compte
         </a>
-      </div>
+      </form>
     </>
   );
 }

@@ -39,7 +39,7 @@ function SignIn(props) {
   //Affichage du formulaire
   return (
     <>
-      <div id="signin_form">
+      <form id="signin_form">
         <p id="title">Créer un compte</p>
         <label id="loginLabel">Identifiant: </label>
         <input id="login" onChange={(e) => setLogin(e.target.value)} />
@@ -59,6 +59,7 @@ function SignIn(props) {
         </div>
         <button
           id="confirmSignin"
+          type="submit"
           onClick={(e) => {
             e.preventDefault();
             if (!mdpDifferent()) Signin();
@@ -77,7 +78,7 @@ function SignIn(props) {
         >
           Cliquez ici pour vous connecter
         </a>
-      </div>
+      </form>
     </>
   );
 }

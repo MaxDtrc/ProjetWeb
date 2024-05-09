@@ -29,14 +29,25 @@ function NouveauCanal(props) {
 
   //Affichage du composant: champ pour le titre, bouton de validation et case pour le définir comme privé
   return (
-    <>
-    
+    <form>
       <input onChange={(e) => setNewCanal(e.target.value)} id="nv_cnl" />
-      <button onClick={createCanal}>Créer le canal</button>
-      {props.isAdmin ? (<><label htmlFor="private"> Privé: </label>
-      <input id="private" type="checkbox"></input></>) : null}
-      
-    </>
+      <button
+        type="submit"
+        onClick={(e) => {
+          e.preventDefault();
+          createCanal();
+          document.getElementById("nv_cnl").value = ""
+        }}
+      >
+        Créer le canal
+      </button>
+      {props.isAdmin ? (
+        <>
+          <label htmlFor="private"> Privé: </label>
+          <input id="private" type="checkbox"></input>
+        </>
+      ) : null}
+    </form>
   );
 }
 
