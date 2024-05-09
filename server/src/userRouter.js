@@ -150,6 +150,7 @@ function init(db) {
     });
 
 
+    
 
   //Multer (stockage d'images)
   const multer = require('multer');
@@ -158,7 +159,8 @@ function init(db) {
 
   //Route concernant les photos de profil
   router
-  .post('/photo/:user_id', upload.single('image'), async (req, res) => {
+  .route('/photo/:user_id')
+  .post(upload.single('image'), async (req, res) => {
     try {
       console.log("API: insertion de l'image dans la base de données ...")
 
@@ -174,37 +176,15 @@ function init(db) {
           res.status(500).send("Image illisible")
         }
 
-        //On vérifie si l'utilisateur a déjà stocké une photo
-        const u = (await db.collection('images').find({
-          user_id: req.params.user_id
-        }));
-
-        //Si c'est le cas, on la supprime
-        if(u){
-          await db.collection('images').deleteOne({
-            user_id: req.params.user_id
-          })
-        }
-
-        //On insère l'image dans la base de données
-        await db.collection('images').insertOne({
-          image: data,
-          user_id: req.params.user_id
+        users.changeProfilePicture(req.params.user_id, data)
+        .then(r => {
+          console.log("API: Photo mise à jour avec succès !")
+          res.status(200).send(true);
         })
-
-        console.log("API: Photo insérée avec succès !");
-
-        /* NE MARCHE PAS POUR L'INSTANT
-        //On supprime le fichier temporaire
-        fs.unlink(req.file.path, (err) => {
-            if (err) {
-              console.error("API: Erreur lors de la suppression du fichier temporaire (photo)");
-          }
-        });
-        */
-
-        //On renvoie un ok
-        res.status(200).send(true);
+        .catch(err => {
+          console.log("API: erreur lors de l'upload de la photo")
+          res.status(500).send(false);
+        })
       })
     }
     catch(err){
@@ -213,20 +193,16 @@ function init(db) {
       res.status(500).send(false);
     }
   })
-
-  //Get de la photo
-  router.get("/photo/:user_id", (req, res) => {
+  .get((req, res) => {
     console.log("API: Obtention de la photo ...")
 
     //On cherche la photo
-    db.collection("images").findOne({
-      user_id: {$eq: req.params.user_id}
-    })
+    users.getProfilePicture(req.params.user_id)
     .then((r) => {
         if(r){
           console.log("API: photo obtenue avec succès !")
           res.set('Content-Type', 'image/png'); 
-          res.send(r.image.buffer); //Envoi de la photo
+          res.send(r.buffer); //Envoi de la photo
         }else{
           console.log("API: photo introuvable")
           res.status(500).send(null)
@@ -239,6 +215,9 @@ function init(db) {
       res.status(500).send(null)
     })
   })
+
+
+
 
   //Route concernant la phrase de statut des utilisateurs
   router

@@ -182,7 +182,7 @@ class Users {
       this.db.collection("users").updateOne({
         _id : new BSON.ObjectId(id_user)
       }, {
-        $set : {"profile_picture" : photo}
+        $set : {"photo" : photo}
       })
       .then(res=>{
         console.log("Users: photo mise à jour avec succès !")
@@ -191,6 +191,25 @@ class Users {
       .catch(err => {
         //Erreur
         console.log("Users: erreur lors de la mise à jour de la photo")
+        reject()
+      })
+    });
+  }
+
+  //Fonction permettant d'obtenir la photo de profil de l'utilisateur
+  getProfilePicture(id_user){
+    return new Promise((resolve, reject) => {
+      console.log("Users: obtention de la photo de profil ...")
+      this.db.collection("users").findOne({
+        _id : new BSON.ObjectId(id_user)
+      })
+      .then(res => {
+        console.log("Users: photo obtenue avec succès !")
+        resolve(res.photo)
+      })
+      .catch(err => {
+        //Erreur
+        console.log("Users: erreur lors de l'obtention de la photo")
         reject()
       })
     });
