@@ -120,17 +120,22 @@ function PageProfil(props) {
       <div id="user">
         {profileData.profile_picture ? <img className="profile_photo" src={profileData.profile_picture} alt="Profile Picture" /> : <img className="profile_photo" src={def}/>}
         {props.idProfil == props.userId ? <input type="file" onChange={uploadPhoto}></input> : null}
-        <p id="profile_username">{profileData ? profileData.username : "auteurnotfound"} {profileData ? (profileData.isAdmin ? (<i title="Administrateur" className="bi bi-check-circle"></i>) : null) : "adminnotfound:("}</p>
+        
+        <div id="username_zone">
+          <p id="profile_username">{profileData ? profileData.username : "auteurnotfound"} {profileData ? (profileData.isAdmin ? (<i title="Administrateur" className="bi bi-check-circle"></i>) : null) : "adminnotfound:("}</p>
+          {/* Bouton pour rendre une personne admin */}
+          {props.admin && props.idProfil != props.userId?
+              (profileData && profileData.isAdmin ?
+                <button id="button_add_admin" title="Enlever le rôle d'admin" onClick={() => setAdmin(false)}><i className="bi bi-heart-fill"></i></button>
+              : <button id="button_add_admin" title="Donner le rôle d'admin" onClick={() => setAdmin(true)}><i className="bi bi-heart" ></i></button>
+              )
+          : null
+          }
+        </div>
+
         <p id="date">A rejoint le : {profileData ? profileData.date : "datenotfound"}</p>
 
-        {/* Bouton pour rendre une personne admin */}
-        {props.admin && props.idProfil != props.userId?
-            (profileData && profileData.isAdmin ?
-              <button id="button_add_admin" title="Enlever le rôle d'admin" onClick={() => setAdmin(false)}><i className="bi bi-heart-fill"></i></button>
-            : <button id="button_add_admin" title="Donner le rôle d'admin" onClick={() => setAdmin(true)}><i className="bi bi-heart" ></i></button>
-            )
-        : null
-        }
+        
       </div>
 
       {/* Status */}
