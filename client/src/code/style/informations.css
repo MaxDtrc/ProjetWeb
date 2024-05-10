@@ -28,6 +28,54 @@
   
 }
 
+#info_title {
+  text-align: right;
+  font-weight: bold;
+  text-decoration: underline;
+  color: white;
+  font-size: large;
+  font-weight: 30;
+  margin-top: -5px;
+  margin-bottom: 5px;
+}
+
+#info_top {
+  display:flex;
+  align-items: baseline;
+  gap: 10px;
+  width: 60%;
+  align-self: center;
+  padding-left: 20%;
+}
+
+#info_refresh {
+  align-self: left;
+  grid-row: 1;
+  grid-column: 3;
+
+  width: 25px;
+  height: 25px;
+
+  cursor: pointer;
+  background: transparent;
+
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+#info_refresh:hover {
+  border-color: #5cb3ff;
+  color: #5cb3ff;
+}
+
+#refresh_icon {
+  width: 15px;
+  height: 15px;
+  top: 15%;
+  left: 15%;
+  color:white;
+}
+
 #info_date {
   padding-right: 15px;
   color: #ddddffc5;

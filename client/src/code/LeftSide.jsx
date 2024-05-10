@@ -82,15 +82,29 @@ function LeftSide() {
 
   //Affichage du composant
   return (
-    <div id="left_side">
-      {infos.map((inf) => (
-        <Information
-          key={i++}
-          text={inf.text}
-          date={inf.date}
-        />
-      ))}
-    </div>
+    <>
+      <div id="left_side">
+        <div id="info_top">
+          <p id="info_title">Notifications</p>
+          <button
+              id="info_refresh"
+              title="Rafraichir"
+              onClick={(e) => {
+                update();
+              }}
+            >
+              <i id="refresh_icon" className="bi bi-arrow-clockwise"></i>
+          </button>
+        </div>
+        {infos.map((inf) => (
+          <Information
+            key={i++}
+            text={inf.text}
+            date={inf.date}
+          />
+        ))}
+      </div>
+    </>
   );
 }
 

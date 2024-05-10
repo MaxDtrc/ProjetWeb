@@ -79,8 +79,7 @@
 }
 
 #liste_en_attente {
-  padding-bottom: 20px;
-  border-bottom: 1px solid white;
+  padding-bottom: 10px;
 }
 
 #liste_adherents {
@@ -100,4 +99,18 @@
 #retour {
   color:white;
   margin-right: 10px;
+}
+
+#en_attente_scrollview {
+  width: 100%;
+  max-height: 35vh;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  border-bottom: 1px solid white;
+}
+
+#adherents_scrollview {
+  width: 100%;
+  max-height: 75vh;
+  overflow-y: auto;
 }
