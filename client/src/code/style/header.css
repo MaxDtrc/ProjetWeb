@@ -36,6 +36,16 @@
     grid-column: 5;
     margin: 0px 10px;
     min-width: 100px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.text {
+    color: white;
+    margin: 0px;
+    padding-bottom: 3px;
 }
 
 #header_validation {
@@ -43,4 +53,13 @@
     grid-column: 5;
     margin: 0px 10px;
     min-width: 100px;
+    cursor: pointer;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 5px;
 }
+
+#header_validation:hover, #header_logout:hover {
+    border-color: #5cb3ff;
+    color: #5cb3ff;
+  }
