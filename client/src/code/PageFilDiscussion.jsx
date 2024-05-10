@@ -27,7 +27,7 @@ function PageFilDiscussion(props) {
   //On met en bas après un refresh
   useEffect(() => {
     if(lstMessages != 0 && replyAuteur == ""){
-      var scrollableDiv = document.getElementById("scroll");
+      var scrollableDiv = document.getElementById("msg_scrollview");
       scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
     }
   })
@@ -92,7 +92,7 @@ function PageFilDiscussion(props) {
       <div id="fil_discussion">
         <p id="msg_title">{props.nomCanal}</p>
         {lstMessages.length > 0 ? (
-        <div id="scroll">
+        <div id="msg_scrollview">
           <ListeMessages
             id_user={props.userId}
             admin={props.admin}
