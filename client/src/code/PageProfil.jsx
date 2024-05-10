@@ -134,8 +134,8 @@ function PageProfil(props) {
       </div>
 
       {/* Status */}
+      <div id="status">
       <p>A propos de l'utilisateur: </p>
-      
       {props.idProfil == props.userId ? 
       (modification ? 
         <div id="changer_statut">
@@ -146,8 +146,10 @@ function PageProfil(props) {
         {profileData ? profileData.status : null}
         <button title="Modifier" onClick={() => setModification(!modification)}><i className="bi bi-pencil-square"></i></button>
         </div>): <p>{profileData ? profileData.status : null}</p>}
-      
+      </div>
+
       {/* Nb de messages envoyés et la liste */}
+
       <div id="nb_messages">
         Messages envoyés par l'utilisateur :   {profileData.liste_messages.length}
         {
@@ -159,13 +161,15 @@ function PageProfil(props) {
       
       <div id="profil_msg">
         { afficherMessages ?
-        <ListeMessages 
-          lstMessages={[...profileData.liste_messages].reverse()} 
-          openCanal={props.openCanal}
-          setPage={props.setPage}
-          reply={false}
-          setIdProfil={props.setIdProfil}
-        /> : null
+        <div id="profil_scrollview">
+          <ListeMessages 
+            lstMessages={[...profileData.liste_messages].reverse()} 
+            openCanal={props.openCanal}
+            setPage={props.setPage}
+            reply={false}
+            setIdProfil={props.setIdProfil}
+          />
+        </div> : null
         }
       </div>
     </>

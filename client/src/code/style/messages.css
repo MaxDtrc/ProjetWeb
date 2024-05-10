@@ -18,7 +18,7 @@
 
 #msg_scrollview, #recherche_scrollview {
   width: 100%;
-  height: 60vh;
+  max-height: 60vh;
   overflow-y: auto;
   margin-bottom: 20px;
 }
