@@ -16,6 +16,13 @@
     sans-serif;
 }
 
+#scroll {
+  width: 100%;
+  height: 55vh;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
 #msg_title {
   text-align: center;
   font-weight: bold;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListeMessages from "./ListeMessages";
 import NouveauMessage from "./NouveauMessage";
 import {getListeMessages, idToName, idToPhoto} from "./utils.js"
@@ -21,8 +21,16 @@ function PageFilDiscussion(props) {
 
     //Mise à jour
     console.log("PageFilDiscussion: mise à jour effectuée !")
-    setLstMessages(lst);
+    await setLstMessages(lst);
   }
+
+  //On met en bas après un refresh
+  useEffect(() => {
+    if(lstMessages != 0 && replyAuteur == ""){
+      var scrollableDiv = document.getElementById("scroll");
+      scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+    }
+  })
 
   //Fonction de suppression d'un message
   function deleteMessage(id_message){
@@ -84,6 +92,7 @@ function PageFilDiscussion(props) {
       <div id="fil_discussion">
         <p id="msg_title">{props.nomCanal}</p>
         {lstMessages.length > 0 ? (
+        <div id="scroll">
           <ListeMessages
             id_user={props.userId}
             admin={props.admin}
@@ -97,19 +106,20 @@ function PageFilDiscussion(props) {
             setIdProfil={props.setIdProfil}
             reply={true}
           />
+        </div>
         ) : (
           <p>Aucun message trouvé</p>
         )}
         {
           !props.canalDeleted ?
-          <NouveauMessage
-            ajouterMessage={ajouterMessage}
-            replyAuteur={replyAuteur}
-            replyMessage={replyMessage}
-            replyNomAuteur={replyNomAuteur}
-            setReplyAuteur={setReplyAuteur}
-            setReplyMessage={setReplyMessage}
-          /> : null
+            <NouveauMessage
+              ajouterMessage={ajouterMessage}
+              replyAuteur={replyAuteur}
+              replyMessage={replyMessage}
+              replyNomAuteur={replyNomAuteur}
+              setReplyAuteur={setReplyAuteur}
+              setReplyMessage={setReplyMessage}
+            /> : null 
         }
       </div>
     </>
