@@ -30,7 +30,7 @@ function NouveauCanal(props) {
   //Affichage du composant: champ pour le titre, bouton de validation et case pour le définir comme privé
   return (
     <form>
-      <input onChange={(e) => setNewCanal(e.target.value)} id="nv_cnl" />
+      <input onChange={(e) => setNewCanal(e.target.value)} id="nv_cnl" placeholder="Nouveau canal ..."/>
       <button
         type="submit"
         onClick={(e) => {
