@@ -92,3 +92,16 @@
   margin-bottom: 20px;
   margin-right: 10px;
 }
+
+#creer_canal {
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+#creer_canal:hover {
+  border-color: #5cb3ff;
+  color: #5cb3ff;
+}

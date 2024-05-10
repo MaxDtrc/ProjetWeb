@@ -25,7 +25,7 @@
 
 #recherche_scrollview {
   margin-bottom: 0px;
-  height: 78vh;
+  max-height: 75vh;
 }
 
 #msg_title {

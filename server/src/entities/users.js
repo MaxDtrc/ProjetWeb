@@ -32,7 +32,7 @@ class Users {
             "password": password,
             "admin": false,
             "validation": false,
-            "profile_picture": null,
+            "photo": null,
             "date": new Date(),
             "status": ""
           }).then((u) => {

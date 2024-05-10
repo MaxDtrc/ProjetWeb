@@ -171,3 +171,11 @@ export async function getListeMessages(idCanal, condition, afficherCanal) {
   console.log("Utils: liste des messages obtenue avec succès !")
   return lst;
 }
+
+//Convertit une chaine au format "jj/mm/aaaa" en date.
+export function stringToDate(dateString) {
+  var parts = dateString.split('/');
+  var convertedDate = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+
+  return convertedDate;
+}

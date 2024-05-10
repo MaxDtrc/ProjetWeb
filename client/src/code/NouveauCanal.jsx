@@ -33,13 +33,14 @@ function NouveauCanal(props) {
       <input onChange={(e) => setNewCanal(e.target.value)} id="nv_cnl" placeholder="Nouveau canal ..."/>
       <button
         type="submit"
+        id="creer_canal"
         onClick={(e) => {
           e.preventDefault();
           createCanal();
           document.getElementById("nv_cnl").value = ""
         }}
       >
-        Créer le canal
+        <p className="text">Créer le canal</p>
       </button>
       {props.isAdmin ? (
         <>

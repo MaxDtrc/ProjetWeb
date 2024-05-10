@@ -1,7 +1,8 @@
 import { useState } from "react";
 import ListeMessages from "./ListeMessages";
-import {idToName, nameToId, idToPhoto, getListeMessages} from "./utils.js"
+import {idToName, nameToId, idToPhoto, getListeMessages, stringToDate} from "./utils.js"
 import axios from "axios";
+import "./style/messages.css"
 
 //Composant permettant d'afficher la page de recherche
 function PageRecherche(props) {
@@ -12,12 +13,18 @@ function PageRecherche(props) {
   async function update() {
     console.log("PageRecherche: mise à jour de la liste des messages ...")
 
-    //Nom de l'utilisateur recherché
+    //Nom de l'utilisateur recherché (recherche prefixée par @)
     var idSearchedUser = props.recherche[0] == "@" ? await nameToId(props.recherche.substring(1)) : ""; 
+
+    //Intervalle de dates recherché (recherche au format "[dd/mm/aaaa-dd/mm/aaaa])
+    var dateDebut = props.recherche[0] == "[" ? stringToDate(props.recherche.split("-")[0].substring(1)) : null
+    var dateFin = props.recherche[0] == "[" ? stringToDate(props.recherche.split("-")[1].slice(0, -1)) : null
 
     //Condition de filtrage des messages
     const cond = (msg => {
-      return (props.recherche[0] != "@" && msg.text.toLowerCase().includes(props.recherche.toLowerCase()) && !msg.deleted) || (props.recherche[0] == "@" && msg.auteur == idSearchedUser)
+      return (props.recherche[0] != "@" && props.recherche[0] != "[" && msg.text.toLowerCase().includes(props.recherche.toLowerCase()) && !msg.deleted) 
+          || (props.recherche[0] == "[" && new Date(msg.date) >= dateDebut && new Date(msg.date) <= dateFin)
+          || (props.recherche[0] == "@" && msg.auteur == idSearchedUser)
     })
     
     //Obtention de la liste des messages
@@ -38,8 +45,8 @@ function PageRecherche(props) {
   //Affichage du composant (liste des messages correspondants à la recherche)
   return (
     <>
-      <div id="recherche_scrollview">
-        <div id="fil_discussion">
+      <div id="fil_discussion">
+        <div id="recherche_scrollview">
           {lstMessages.length > 0 ? (
             <ListeMessages
               openCanal={props.openCanal}

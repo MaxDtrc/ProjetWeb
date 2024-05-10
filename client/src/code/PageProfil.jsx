@@ -22,8 +22,12 @@ function PageProfil(props) {
       console.log("PageProfil: Obtention de la photo")
       const photo = await idToPhoto(props.idProfil);
 
-      //Obtention de la liste des messages
-      const lst = await getListeMessages(null, ((msg) => msg.auteur == props.idProfil), true);
+      //Obtention de la liste des messages (si pas déjà obtenue à un précédent refresh)
+      var lst;
+      if(profileData && profileData.liste_messages.length != 0)
+        lst = profileData.liste_messages
+      else
+        lst = await getListeMessages(null, ((msg) => msg.auteur == props.idProfil), true);
 
       //Mise à jour du profil
       setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: photo, liste_messages: lst});
@@ -96,6 +100,21 @@ function PageProfil(props) {
     });
   }
 
+  //Fonction permettant de bannir l'utilisateur
+  function deleteUser(){
+    console.log("PageProfil: suppression de l'utilisateur en cours ...")
+    axios.delete(("/api/user/" + props.idProfil))
+    .then((res) => {
+      //Réussite
+      console.log("PageProfil: utilisateur supprimé !")
+      props.quit();
+    })
+    .catch((err) => {
+      //Erreur
+      console.log("PageProfil: erreur lors de la suppression de l'utilisateur ...")
+    })
+  }
+
   //Si aucun profile n'est chargé, on le met à jour
   if(profileData == null){
     update();
@@ -118,64 +137,130 @@ function PageProfil(props) {
 
       {/* pseudo, photo de profil, logoAdmin et date d'adhésion */}
       <div id="user">
-        {profileData.profile_picture ? <img className="profile_photo" src={profileData.profile_picture} alt="Profile Picture" /> : <img className="profile_photo" src={def}/>}
-        {props.idProfil == props.userId ? <input type="file" onChange={uploadPhoto}></input> : null}
-        
+        {profileData.profile_picture ? (
+          <img
+            className="profile_photo"
+            src={profileData.profile_picture}
+            alt="Profile Picture"
+          />
+        ) : (
+          <img className="profile_photo" src={def} />
+        )}
+        {props.idProfil == props.userId ? (
+          <>
+            <label htmlFor="change_photo" id="change_photo_button">
+              <i id="change_photo_icon" title="Changer la photo de profil" className="bi bi-pencil"></i>
+            </label>
+            <input
+              id="change_photo"
+              value=""
+              type="file"
+              onChange={uploadPhoto}
+            ></input>
+          </>
+        ) : null}
+
         <div id="username_zone">
-          <p id="profile_username">{profileData ? profileData.username : "auteurnotfound"} {profileData ? (profileData.isAdmin ? (<i title="Administrateur" className="bi bi-check-circle"></i>) : null) : "adminnotfound:("}</p>
-          {/* Bouton pour rendre une personne admin */}
-          {props.admin && props.idProfil != props.userId?
-              (profileData && profileData.isAdmin ?
-                <button id="button_add_admin" title="Enlever le rôle d'admin" onClick={() => setAdmin(false)}><i className="bi bi-heart-fill"></i></button>
-              : <button id="button_add_admin" title="Donner le rôle d'admin" onClick={() => setAdmin(true)}><i className="bi bi-heart" ></i></button>
-              )
-          : null
+          <p id="profile_username">
+            {profileData ? profileData.username : "auteurnotfound"}{" "}
+            {profileData ? (
+              profileData.isAdmin ? (
+                <i title="Administrateur" className="bi bi-check-circle"></i>
+              ) : null
+            ) : (
+              "adminnotfound:("
+            )}
+          </p>
+          
+        </div>
+
+        <div id="profile_actions">
+          { props.admin && props.idProfil != props.userId ?
+            ( !profileData.isAdmin ?
+              <button id="profile_set_admin" onClick={() => setAdmin(true)}>
+                <p className="text">Donner le rôle administrateur</p>
+              </button> : 
+              <button id="profile_set_admin" onClick={() => setAdmin(false)}>
+                <p className="text">Retirer le rôle d'administrateur</p>
+              </button>
+             ) : null
+          }
+
+          { props.admin && props.idProfil != props.userId && !profileData.isAdmin ?
+          <button id="profile_ban" onClick={(e) => {e.preventDefault(); deleteUser()}}>
+            <p className="text">Bannir l'adhérent</p>
+          </button> : null
           }
         </div>
 
-        <p id="date">A rejoint le : {profileData ? profileData.date : "datenotfound"}</p>
-
-        
+        <p id="date">
+          A rejoint le : {profileData ? profileData.date : "datenotfound"}
+        </p>
       </div>
 
       {/* Status */}
       <div id="status">
-      <p>A propos de l'utilisateur: </p>
-      {props.idProfil == props.userId ? 
-      (modification ? 
-        <div id="changer_statut">
-        <input defaultValue={profileData.status} id="status_input" onChange={(e) => {profileData.status = e.target.value}} placeholder="Status"></input> 
-        <button title="Enregistrer" onClick={changeStatus}><i className="bi bi-floppy"></i></button> 
-        </div> 
-        : <div id="changer_statut">
-        {profileData ? profileData.status : null}
-        <button title="Modifier" onClick={() => setModification(!modification)}><i className="bi bi-pencil-square"></i></button>
-        </div>): <p>{profileData ? profileData.status : null}</p>}
+        <p>A propos de l'utilisateur: </p>
+        {props.idProfil == props.userId ? (
+          modification ? (
+            <div id="changer_statut">
+              <input
+                defaultValue={profileData.status}
+                id="status_input"
+                onChange={(e) => {
+                  profileData.status = e.target.value;
+                }}
+                placeholder="Status"
+              ></input>
+              <button title="Enregistrer" onClick={changeStatus}>
+                <i className="bi bi-floppy"></i>
+              </button>
+            </div>
+          ) : (
+            <div id="changer_statut">
+              {profileData ? profileData.status : null}
+              <button
+                title="Modifier"
+                onClick={() => setModification(!modification)}
+              >
+                <i className="bi bi-pencil-square"></i>
+              </button>
+            </div>
+          )
+        ) : (
+          <p>{profileData ? profileData.status : null}</p>
+        )}
       </div>
 
       {/* Nb de messages envoyés et la liste */}
 
       <div id="nb_messages">
-        Messages envoyés par l'utilisateur :   {profileData.liste_messages.length}
-        {
-          profileData.liste_messages.length != 0 ?
-          <button onClick={(e) => {e.preventDefault(); setAfficherMessage(!afficherMessages)}}> {afficherMessages ? "Masquer" : "Afficher"} </button>
-          : null
-        }  
+        Messages envoyés par l'utilisateur : {profileData.liste_messages.length}
+        {profileData.liste_messages.length != 0 ? (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setAfficherMessage(!afficherMessages);
+            }}
+          >
+            {" "}
+            {afficherMessages ? "Masquer" : "Afficher"}{" "}
+          </button>
+        ) : null}
       </div>
-      
+
       <div id="profil_msg">
-        { afficherMessages ?
-        <div id="profil_scrollview">
-          <ListeMessages 
-            lstMessages={[...profileData.liste_messages].reverse()} 
-            openCanal={props.openCanal}
-            setPage={props.setPage}
-            reply={false}
-            setIdProfil={props.setIdProfil}
-          />
-        </div> : null
-        }
+        {afficherMessages ? (
+          <div id="profil_scrollview">
+            <ListeMessages
+              lstMessages={[...profileData.liste_messages].reverse()}
+              openCanal={props.openCanal}
+              setPage={props.setPage}
+              reply={false}
+              setIdProfil={props.setIdProfil}
+            />
+          </div>
+        ) : null}
       </div>
     </>
   );
