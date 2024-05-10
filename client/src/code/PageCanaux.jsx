@@ -50,17 +50,19 @@ function PageCanaux(props) {
   //Affichage du composant: formulaire de création d'un canal et liste des canaux
   return (
     <>
+      <NouveauCanal userId={props.userId} update={update} isAdmin = {props.admin}/>
       <div id="liste_canaux">
-        <NouveauCanal userId={props.userId} update={update} isAdmin = {props.admin}/>
-        <ListeCanaux
-          lstCanaux={lstCanaux}
-          userId={props.userId}
-          admin={props.admin}
-          openCanal={props.openCanal}
-          setPage={props.setPage}
-          setIdProfil={props.setIdProfil}
-          deleteCanal={deleteCanal}
-        />
+        <div id="cnl_scrollview">
+          <ListeCanaux
+            lstCanaux={lstCanaux}
+            userId={props.userId}
+            admin={props.admin}
+            openCanal={props.openCanal}
+            setPage={props.setPage}
+            setIdProfil={props.setIdProfil}
+            deleteCanal={deleteCanal}
+          />
+        </div>
       </div>
     </> 
   );
