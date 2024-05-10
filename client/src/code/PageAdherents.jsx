@@ -77,31 +77,32 @@ function PageAdherents(props) {
         Retour
       </a>
       {props.admin && lstAValider.length != 0 ? (
-        <div id="en_attente_scrollview">
           <div id="liste_en_attente">
             <p id="usr_title">Adhérents en attente de validation</p>
+            <div id="en_attente_scrollview">
+              <ListeUtilisateurs
+                lstUtilisateurs={lstAValider}
+                accept={accept}
+                deny={deny}
+                valide={false}
+                setPage={props.setPage}
+                setIdProfil={props.setIdProfil}
+              />
+            </div>
+          </div>
+      ) : null}
+        <div id="liste_adherents">
+          <p id="usr_title">Liste des adhérents</p>
+          <div id="adherents_scrollview">
             <ListeUtilisateurs
-              lstUtilisateurs={lstAValider}
-              accept={accept}
-              deny={deny}
-              valide={false}
+              valide={true}
+              lstUtilisateurs={lstAdherents}
               setPage={props.setPage}
               setIdProfil={props.setIdProfil}
             />
           </div>
         </div>
-      ) : null}
-      <div id="adherents_scrollview">
-        <div id="liste_adherents">
-          <p id="usr_title">Liste des adhérents</p>
-          <ListeUtilisateurs
-            valide={true}
-            lstUtilisateurs={lstAdherents}
-            setPage={props.setPage}
-            setIdProfil={props.setIdProfil}
-          />
-        </div>
-      </div>
+      
     </>
   );
 }
