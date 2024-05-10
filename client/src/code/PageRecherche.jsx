@@ -38,18 +38,20 @@ function PageRecherche(props) {
   //Affichage du composant (liste des messages correspondants à la recherche)
   return (
     <>
-      <div id="fil_discussion">
-        {lstMessages.length > 0 ? (
-          <ListeMessages
-            openCanal={props.openCanal}
-            setPage={props.setPage}
-            lstMessages={[...lstMessages].reverse()}
-            reply={false}
-            setIdProfil={props.setIdProfil}
-          />
-        ) : (
-          <p>Aucun message trouvé</p>
-        )}
+      <div id="recherche_scrollview">
+        <div id="fil_discussion">
+          {lstMessages.length > 0 ? (
+            <ListeMessages
+              openCanal={props.openCanal}
+              setPage={props.setPage}
+              lstMessages={[...lstMessages].reverse()}
+              reply={false}
+              setIdProfil={props.setIdProfil}
+            />
+          ) : (
+            <p>Aucun message trouvé</p>
+          )}
+        </div>
       </div>
     </>
   );
