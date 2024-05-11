@@ -78,11 +78,11 @@
   grid-column-end: 4;
   display: grid;
   grid-template-rows: auto auto;
+  grid-template-columns: 15px auto;
 }
 
 #msg_reply_author #auteur {
   color: rgb(255, 52, 52);
-  margin-left: 15px;
   margin-bottom: -5px;
   margin-top: 5px;
   text-justify: auto;
@@ -96,6 +96,7 @@
   margin-top: 5px;
   text-justify: auto;
   grid-row: 1;
+  grid-column: 2;
 }
 
 #msg_reply {
@@ -105,15 +106,17 @@
   margin-left: 8px;
   text-justify: auto;
   grid-row: 2;
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 #reply_icon_box {
-  position: relative;
   width: 14px;
   height: 14px;
-  margin-top: -50px;
-  margin-left: 5px;
-  
+  grid-column: 1;
+  grid-row: 1;
+  padding-top: 3px;
+  padding-left: 4px;
 }
 
 #msg_photo {

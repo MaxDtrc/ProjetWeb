@@ -125,3 +125,13 @@ input[type="file"] {
     gap: 10px;
     margin-bottom: -37px;
 }
+
+.button_profil {
+    background : transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    width: 22px;
+    height: 22px;   
+    align-self: center;
+}

@@ -212,7 +212,7 @@ function PageProfil(props) {
                 }}
                 placeholder="Status"
               ></input>
-              <button title="Enregistrer" onClick={changeStatus}>
+              <button className="button_profil" title="Enregistrer" onClick={changeStatus}>
                 <i className="bi bi-floppy"></i>
               </button>
             </div>
@@ -221,9 +221,10 @@ function PageProfil(props) {
               {profileData ? profileData.status : null}
               <button
                 title="Modifier"
+                className="button_profil"
                 onClick={() => setModification(!modification)}
               >
-                <i className="bi bi-pencil-square"></i>
+                <i className="bi bi-pencil"></i>
               </button>
             </div>
           )
