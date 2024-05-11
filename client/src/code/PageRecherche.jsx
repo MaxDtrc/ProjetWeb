@@ -22,13 +22,14 @@ function PageRecherche(props) {
 
     //Condition de filtrage des messages
     const cond = (msg => {
-      return (props.recherche[0] != "@" && props.recherche[0] != "[" && msg.text.toLowerCase().includes(props.recherche.toLowerCase()) && !msg.deleted) 
+      return (
+          props.recherche[0] != "@" && props.recherche[0] != "[" && msg.text.toLowerCase().includes(props.recherche.toLowerCase()) && !msg.deleted) 
           || (props.recherche[0] == "[" && new Date(msg.date) >= dateDebut && new Date(msg.date) <= dateFin)
           || (props.recherche[0] == "@" && msg.auteur == idSearchedUser)
     })
     
     //Obtention de la liste des messages
-    const lst = await getListeMessages(props.idCanal, cond, true);
+    const lst = await getListeMessages(props.admin, props.idCanal, cond, true);
 
     //Mise à jour de la dernière recherche effectuée
     setLastRecherche(props.recherche);

@@ -48,11 +48,11 @@ function Header(props) {
           props.setPage("page_validation");
         }}
       >
-        <p class="text">Liste Adhérents</p>
+        <p className="text">Liste Adhérents</p>
       </button>
       
       <button id="header_logout" onClick={logout}>
-      <p class="text">Deconnexion</p>
+      <p className="text">Deconnexion</p>
       </button>
     </div>
   );

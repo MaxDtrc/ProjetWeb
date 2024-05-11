@@ -85,7 +85,7 @@ idCanal = identifiant du canal dans lequel on recherche le message
 condition = fonction de filtre des messages
 afficherCanal = booleen pour afficher ou non le canal dans le titre du message
 */
-export async function getListeMessages(idCanal, condition, afficherCanal) {
+export async function getListeMessages(isAdmin, idCanal, condition, afficherCanal) {
   console.log("Utils: obtention de la liste des messages ...")
 
   var lst = []; //Création de la liste des messages
@@ -115,7 +115,7 @@ export async function getListeMessages(idCanal, condition, afficherCanal) {
     for (var j = 0; j < canaux[i].liste_messages.length; j++) {
       var msg = canaux[i].liste_messages[j]; //Récupération du message
 
-      if (condition(msg)) {
+      if (condition(msg) && (isAdmin || !canaux[i].isPrivate)) {
         //Le message correspond aux critères de recherche
         msg.id_auteur = msg.auteur; //On copie l'id de l'auteur
         

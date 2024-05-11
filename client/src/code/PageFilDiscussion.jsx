@@ -17,7 +17,7 @@ function PageFilDiscussion(props) {
     console.log("PageFilDiscussion: mise à jour de la liste des messages ...")
 
     //Obtention de la liste des messages
-    const lst = await getListeMessages(props.idCanal, (msg) => {return true}, false);
+    const lst = await getListeMessages(props.admin, props.idCanal, (msg) => {return true}, false);
 
     //Mise à jour
     console.log("PageFilDiscussion: mise à jour effectuée !")

@@ -27,7 +27,7 @@ function PageProfil(props) {
       if(profileData && profileData.liste_messages.length != 0)
         lst = profileData.liste_messages
       else
-        lst = await getListeMessages(null, ((msg) => msg.auteur == props.idProfil), true);
+        lst = await getListeMessages(props.admin, null, ((msg) => msg.auteur == props.idProfil), true);
 
       //Mise à jour du profil
       setProfileData({username : user.username, date : formaterDate(user.date), isAdmin: user.admin, status: user.status, profile_picture: photo, liste_messages: lst});

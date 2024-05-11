@@ -10,7 +10,7 @@ function PageAdherents(props) {
 
   //Fonction de mise à jour du composant
   async function update() {
-    console.log("PageAdherents: mise à jour de la liste des utilisateurs")
+    console.log("PageAdherents: mise à jour de la liste des utilisateurs ...")
 
     var lstEnAttente = [] //Liste des utilisateurs en attente
     var lstValide = [] //Liste des utilisateurs inscrits

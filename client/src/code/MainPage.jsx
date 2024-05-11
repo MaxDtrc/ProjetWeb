@@ -61,6 +61,7 @@ function MainPage(props) {
       return (
         <main id="main_page">
           <PageRecherche
+            admin={props.admin}
             currentCanal={idCanal}
             page={props.page}
             setPage={props.setPage}

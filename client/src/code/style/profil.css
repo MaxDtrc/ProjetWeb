@@ -117,7 +117,6 @@ input[type="file"] {
 
 #profile_ban:hover, #profile_set_admin:hover {
     border-color: #5cb3ff;
-    color: #5cb3ff;
 }
 
 #profile_actions {
@@ -134,4 +133,8 @@ input[type="file"] {
     width: 22px;
     height: 22px;   
     align-self: center;
+}
+
+.button_profil:hover{
+    border-color: #5cb3ff;
 }

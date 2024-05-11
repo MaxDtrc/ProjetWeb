@@ -26,6 +26,7 @@ function LeftSide() {
     var users;
     try {
       users = (await axios.get("api/user")).data;
+      console.log("LeftSide: Liste des utilisateurs obtenue")
     }
     catch(e){
       console.log("LeftSide: Erreur dans l'obtention de la liste des utilisateurs")
@@ -70,6 +71,7 @@ function LeftSide() {
     }
 
     //Mise à jour de la liste des informations (et refresh du composant)
+    console.log("LeftSide: liste des notifications mise à jour !")
     setInfos(listeInfos);
   }
 
